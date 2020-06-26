@@ -10,14 +10,13 @@ namespace Core
     /// <summary>
     /// Ball
     /// </summary>
-    class Ball : Drawable
+    class Ball : Drawable, IDebuggable
     {
         public readonly Color BallColor;
-        public uint X;
-        public uint Y;
-        public readonly RectangleShape BackRect;
-        public int deltaX;
-        public int deltaY;
+        public float X;
+        public float Y;
+        public readonly CircleShape BackRect;
+        public Vector2f moveVector;
 
         /// <summary>
         /// Create Ball
@@ -27,12 +26,12 @@ namespace Core
             X = Dimensions.WindowWidth / 2;
             Y = Dimensions.WindowHeight / 2;
 
-            deltaX = 1;
-            deltaY = 1;
+            moveVector = new Vector2f(1, 1);
 
             BallColor = Color.White;
 
-            BackRect = new RectangleShape(new Vector2f(10, 10));
+            //BackRect = new RectangleShape(new Vector2f(10, 10));
+            BackRect = new CircleShape(5, 100);
             BackRect.FillColor = BallColor;
             BackRect.Position = new Vector2f(X, Y);
         }
@@ -54,12 +53,33 @@ namespace Core
         /// <param name="args"></param>
         public void Move(object sender, ElapsedEventArgs args)
         {
-            if (deltaX > 0) X += (uint)deltaX;
-            if (deltaX < 0) X -= (uint)deltaX;
-            if (deltaY > 0) Y += (uint)deltaY;
-            if (deltaY < 0) Y -= (uint)deltaY;
+            if (!((BackRect.Position.X < Dimensions.WindowWidth - 10) && (BackRect.Position.X > 0)))
+                moveVector.X *= -1;
+            X += moveVector.X;
+
+            if (!((BackRect.Position.Y < Dimensions.WindowHeight - 10) && (BackRect.Position.Y > 0)))
+                moveVector.Y *= -1;
+            Y += moveVector.Y;
 
             BackRect.Position = new Vector2f(X, Y);
+        }
+
+        /// <summary>
+        /// Display Debug info about ball position
+        /// </summary>
+        /// <returns>string with info</returns>
+        public string GetDebugDisplayInfo()
+        {
+            return "Ball: \n\tX: " + X + "\n\tY: " + Y + "\n\tdx: " + moveVector.X;
+        }
+
+        /// <summary>
+        /// Get counts of lines in debug info
+        /// </summary>
+        /// <returns>Count</returns>
+        public int GetDebugDisplayInfoLinesCount()
+        {
+            return 4;
         }
     }
 }

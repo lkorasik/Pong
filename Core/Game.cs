@@ -12,14 +12,21 @@ namespace Core
         //Main logic
         private readonly Field field;
         private readonly Ball ball;
-        private readonly Racket LeftRacket;
-        private readonly Racket RightRacket;
-        private readonly Counter LeftCounter;
-        private readonly Counter RightCounter;
+        private readonly Racket leftRacket;
+        private readonly Racket rightRacket;
+        private readonly Counter leftCounter;
+        private readonly Counter rightCounter;
         private readonly Grid Grid;
 
         public Drawable Field => field;
         public Drawable Ball => ball;
+        public IDebuggable BallDebug => ball;
+        public Drawable LeftRacket => leftRacket;
+        public IDebuggable LeftRacketDebug => leftRacket;
+        public IMovable LeftRacketMove => leftRacket;
+        public Drawable RightRacket => rightRacket;
+        public IDebuggable RightRacketDebug => rightRacket;
+        public IMovable RightRacketMove => rightRacket;
 
         /// <summary>
         /// Create and start game
@@ -28,10 +35,10 @@ namespace Core
         {
             field = new Field();
             ball = new Ball();
-            LeftRacket = new Racket();
-            RightRacket = new Racket();
-            LeftCounter = new Counter();
-            RightCounter = new Counter();
+            leftRacket = new Racket(10);
+            rightRacket = new Racket(580);
+            leftCounter = new Counter();
+            rightCounter = new Counter();
             Grid = new Grid();
 
             StartGame();
@@ -42,16 +49,6 @@ namespace Core
             var ballTimer = new Timer(50);
             ballTimer.Start();
             ballTimer.Elapsed += ball.Move;
-        }
-    }
-
-    class Racket
-    {
-        public readonly Color RacketColor;
-
-        public Racket()
-        {
-            RacketColor = Color.White;
         }
     }
 
