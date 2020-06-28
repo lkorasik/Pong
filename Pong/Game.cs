@@ -19,7 +19,7 @@ namespace Pong
         private readonly Counter RightCounter;
         private readonly PhysicEngine PhysicEngine;
 
-        public Game(Action<Drawable> AddDrawableElement)
+        public Game(Action<Drawable> AddDrawableElement, ref bool inited, ref Racket Left, ref Racket Right)
         {
             Ball = new Ball();
             LeftRacket = new Racket(10, 50);
@@ -31,6 +31,13 @@ namespace Pong
             AddDrawableElement(Ball);
             AddDrawableElement(LeftRacket);
             AddDrawableElement(RightRacket);
+
+            Console.WriteLine("Inited");
+
+            inited = true;
+
+            Left = LeftRacket;
+            Right = RightRacket;
 
             PhysicEngine.StartCalcs();
         }

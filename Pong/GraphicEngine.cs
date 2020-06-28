@@ -18,6 +18,8 @@ namespace Pong
         // Список вещей, которые надо отрисовывать, учитывается их порядок
         private readonly List<Drawable> Conveyor;
 
+        private readonly Racket LeftRacket, RightRacket;
+
         /// <summary>
         /// Создание окна игры
         /// </summary>
@@ -31,9 +33,12 @@ namespace Pong
         /// <summary>
         /// Начать отрисовку экранов в цикле
         /// </summary>
-        public void StartDrawing()
+        public void StartDrawing(ref Racket LeftRacket, ref Racket RightRacket)
         {
             Window.DispatchEvents();
+
+            Console.WriteLine(LeftRacket == null);
+            Console.WriteLine(RightRacket == null);
 
             while (Window.IsOpen)
             {
