@@ -46,7 +46,7 @@ namespace Pong
                 if (isPressedRightDown) Game.RightRacketMove.MoveDown();
                 if (isPressedRightUp) Game.RightRacketMove.MoveUp();
 
-                Console.WriteLine("LD: " + isPressedLeftDown + " LU: " + isPressedLeftUp + " RD: " + isPressedRightDown + " RU: " + isPressedRightUp);
+                //Console.WriteLine("LD: " + isPressedLeftDown + " LU: " + isPressedLeftUp + " RD: " + isPressedRightDown + " RU: " + isPressedRightUp);
             }
         }
 

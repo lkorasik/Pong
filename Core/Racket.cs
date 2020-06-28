@@ -11,8 +11,9 @@ namespace Core
         public float Y;
         public readonly RectangleShape BackRect;
         public Vector2f moveVector;
-        private int height = 50;
-        private int width = 10;
+        public int height = 50;
+        public int width = 10;
+        public float step;
 
         public Racket(int position)
         {
@@ -25,6 +26,8 @@ namespace Core
             RacketColor = Color.White;
             BackRect.FillColor = RacketColor;
             BackRect.Position = new Vector2f(X, Y);
+
+            step = 45 / (height / 2);
         }
 
         public void Draw(RenderTarget target, RenderStates states)
