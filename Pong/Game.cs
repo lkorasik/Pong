@@ -1,7 +1,9 @@
 ﻿using SFML.Graphics;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Pong
 {
@@ -24,7 +26,7 @@ namespace Pong
             RightRacket = new Racket(580, 50);
             LeftCounter = new Counter();
             RightCounter = new Counter();
-            PhysicEngine = new PhysicEngine(Ball);
+            PhysicEngine = new PhysicEngine(Ball, RightRacket, LeftRacket);
 
             AddDrawableElement(Ball);
             AddDrawableElement(LeftRacket);

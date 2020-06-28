@@ -2,7 +2,9 @@
 using SFML.System;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
+using Color = SFML.Graphics.Color;
 
 namespace Pong
 {
@@ -11,44 +13,52 @@ namespace Pong
     /// </summary>
     class Ball : Drawable
     {
-        private uint X;
-        private uint Y;
-        private uint radius;
-        private CircleShape Shape;
-        public uint PositionX => X;
-        public uint PositionY => Y;
+        private float X;
+        private float Y;
+        public Vector2f MoveVector;
+        private RectangleShape Shape;
+        public float PositionX => X;
+        public float PositionY => Y;
 
         /// <summary>
         /// Создать шарик
         /// </summary>
         public Ball()
         {
-            radius = 5;
+            X = Constants.WindowWidth / 2 - 5;
+            Y = Constants.WindowHeight / 2 - 5;
 
-            X = Constants.WindowWidth / 2 - radius;
-            Y = Constants.WindowHeight / 2 - radius;
+            MoveVector = new Vector2f(1f, 0f);
 
-            Shape = new CircleShape(radius);
+            Shape = new RectangleShape(new Vector2f(10, 10));
             Shape.FillColor = Color.Red;
             Shape.Position = new Vector2f(X, Y);
         }
 
-        public void MoveHorizontal(int dx)
+        public void RecalcMoveVector(float angle)
         {
-            if (dx > 0)
-                X += (uint)dx;
-            else
-                X -= (uint)dx;
+            var speed = Math.Sqrt(MoveVector.X * MoveVector.X + MoveVector.Y * MoveVector.Y);
+            MoveVector = new Vector2f((float)(speed * Math.Cos(angle)), (float)(speed * -Math.Sin(angle)));
+        }
+
+        /// <summary>
+        /// Сдвинуть шарик
+        /// </summary>
+        public void Move()
+        {
+            X += MoveVector.X;
+            Y += MoveVector.Y;
             Shape.Position = new Vector2f(X, Y);
         }
 
-        public void MoveVertical(int dy)
+        public float PredictMoveX()
         {
-            if (dy > 0)
-                Y += (uint)dy;
-            else
-                Y -= (uint)dy;
-            Shape.Position = new Vector2f(X, Y);
+            return X + MoveVector.X;
+        }
+
+        public float PredictMoveY()
+        {
+            return Y + MoveVector.Y;
         }
 
         /// <summary>
@@ -59,6 +69,11 @@ namespace Pong
         public void Draw(RenderTarget target, RenderStates states)
         {
             Shape.Draw(target, states);
+        }
+
+        public Rectangle GetBorder()
+        {
+            return new Rectangle((int)X, (int)Y, (int)10, (int)10);
         }
     }
 }
