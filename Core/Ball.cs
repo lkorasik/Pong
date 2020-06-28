@@ -17,21 +17,29 @@ namespace Core
         public float Y;
         public readonly CircleShape BackRect;
         public Vector2f moveVector;
+        public float speed;
+        public float direction;
+        public readonly int radius;
 
         /// <summary>
         /// Create Ball
         /// </summary>
         public Ball()
         {
-            X = Dimensions.WindowWidth / 2;
-            Y = Dimensions.WindowHeight / 2;
+            radius = 5;
 
-            moveVector = new Vector2f(1, 1);
+            X = Dimensions.WindowWidth / 2 - radius;
+            Y = Dimensions.WindowHeight / 2 - radius;
+
+            speed = 5;
+            direction = 0;
+            //moveVector = new Vector2f(2, 2);
+            moveVector = new Vector2f((float)(speed * Math.Cos(direction)), (float)(speed * Math.Sin(direction)));
 
             BallColor = Color.White;
 
             //BackRect = new RectangleShape(new Vector2f(10, 10));
-            BackRect = new CircleShape(5, 100);
+            BackRect = new CircleShape(radius, 100);
             BackRect.FillColor = BallColor;
             BackRect.Position = new Vector2f(X, Y);
         }
@@ -46,12 +54,22 @@ namespace Core
             BackRect.Draw(target, states);
         }
 
+        public void RecalcDirection()
+        {
+            moveVector = new Vector2f((float)(speed * Math.Cos(direction)), (float)(speed * Math.Sin(direction)));
+        }
+
         /// <summary>
         /// Call when you want to move ball
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         public void Move(object sender, ElapsedEventArgs args)
+        {
+            BackRect.Position = new Vector2f(X, Y);
+        }
+
+        public void CheckWallCollisions(object sender, ElapsedEventArgs args)
         {
             if (!((BackRect.Position.X < Dimensions.WindowWidth - 10) && (BackRect.Position.X > 0)))
                 moveVector.X *= -1;
@@ -60,8 +78,6 @@ namespace Core
             if (!((BackRect.Position.Y < Dimensions.WindowHeight - 10) && (BackRect.Position.Y > 0)))
                 moveVector.Y *= -1;
             Y += moveVector.Y;
-
-            BackRect.Position = new Vector2f(X, Y);
         }
 
         /// <summary>

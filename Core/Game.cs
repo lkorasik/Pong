@@ -27,6 +27,7 @@ namespace Core
         public Drawable RightRacket => rightRacket;
         public IDebuggable RightRacketDebug => rightRacket;
         public IMovable RightRacketMove => rightRacket;
+        private int t = 0;
 
         /// <summary>
         /// Create and start game
@@ -49,6 +50,57 @@ namespace Core
             var ballTimer = new Timer(50);
             ballTimer.Start();
             ballTimer.Elapsed += ball.Move;
+            ballTimer.Elapsed += ball.CheckWallCollisions;
+            ballTimer.Elapsed += CheckRacketCollisions; 
+        }
+
+        public void CheckRacketCollisions(object e, ElapsedEventArgs args)
+        {
+            //0) вычислить шаг: 45/height
+            //1) понять попали мы в плащдку или нет
+            //2) если попали понять координату попадания
+            //3) на основе координаты понять угол
+            //4) пересчитать вектор движения
+
+            //Нужен физический движок
+
+            if(t != 0)
+            {
+                t = 0;
+                return;
+            }
+            else
+            {
+                t++;
+            }
+
+            var ballCenterY = ball.Y + ball.radius;
+            var ballCenterX = ball.X + ball.radius;
+            var racketCenterY = rightRacket.Y + rightRacket.height / 2;
+
+            var dy = ballCenterY - racketCenterY;
+
+            ball.direction = dy * rightRacket.step;
+
+            if((rightRacket.X - ballCenterX <= ball.radius) && (ballCenterY >= rightRacket.Y) && (ball.Y <= rightRacket.Y + rightRacket.height))
+            {
+                ball.RecalcDirection();
+                ball.moveVector.X *= -1;
+                Console.WriteLine("Connect right");
+            }
+
+            racketCenterY = leftRacket.Y + leftRacket.height / 2;
+
+            dy = ballCenterY - racketCenterY;
+
+            ball.direction = dy * rightRacket.step;
+
+            if ((ball.X - leftRacket.X <= ball.radius) && (ball.Y >= leftRacket.Y - ball.radius) && (ball.Y <= leftRacket.Y + leftRacket.height))
+            {
+                ball.RecalcDirection();
+                ball.moveVector.X *= -1;
+                Console.WriteLine("Connect left");
+            }
         }
     }
 
