@@ -16,9 +16,6 @@ namespace Pong
     class Program
     {
         private static Thread GameThread;
-        private static bool initedGameObjects = false;
-        private static Racket LeftRacket;
-        private static Racket RightRacket;
 
         static void Main(string[] args)
         {
@@ -26,15 +23,10 @@ namespace Pong
 
             /// Через ref поднять ссылки на блоки вверх
 
-            GameThread = new Thread(() => new Game(graphicEngine.AddDrawingElement, ref initedGameObjects, ref LeftRacket, ref RightRacket));
+            GameThread = new Thread(() => new Game(graphicEngine.AddDrawingElement));
             GameThread.Start();
 
-            while (!initedGameObjects)
-            {
-                Console.WriteLine("Wait");
-            }
-
-            graphicEngine.StartDrawing(ref LeftRacket, ref RightRacket);
+            graphicEngine.StartDrawing();
         }
     }
 

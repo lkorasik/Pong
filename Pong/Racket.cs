@@ -21,19 +21,39 @@ namespace Pong
         public float PositionX => X;
         public float PositionY => Y;
         public float Step;
+        public bool IsUp;
+        public bool IsDown;
 
         public Racket(uint x, uint height)
         {
             Height = height;
 
             X = x;
-            Y = Constants.WindowHeight / 2 - Height / 2 - 20;
+            Y = Constants.WindowHeight / 2 - Height / 2;
 
             Shape = new RectangleShape(new Vector2f(Width, Height));
             Shape.FillColor = Color.White;
             Shape.Position = new Vector2f(X, Y);
 
             Step = 45 / (float)Height;
+        }
+
+        public void MoveUp()
+        {
+            if (Y - 1 > 10)
+            {
+                Y -= 1;
+                Shape.Position = new Vector2f(X, Y);
+            }
+        }
+
+        public void MoveDown()
+        {
+            if (Y - 1 < Constants.WindowHeight - 10 - Height)
+            {
+                Y += 1;
+                Shape.Position = new Vector2f(X, Y);
+            }
         }
 
         public void Draw(RenderTarget target, RenderStates states)
@@ -49,8 +69,6 @@ namespace Pong
         public float GetAngle(float y)
         {
             var shift = Y + Height / 2 - y;
-
-            Console.WriteLine(shift);
 
             return Step * shift;
         }

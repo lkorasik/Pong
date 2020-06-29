@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -28,6 +29,15 @@ namespace Pong
             {
                 Thread.Sleep(5);
 
+                if (Keyboard.IsKeyPressed(Keyboard.Key.S))
+                    LeftRacket.MoveDown();
+                if (Keyboard.IsKeyPressed(Keyboard.Key.W))
+                    LeftRacket.MoveUp();
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Down))
+                    RightRacket.MoveDown();
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Up))
+                    RightRacket.MoveUp();
+
                 Ball.Move();
 
                 if (IsIntersected(Ball.GetBorder(), RightRacket.GetBorder()))
@@ -35,15 +45,21 @@ namespace Pong
                     var rad = RightRacket.GetAngle(Ball.PositionY + 5) * Math.PI / 180;
 
                     Ball.RecalcMoveVector((float)rad);
-                    Ball.MoveVector.X *= -1;
+                    if(Ball.MoveVector.X > 0)
+                        Ball.MoveVector.X *= -1;
+                    Ball.Move();
+                    //Console.WriteLine("Right\n Rad: " + rad + "\nVector x: " + Ball.MoveVector.X + "\nVector y: " + Ball.MoveVector.Y + "\n");
                 }
 
                 if(IsIntersected(Ball.GetBorder(), LeftRacket.GetBorder()))
                 {
-                    Ball.MoveVector.X *= -1;
                     var rad = RightRacket.GetAngle(Ball.PositionY + 5) * Math.PI / 180;
 
                     Ball.RecalcMoveVector((float)rad);
+                    if(Ball.MoveVector.X < 0)
+                        Ball.MoveVector.X *= -1;
+                    Ball.Move();
+                    //Console.WriteLine("Left\n Rad: " + rad  + "\nVector x: " + Ball.MoveVector.X + "\nVector y: " + Ball.MoveVector.Y + "\n");
                 }
 
                 if (Ball.PositionY < 1)

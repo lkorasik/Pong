@@ -19,7 +19,7 @@ namespace Pong
         private readonly Counter RightCounter;
         private readonly PhysicEngine PhysicEngine;
 
-        public Game(Action<Drawable> AddDrawableElement, ref bool inited, ref Racket Left, ref Racket Right)
+        public Game(Action<Drawable> AddDrawableElement)
         {
             Ball = new Ball();
             LeftRacket = new Racket(10, 50);
@@ -32,14 +32,31 @@ namespace Pong
             AddDrawableElement(LeftRacket);
             AddDrawableElement(RightRacket);
 
-            Console.WriteLine("Inited");
-
-            inited = true;
-
-            Left = LeftRacket;
-            Right = RightRacket;
-
             PhysicEngine.StartCalcs();
+        }
+
+        private void KeyPressListner(object sender, KeyEventArgs args)
+        {
+            if (args.Code == Keyboard.Key.S)
+                LeftRacket.MoveDown();
+            if (args.Code == Keyboard.Key.W)
+                LeftRacket.MoveUp();
+            if (args.Code == Keyboard.Key.Down)
+                RightRacket.IsDown = true;
+            if (args.Code == Keyboard.Key.Up)
+                RightRacket.IsUp = true;
+        }
+
+        private void KeyReleaseListner(object sender, KeyEventArgs args)
+        {
+            if (args.Code == Keyboard.Key.S)
+                LeftRacket.IsDown = false;
+            if (args.Code == Keyboard.Key.W)
+                LeftRacket.IsUp = false;
+            if (args.Code == Keyboard.Key.Down)
+                RightRacket.IsDown = false;
+            if (args.Code == Keyboard.Key.Up)
+                RightRacket.IsUp = false;
         }
     }
 }

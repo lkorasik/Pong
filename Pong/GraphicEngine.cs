@@ -28,20 +28,18 @@ namespace Pong
             VideoMode = new VideoMode(Constants.WindowWidth, Constants.WindowHeight);
             Window = new RenderWindow(VideoMode, "Pong!");
             Conveyor = new List<Drawable>();
+
+            Window.Closed += (s, e) => Window.Close();
         }
 
         /// <summary>
         /// Начать отрисовку экранов в цикле
         /// </summary>
-        public void StartDrawing(ref Racket LeftRacket, ref Racket RightRacket)
+        public void StartDrawing()
         {
-            Window.DispatchEvents();
-
-            Console.WriteLine(LeftRacket == null);
-            Console.WriteLine(RightRacket == null);
-
             while (Window.IsOpen)
             {
+                Window.DispatchEvents();
                 Window.Clear();
                 for (int i = 0; i < Conveyor.Count; i++)
                 {
