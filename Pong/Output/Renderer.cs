@@ -1,4 +1,5 @@
-﻿using Pong.Logic;
+﻿using Pong.Input;
+using Pong.Logic;
 using SFML.Graphics;
 using SFML.Window;
 using System;
@@ -28,6 +29,8 @@ namespace Pong.Output
             Window = new RenderWindow(VideoMode, Constants.WindowTitle);
 
             Window.Closed += OnClose;
+            Window.KeyPressed += OnKeyPressed;
+            Window.KeyReleased += OnKeyReleased;
 
             Drawables = new List<Drawable>();
 
@@ -45,6 +48,36 @@ namespace Pong.Output
         private void OnClose(object sender, EventArgs e)
         {
             Window.Close();
+        }
+
+        /// <summary>
+        /// Listen keyboard and change states in special class
+        /// </summary>
+        private void OnKeyPressed(object obj, KeyEventArgs args)
+        {
+            if (args.Code == Keyboard.Key.S)
+                KeyboardStat.LeftDown = true;
+            if (args.Code == Keyboard.Key.W)
+                KeyboardStat.LeftUp = true;
+            if (args.Code == Keyboard.Key.Up)
+                KeyboardStat.RightUp = true;
+            if (args.Code == Keyboard.Key.Down)
+                KeyboardStat.RightDown = true;
+        }
+
+        /// <summary>
+        /// Listen keyboard and change states in special class
+        /// </summary>
+        private void OnKeyReleased(object obj, KeyEventArgs args)
+        {
+            if (args.Code == Keyboard.Key.S)
+                KeyboardStat.LeftDown = false;
+            if (args.Code == Keyboard.Key.W)
+                KeyboardStat.LeftUp = false;
+            if (args.Code == Keyboard.Key.Up)
+                KeyboardStat.RightUp = false;
+            if (args.Code == Keyboard.Key.Down)
+                KeyboardStat.RightDown = false;
         }
 
         /// <summary>

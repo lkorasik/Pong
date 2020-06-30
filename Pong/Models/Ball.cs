@@ -9,6 +9,9 @@ using SFMLColor = SFML.Graphics.Color;
 
 namespace Pong.Models
 {
+    /// <summary>
+    /// Create ball
+    /// </summary>
     class Ball : Drawable, IMovable
     {
         private float X;
@@ -34,8 +37,8 @@ namespace Pong.Models
             BallView.Position = new Vector2f(X, Y);
             BallView.FillColor = SFMLColor.White;
 
-            dx = -1;
-            dy = -1;
+            dx = 1;
+            dy = 1;
         }
 
         /// <summary>

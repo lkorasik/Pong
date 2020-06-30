@@ -3,11 +3,12 @@ using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Net;
 using System.Text;
 
 namespace Pong.Models
 {
-    class Racket: Drawable, IMovable
+    class Racket: Drawable, IMovable, IControlMovable
     {
         private float X;
         private float Y;
@@ -17,6 +18,7 @@ namespace Pong.Models
         private float dx;
         private float dy;
         private RacketTypes Type;
+        private RacketMovements Movement;
 
         /// <summary>
         /// Create racket
@@ -29,12 +31,16 @@ namespace Pong.Models
             if (type == RacketTypes.LEFT)
                 X = Constants.LeftRacketPositionX;
             else
-                X = Constants.RighrRacketPositionX;
+                X = Constants.RightRacketPositionX;
             Y = Constants.WindowHeight / 2 - Height / 2;
 
             RacketView = new RectangleShape(new Vector2f(Width, Height));
             RacketView.FillColor = SFML.Graphics.Color.White;
             RacketView.Position = new Vector2f(X, Y);
+
+            Type = type;
+
+            Movement = RacketMovements.STOP;
         }
 
         /// <summary>
@@ -102,6 +108,15 @@ namespace Pong.Models
         }
 
         /// <summary>
+        /// Get the state of movement
+        /// </summary>
+        /// <returns></returns>
+        public RacketMovements GetMovement()
+        {
+            return Movement;
+        }
+
+        /// <summary>
         /// Up left corner
         /// </summary>
         /// <returns>PointF</returns>
@@ -126,8 +141,9 @@ namespace Pong.Models
         /// <param name="dy">steps on axis y</param>
         public void Move(float dx, float dy)
         {
-            X += dx;
-            Y += dy;
+            //X += dx;
+            if((Y + dy > 10) && (Y + dy < Constants.WindowHeight - 10 - Height))
+                Y += dy;
             RacketView.Position = new Vector2f(X, Y);
         }
 
@@ -148,11 +164,33 @@ namespace Pong.Models
         {
             this.dy = dy;
         }
+
+        /// <summary>
+        /// Set move state
+        /// </summary>
+        /// <param name="movement">Move State</param>
+        public void SetMovement(RacketMovements movement)
+        {
+            Movement = movement;
+        }
     }
 
+    /// <summary>
+    /// Use it for rackets.
+    /// </summary>
     enum RacketTypes
     {
         LEFT, 
         RIGHT
+    }
+    
+    /// <summary>
+    /// Use it when you want to move rackets
+    /// </summary>
+    enum RacketMovements
+    {
+        UP,
+        STOP,
+        DOWN
     }
 }

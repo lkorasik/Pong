@@ -3,15 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.0.5</Version>
+    <Version>0.0.9</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="SFML.Net" Version="2.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Input\" />
   </ItemGroup>
 
 </Project>

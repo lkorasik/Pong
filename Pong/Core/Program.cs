@@ -25,10 +25,11 @@ namespace Pong
         {
             var ball = new Ball();
             var leftRacket = new Racket(RacketTypes.LEFT);
+            var rightRacket = new Racket(RacketTypes.RIGHT);
 
-            var physicEngine = new PhysicsEngine(ball, leftRacket);
+            var physicEngine = new PhysicsEngine(ball, leftRacket, rightRacket);
 
-            var renderer = new Renderer(physicEngine, ball, leftRacket);
+            var renderer = new Renderer(physicEngine, ball, leftRacket, rightRacket);
             renderer.StartDrawing();
         }
     }

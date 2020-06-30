@@ -14,6 +14,6 @@ namespace Pong
         public const string WindowTitle = "Pong!";
 
         public const float LeftRacketPositionX = 10;
-        public const float RighrRacketPositionX = WindowWidth - 20;
+        public const float RightRacketPositionX = WindowWidth - 20;
     }
 }
