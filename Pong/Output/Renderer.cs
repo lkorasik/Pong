@@ -87,7 +87,7 @@ namespace Pong.Output
         {
             while (Window.IsOpen)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(15);
 
                 PhysicEngine.MakeStep();
 
