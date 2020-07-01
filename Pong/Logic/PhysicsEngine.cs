@@ -60,9 +60,9 @@ namespace Pong.Logic
                 ball.SetDirection((float)(-ball.GetDirection()));
             if (DownRight.Y >= Constants.WindowHeight)
                 ball.SetDirection((float)(-ball.GetDirection()));
-            if (UpLeft.X <= 0)
+            if (UpLeft.X <= 0 - Constants.HorizontalExpand)
                 ball.SetDirection((float)(Math.PI - ball.GetDirection()));
-            if (DownRight.X >= Constants.WindowWidth)
+            if (DownRight.X >= Constants.WindowWidth + Constants.HorizontalExpand)
                 ball.SetDirection((float)(Math.PI - ball.GetDirection()));
         }
 

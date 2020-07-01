@@ -12,18 +12,18 @@ namespace Pong.Models
         private int Width;
         private int Height;
         private RectangleShape RacketView;
-        private RacketTypes Type;
+        private PositionTypes Type;
         private RacketMovements Movement;
 
         /// <summary>
         /// Create racket
         /// </summary>
-        public Racket(RacketTypes type)
+        public Racket(PositionTypes type)
         {
             Width = 10;
             Height = 50;
 
-            if (type == RacketTypes.LEFT)
+            if (type == PositionTypes.LEFT)
                 X = Constants.LeftRacketPositionX;
             else
                 X = Constants.RightRacketPositionX;
@@ -43,7 +43,7 @@ namespace Pong.Models
         /// </summary>
         public void DebugPrintPosition()
         {
-            if(Type == RacketTypes.LEFT)
+            if(Type == PositionTypes.LEFT)
                 Console.WriteLine("Left X: {0}, Y: {1}", X, Y);
             else
                 Console.WriteLine("Right X: {0}, Y: {1}", X, Y);
@@ -151,15 +151,6 @@ namespace Pong.Models
         {
             Movement = movement;
         }
-    }
-
-    /// <summary>
-    /// Use it for rackets.
-    /// </summary>
-    enum RacketTypes
-    {
-        LEFT, 
-        RIGHT
     }
     
     /// <summary>

@@ -1,6 +1,7 @@
 ﻿using Pong.Core;
 using Pong.Input;
 using Pong.Logic;
+using Pong.Models;
 using SFML.Graphics;
 using SFML.Window;
 using System;

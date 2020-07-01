@@ -4,6 +4,7 @@ using Pong.Models;
 using SFML.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Pong.Core
@@ -15,6 +16,8 @@ namespace Pong.Core
         private readonly Racket RightRacket;
         private readonly PhysicsEngine PhysicsEngine;
         private readonly KeyboardState KeyboardState;
+        private readonly Counter LeftCounter;
+        private readonly Counter RightCounter;
         private GameStats GameStat;
 
         public Ball GetBall => Ball;
@@ -22,6 +25,8 @@ namespace Pong.Core
         public Racket GetRightRacket => RightRacket;
         public PhysicsEngine GetPhysicsEngine => PhysicsEngine;
         public KeyboardState GetKeyboardState => KeyboardState;
+        public Counter GetLeftCounter => LeftCounter;
+        public Counter GetRightCounter => RightCounter;
         public GameStats GetGameStat => GameStat;
 
         /// <summary>
@@ -31,9 +36,11 @@ namespace Pong.Core
         public Game(KeyboardState keyboardState)
         {
             Ball = new Ball();
-            LeftRacket = new Racket(RacketTypes.LEFT);
-            RightRacket = new Racket(RacketTypes.RIGHT);
+            LeftRacket = new Racket(PositionTypes.LEFT);
+            RightRacket = new Racket(PositionTypes.RIGHT);
             KeyboardState = keyboardState;
+            LeftCounter = new Counter(PositionTypes.LEFT);
+            RightCounter = new Counter(PositionTypes.RIGHT);
 
             GameStat = GameStats.PAUSE;
 
@@ -46,7 +53,7 @@ namespace Pong.Core
         /// <returns>List</returns>
         public List<Drawable> GetDrawables()
         {
-            return new List<Drawable>() { Ball, LeftRacket, RightRacket };
+            return new List<Drawable>() { Ball, LeftRacket, RightRacket, LeftCounter, RightCounter };
         }
 
         public void TogglePause()
