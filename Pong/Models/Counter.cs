@@ -27,6 +27,12 @@ namespace Pong.Models
             CountView.FillColor = Color.Red;
         }
 
+        public void Increase()
+        {
+            Count++;
+            CountView.DisplayedString = Count.ToString();
+        }
+
         public void Draw(RenderTarget target, RenderStates states)
         {
             CountView.Draw(target, states);

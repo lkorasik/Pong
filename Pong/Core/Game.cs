@@ -19,6 +19,7 @@ namespace Pong.Core
         private readonly Counter LeftCounter;
         private readonly Counter RightCounter;
         private GameStats GameStat;
+        public event Action End;
 
         public Ball GetBall => Ball;
         public Racket GetLeftRacket => LeftRacket;
@@ -44,7 +45,7 @@ namespace Pong.Core
 
             GameStat = GameStats.PAUSE;
 
-            PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState);
+            PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState, Goal);
         }
 
         /// <summary>
@@ -62,6 +63,17 @@ namespace Pong.Core
                 GameStat = GameStats.PAUSE;
             else
                 GameStat = GameStats.PLAY;
+        }
+
+        public void Goal(PositionTypes side)
+        {
+            if (side == PositionTypes.LEFT)
+                RightCounter.Increase();
+            else
+                LeftCounter.Increase();
+
+            Ball.ResetPosition();
+            GameStat = GameStats.PAUSE;
         }
     }
 

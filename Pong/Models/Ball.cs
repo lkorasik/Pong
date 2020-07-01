@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using Pong.Core;
+using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Drawing;
@@ -13,6 +14,8 @@ namespace Pong.Models
     {
         private float X;
         private float Y;
+        private readonly float StartX;
+        private readonly float StartY;
         private int Width;
         private int Height;
         private RectangleShape BallView;
@@ -30,6 +33,9 @@ namespace Pong.Models
 
             X = Constants.WindowWidth / 2 - Width / 2;
             Y = Constants.WindowHeight / 2 - Height / 2;
+
+            StartX = X;
+            StartY = Y;
 
             BallView = new RectangleShape(new Vector2f(Width, Height));
             BallView.Position = new Vector2f(X, Y);
@@ -129,6 +135,13 @@ namespace Pong.Models
         public float GetDirection()
         {
             return Direction;
+        }
+
+        public void ResetPosition()
+        {
+            X = StartX;
+            Y = StartY;
+            BallView.Position = new Vector2f(X, Y);
         }
     }
 }

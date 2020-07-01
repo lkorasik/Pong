@@ -1,4 +1,5 @@
-﻿using Pong.Input;
+﻿using Pong.Core;
+using Pong.Input;
 using Pong.Models;
 using System;
 
@@ -10,17 +11,20 @@ namespace Pong.Logic
         private readonly IControlMovable LeftRacket;
         private readonly IControlMovable RightRacket;
         private readonly IReadable Keyboard;
+        private readonly Action<PositionTypes> Goal;
         
         /// <summary>
         /// Create physic engine
         /// </summary>
         /// <param name="movables">What you will move</param>
-        public PhysicsEngine(IMovable ball, IControlMovable left, IControlMovable right, IReadable keyboard)
+        public PhysicsEngine(IMovable ball, IControlMovable left, IControlMovable right, IReadable keyboard, Action<PositionTypes> goal)
         {
             Ball = ball;
             LeftRacket = left;
             RightRacket = right;
             Keyboard = keyboard;
+
+            Goal = goal;
         }
 
         /// <summary>
@@ -61,9 +65,15 @@ namespace Pong.Logic
             if (DownRight.Y >= Constants.WindowHeight)
                 ball.SetDirection((float)(-ball.GetDirection()));
             if (UpLeft.X <= 0 - Constants.HorizontalExpand)
-                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+            {
+                //ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+                Goal(PositionTypes.LEFT);
+            }
             if (DownRight.X >= Constants.WindowWidth + Constants.HorizontalExpand)
-                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+            {
+                //ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+                Goal(PositionTypes.RIGHT);
+            }
         }
 
         /// <summary>
