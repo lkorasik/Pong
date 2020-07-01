@@ -1,5 +1,7 @@
-﻿using Pong.Input;
+﻿using Pong.Core;
+using Pong.Input;
 using Pong.Logic;
+using Pong.Models;
 using SFML.Graphics;
 using SFML.Window;
 using System;
@@ -17,12 +19,18 @@ namespace Pong.Output
         private readonly VideoMode VideoMode;
         private readonly List<Drawable> Drawables;
         private readonly PhysicsEngine PhysicEngine;
+        private readonly ISetable KeyboardStat;
+        private readonly Game Game;
 
         /// <summary>
         /// Create window
         /// </summary>
-        public Renderer(PhysicsEngine physicEngine, params Drawable[] drawables)
+        public Renderer(Game game)
         {
+            Game = game;
+
+            KeyboardStat = game.GetKeyboardState;
+
             VideoMode = new VideoMode(Constants.WindowWidth, Constants.WindowHeight);
             Window = new RenderWindow(VideoMode, Constants.WindowTitle);
 
@@ -30,14 +38,9 @@ namespace Pong.Output
             Window.KeyPressed += OnKeyPressed;
             Window.KeyReleased += OnKeyReleased;
 
-            Drawables = new List<Drawable>();
+            Drawables = game.GetDrawables();
 
-            for(int i = 0; i < drawables.Length; i++)
-            {
-                Drawables.Add(drawables[i]);
-            }
-
-            PhysicEngine = physicEngine;
+            PhysicEngine = game.GetPhysicsEngine;
         }
 
         /// <summary>
@@ -54,13 +57,13 @@ namespace Pong.Output
         private void OnKeyPressed(object obj, KeyEventArgs args)
         {
             if (args.Code == Keyboard.Key.S)
-                KeyboardStat.LeftDown = true;
+                KeyboardStat.EnableLeftDown();
             if (args.Code == Keyboard.Key.W)
-                KeyboardStat.LeftUp = true;
+                KeyboardStat.EnableLeftUp();
             if (args.Code == Keyboard.Key.Up)
-                KeyboardStat.RightUp = true;
+                KeyboardStat.EnableRightUp();
             if (args.Code == Keyboard.Key.Down)
-                KeyboardStat.RightDown = true;
+                KeyboardStat.EnableRightDown();
         }
 
         /// <summary>
@@ -68,14 +71,17 @@ namespace Pong.Output
         /// </summary>
         private void OnKeyReleased(object obj, KeyEventArgs args)
         {
+            if (args.Code == Keyboard.Key.Space)
+                //KeyboardStat.ToggleSpace();
+                Game.TogglePause();
             if (args.Code == Keyboard.Key.S)
-                KeyboardStat.LeftDown = false;
+                KeyboardStat.DisableLeftDown();
             if (args.Code == Keyboard.Key.W)
-                KeyboardStat.LeftUp = false;
+                KeyboardStat.DisableLeftUp();
             if (args.Code == Keyboard.Key.Up)
-                KeyboardStat.RightUp = false;
+                KeyboardStat.DisableRightUp();
             if (args.Code == Keyboard.Key.Down)
-                KeyboardStat.RightDown = false;
+                KeyboardStat.DisableRightDown();
         }
 
         /// <summary>
@@ -87,7 +93,8 @@ namespace Pong.Output
             {
                 Thread.Sleep(15);
 
-                PhysicEngine.MakeStep();
+                if (Game.GetGameStat == GameStats.PLAY)
+                    PhysicEngine.MakeStep();
 
                 Window.DispatchEvents();
                 Window.Clear(Color.Black);
@@ -97,6 +104,19 @@ namespace Pong.Output
                 }
                 Window.Display();
             }
+        }
+
+        /// <summary>
+        /// Draw frized screen. Use it when game at pause
+        /// </summary>
+        public void DrawFirstFrame()
+        {
+            Window.Clear(Color.Black);
+            for (int i = 0; i < Drawables.Count; i++)
+            {
+                Window.Draw(Drawables[i]);
+            }
+            Window.Display();
         }
     }
 }

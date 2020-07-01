@@ -9,16 +9,18 @@ namespace Pong.Logic
         private readonly IMovable Ball;
         private readonly IControlMovable LeftRacket;
         private readonly IControlMovable RightRacket;
+        private readonly IReadable Keyboard;
         
         /// <summary>
         /// Create physic engine
         /// </summary>
         /// <param name="movables">What you will move</param>
-        public PhysicsEngine(IMovable ball, IControlMovable left, IControlMovable right)
+        public PhysicsEngine(IMovable ball, IControlMovable left, IControlMovable right, IReadable keyboard)
         {
             Ball = ball;
             LeftRacket = left;
             RightRacket = right;
+            Keyboard = keyboard;
         }
 
         /// <summary>
@@ -26,13 +28,13 @@ namespace Pong.Logic
         /// </summary>
         public void MakeStep()
         {
-            if (KeyboardStat.LeftUp)
+            if (Keyboard.GetLeftUp())
                 LeftRacket.Move(0, -2);
-            if (KeyboardStat.LeftDown)
+            if (Keyboard.GetLeftDown())
                 LeftRacket.Move(0, 2);
-            if (KeyboardStat.RightUp)
+            if (Keyboard.GetRightUp())
                 RightRacket.Move(0, -2);
-            if (KeyboardStat.RightDown)
+            if (Keyboard.GetRightDown())
                 RightRacket.Move(0, 2);
 
             LeftRacket.DebugPrintPosition();
@@ -40,7 +42,7 @@ namespace Pong.Logic
             Ball.DebugPrintPosition();
 
             CheckCollisionsBallWall(Ball);
-            CheckCollisionsBallWithRackets(Ball, LeftRacket, RightRacket);
+            CheckCollisionsBallWithRackets(Ball);
 
             Ball.Move();
         }
@@ -58,9 +60,9 @@ namespace Pong.Logic
                 ball.SetDirection((float)(-ball.GetDirection()));
             if (DownRight.Y >= Constants.WindowHeight)
                 ball.SetDirection((float)(-ball.GetDirection()));
-            if (UpLeft.X <= 0)
+            if (UpLeft.X <= 0 - Constants.HorizontalExpand)
                 ball.SetDirection((float)(Math.PI - ball.GetDirection()));
-            if (DownRight.X >= Constants.WindowWidth)
+            if (DownRight.X >= Constants.WindowWidth + Constants.HorizontalExpand)
                 ball.SetDirection((float)(Math.PI - ball.GetDirection()));
         }
 
@@ -68,7 +70,7 @@ namespace Pong.Logic
         /// Collisions between rackets and ball
         /// </summary>
         /// <param name="obj">Ball</param>
-        private void CheckCollisionsBallWithRackets(IMovable ball, IMovable leftRacket, IMovable rightRight)
+        private void CheckCollisionsBallWithRackets(IMovable ball)
         {
             var ballUpLeft = ball.GetUpLeftPoint();
             var ballDownRight = ball.GetDownRightPoint();
@@ -106,5 +108,4 @@ namespace Pong.Logic
                 ball.SetDirection((float)(-ball.GetDirection()));
         }
     }
-
 }

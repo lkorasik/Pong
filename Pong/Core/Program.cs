@@ -2,6 +2,9 @@
 using Pong.Output;
 using Pong.Models;
 using Pong.Logic;
+using Pong.Input;
+using Pong.Core;
+using System.IO;
 
 namespace Pong
 {
@@ -15,14 +18,13 @@ namespace Pong
         /// </summary>
         static void Main(string[] args)
         {
-            var ball = new Ball();
-            var leftRacket = new Racket(RacketTypes.LEFT);
-            var rightRacket = new Racket(RacketTypes.RIGHT);
+            var keyboardState = KeyboardState.GetInstance;
 
-            var physicEngine = new PhysicsEngine(ball, leftRacket, rightRacket);
+            var game = new Game(keyboardState);
 
-            var renderer = new Renderer(physicEngine, ball, leftRacket, rightRacket);
+            var renderer = new Renderer(game);
             renderer.StartDrawing();
+            //renderer.DrawFirstFrame();
         }
     }
 }

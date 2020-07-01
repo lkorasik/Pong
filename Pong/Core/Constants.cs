@@ -1,4 +1,7 @@
-﻿namespace Pong
+﻿using System;
+using System.IO;
+
+namespace Pong
 {
     /// <summary>
     /// Все постоянные значения
@@ -13,5 +16,7 @@
 
         public const float LeftRacketPositionX = 10;
         public const float RightRacketPositionX = WindowWidth - 20;
+
+        public static string FullPathToFontFile = Path.Combine(Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory))), "Resources"), "arial.ttf");
     }
 }
