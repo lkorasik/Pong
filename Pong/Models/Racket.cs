@@ -1,10 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Net;
-using System.Text;
 
 namespace Pong.Models
 {
@@ -15,8 +12,6 @@ namespace Pong.Models
         private int Width;
         private int Height;
         private RectangleShape RacketView;
-        private float dx;
-        private float dy;
         private RacketTypes Type;
         private RacketMovements Movement;
 
@@ -95,24 +90,6 @@ namespace Pong.Models
         }
 
         /// <summary>
-        /// Get horizontal shift
-        /// </summary>
-        /// <returns>Shift</returns>
-        public float GetDx()
-        {
-            return dx;
-        }
-
-        /// <summary>
-        /// Get vertical shift
-        /// </summary>
-        /// <returns>Shift</returns>
-        public float GetDy()
-        {
-            return dy;
-        }
-
-        /// <summary>
         /// Get the state of movement
         /// </summary>
         /// <returns></returns>
@@ -164,24 +141,6 @@ namespace Pong.Models
         public void SetDirection(float angle)
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Set horizontal shift
-        /// </summary>
-        /// <param name="dx">Shift</param>
-        public void SetDx(float dx)
-        {
-            this.dx = dx;
-        }
-
-        /// <summary>
-        /// Set vertical shift
-        /// </summary>
-        /// <param name="dy">Shift</param>
-        public void SetDy(float dy)
-        {
-            this.dy = dy;
         }
 
         /// <summary>

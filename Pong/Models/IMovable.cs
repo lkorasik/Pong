@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
 
 namespace Pong.Models
 {
@@ -10,7 +7,6 @@ namespace Pong.Models
     /// </summary>
     interface IMovable
     {
-        void Move(float dx, float dy);
         void Move();
         RectangleF GetBorder();
         void DebugPrintPosition();
@@ -19,11 +15,6 @@ namespace Pong.Models
         PointF GetUpRightPoint();
         PointF GetDownLeftPoint();
         PointF GetDownRightPoint();
-
-        void SetDx(float dx);
-        void SetDy(float dy);
-        float GetDx();
-        float GetDy();
 
         void SetDirection(float angle);
         float GetDirection();

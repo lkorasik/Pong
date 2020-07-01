@@ -1,9 +1,4 @@
-﻿using SFML.Window;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pong.Input
+﻿namespace Pong.Input
 {
     /// <summary>
     /// Save key states

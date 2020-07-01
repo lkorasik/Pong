@@ -1,8 +1,6 @@
 ﻿using Pong.Input;
 using Pong.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pong.Logic
 {
@@ -44,7 +42,6 @@ namespace Pong.Logic
             CheckCollisionsBallWall(Ball);
             CheckCollisionsBallWithRackets(Ball, LeftRacket, RightRacket);
 
-            //Ball.Move(Ball.GetDx(), Ball.GetDy());
             Ball.Move();
         }
 
@@ -110,10 +107,4 @@ namespace Pong.Logic
         }
     }
 
-    enum Movements
-    {
-        UP,
-        NONE,
-        DOWN
-    }
 }

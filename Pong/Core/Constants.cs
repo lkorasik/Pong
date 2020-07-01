@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pong
+﻿namespace Pong
 {
     /// <summary>
     /// Все постоянные значения
@@ -12,6 +8,8 @@ namespace Pong
         public const int WindowWidth = 600;
         public const int WindowHeight = 300;
         public const string WindowTitle = "Pong!";
+
+        public const int HorizontalExpand = 10;
 
         public const float LeftRacketPositionX = 10;
         public const float RightRacketPositionX = WindowWidth - 20;
