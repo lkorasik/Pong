@@ -19,12 +19,15 @@ namespace Pong.Output
         private readonly List<Drawable> Drawables;
         private readonly PhysicsEngine PhysicEngine;
         private readonly ISetable KeyboardStat;
+        private readonly Game Game;
 
         /// <summary>
         /// Create window
         /// </summary>
         public Renderer(Game game)
         {
+            Game = game;
+
             KeyboardStat = game.GetKeyboardState;
 
             VideoMode = new VideoMode(Constants.WindowWidth, Constants.WindowHeight);
@@ -68,7 +71,8 @@ namespace Pong.Output
         private void OnKeyReleased(object obj, KeyEventArgs args)
         {
             if (args.Code == Keyboard.Key.Space)
-                KeyboardStat.ToggleSpace();
+                //KeyboardStat.ToggleSpace();
+                Game.TogglePause();
             if (args.Code == Keyboard.Key.S)
                 KeyboardStat.DisableLeftDown();
             if (args.Code == Keyboard.Key.W)
@@ -88,7 +92,7 @@ namespace Pong.Output
             {
                 Thread.Sleep(15);
 
-                if (KeyboardStat.GetSpace())
+                if (Game.GetGameStat == GameStats.PLAY)
                     PhysicEngine.MakeStep();
 
                 Window.DispatchEvents();
@@ -101,6 +105,9 @@ namespace Pong.Output
             }
         }
 
+        /// <summary>
+        /// Draw frized screen. Use it when game at pause
+        /// </summary>
         public void DrawFirstFrame()
         {
             Window.Clear(Color.Black);

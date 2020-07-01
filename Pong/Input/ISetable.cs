@@ -15,9 +15,5 @@ namespace Pong.Input
         void DisableLeftDown();
         void DisableRightUp();
         void DisableRightDown();
-
-        void ToggleSpace();
-
-        bool GetSpace();
     }
 }

@@ -42,7 +42,7 @@ namespace Pong.Logic
             Ball.DebugPrintPosition();
 
             CheckCollisionsBallWall(Ball);
-            CheckCollisionsBallWithRackets(Ball, LeftRacket, RightRacket);
+            CheckCollisionsBallWithRackets(Ball);
 
             Ball.Move();
         }
@@ -70,7 +70,7 @@ namespace Pong.Logic
         /// Collisions between rackets and ball
         /// </summary>
         /// <param name="obj">Ball</param>
-        private void CheckCollisionsBallWithRackets(IMovable ball, IMovable leftRacket, IMovable rightRight)
+        private void CheckCollisionsBallWithRackets(IMovable ball)
         {
             var ballUpLeft = ball.GetUpLeftPoint();
             var ballDownRight = ball.GetDownRightPoint();

@@ -15,7 +15,8 @@ namespace Pong.Core
         private readonly Racket RightRacket;
         private readonly PhysicsEngine PhysicsEngine;
         private readonly KeyboardState KeyboardState;
-        private readonly GameStats GameStat;
+        private GameStats GameStat;
+
         public Ball GetBall => Ball;
         public Racket GetLeftRacket => LeftRacket;
         public Racket GetRightRacket => RightRacket;
@@ -23,6 +24,10 @@ namespace Pong.Core
         public KeyboardState GetKeyboardState => KeyboardState;
         public GameStats GetGameStat => GameStat;
 
+        /// <summary>
+        /// Create game
+        /// </summary>
+        /// <param name="keyboardState">Keyboard</param>
         public Game(KeyboardState keyboardState)
         {
             Ball = new Ball();
@@ -35,9 +40,21 @@ namespace Pong.Core
             PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState);
         }
 
+        /// <summary>
+        /// Get list of drawables things
+        /// </summary>
+        /// <returns>List</returns>
         public List<Drawable> GetDrawables()
         {
             return new List<Drawable>() { Ball, LeftRacket, RightRacket };
+        }
+
+        public void TogglePause()
+        {
+            if (GameStat == GameStats.PLAY)
+                GameStat = GameStats.PAUSE;
+            else
+                GameStat = GameStats.PLAY;
         }
     }
 
