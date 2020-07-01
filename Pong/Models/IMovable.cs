@@ -8,12 +8,9 @@ namespace Pong.Models
     interface IMovable
     {
         void Move();
-        RectangleF GetBorder();
         void DebugPrintPosition();
 
         PointF GetUpLeftPoint();
-        PointF GetUpRightPoint();
-        PointF GetDownLeftPoint();
         PointF GetDownRightPoint();
 
         void SetDirection(float angle);

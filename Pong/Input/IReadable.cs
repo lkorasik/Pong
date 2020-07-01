@@ -10,6 +10,5 @@ namespace Pong.Input
         bool GetLeftDown();
         bool GetRightUp();
         bool GetRightDown();
-        bool GetSpace();
     }
 }

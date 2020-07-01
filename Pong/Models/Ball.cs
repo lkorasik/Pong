@@ -67,15 +67,6 @@ namespace Pong.Models
         }
 
         /// <summary>
-        /// Get ball's border
-        /// </summary>
-        /// <returns>Rectangle</returns>
-        public RectangleF GetBorder()
-        {
-            return new RectangleF(X, Y, Width, Height);
-        }
-
-        /// <summary>
         /// Print position
         /// </summary>
         public void DebugPrintPosition()
@@ -90,24 +81,6 @@ namespace Pong.Models
         public PointF GetUpLeftPoint()
         {
             return new PointF(X, Y);
-        }
-
-        /// <summary>
-        /// Up Right corner
-        /// </summary>
-        /// <returns>PointF</returns>
-        public PointF GetUpRightPoint()
-        {
-            return new PointF(X + Width, Y);
-        }
-        
-        /// <summary>
-        /// Left Down corner
-        /// </summary>
-        /// <returns>PointF</returns>
-        public PointF GetDownLeftPoint()
-        {
-            return new PointF(X, Y + Height);
         }
 
         /// <summary>
@@ -137,6 +110,9 @@ namespace Pong.Models
             return Direction;
         }
 
+        /// <summary>
+        /// Return ball to center
+        /// </summary>
         public void ResetPosition()
         {
             X = StartX;

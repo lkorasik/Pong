@@ -57,6 +57,9 @@ namespace Pong.Core
             return new List<Drawable>() { Ball, LeftRacket, RightRacket, LeftCounter, RightCounter };
         }
 
+        /// <summary>
+        /// toggling between game and pause
+        /// </summary>
         public void TogglePause()
         {
             if (GameStat == GameStats.PLAY)
@@ -65,21 +68,19 @@ namespace Pong.Core
                 GameStat = GameStats.PLAY;
         }
 
+        /// <summary>
+        /// Call this method when someone get a score point
+        /// </summary>
+        /// <param name="side">Which gates hit</param>
         public void Goal(PositionTypes side)
         {
             if (side == PositionTypes.LEFT)
                 RightCounter.Increase();
             else
                 LeftCounter.Increase();
-
+            
             Ball.ResetPosition();
             GameStat = GameStats.PAUSE;
         }
-    }
-
-    enum GameStats
-    {
-        PLAY, 
-        PAUSE
     }
 }

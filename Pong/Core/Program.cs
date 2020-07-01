@@ -24,7 +24,6 @@ namespace Pong
 
             var renderer = new Renderer(game);
             renderer.StartDrawing();
-            //renderer.DrawFirstFrame();
         }
     }
 }

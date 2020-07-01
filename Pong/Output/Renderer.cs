@@ -109,7 +109,7 @@ namespace Pong.Output
         /// <summary>
         /// Draw frized screen. Use it when game at pause
         /// </summary>
-        public void DrawFirstFrame()
+        public void DrawSingleFrame()
         {
             Window.Clear(Color.Black);
             for (int i = 0; i < Drawables.Count; i++)
