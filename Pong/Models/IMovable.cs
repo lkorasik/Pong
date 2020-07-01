@@ -11,6 +11,7 @@ namespace Pong.Models
     interface IMovable
     {
         void Move(float dx, float dy);
+        void Move();
         RectangleF GetBorder();
         void DebugPrintPosition();
 
@@ -23,5 +24,8 @@ namespace Pong.Models
         void SetDy(float dy);
         float GetDx();
         float GetDy();
+
+        void SetDirection(float angle);
+        float GetDirection();
     }
 }

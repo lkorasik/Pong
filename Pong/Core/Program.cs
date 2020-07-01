@@ -23,6 +23,7 @@ namespace Pong
         /// </summary>
         static void Main(string[] args)
         {
+            Console.WriteLine("Start");
             var ball = new Ball();
             var leftRacket = new Racket(RacketTypes.LEFT);
             var rightRacket = new Racket(RacketTypes.RIGHT);

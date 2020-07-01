@@ -71,6 +71,11 @@ namespace Pong.Models
             return new RectangleF(X, Y, Width, Height);
         }
 
+        public float GetDirection()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Left Down corner
         /// </summary>
@@ -139,12 +144,26 @@ namespace Pong.Models
         /// </summary>
         /// <param name="dx">steps on axis x</param>
         /// <param name="dy">steps on axis y</param>
+        [Obsolete]
         public void Move(float dx, float dy)
         {
             //X += dx;
             if((Y + dy > 10) && (Y + dy < Constants.WindowHeight - 10 - Height))
                 Y += dy;
             RacketView.Position = new Vector2f(X, Y);
+        }
+
+        /// <summary>
+        /// Move racket
+        /// </summary>
+        public void Move()
+        {
+
+        }
+
+        public void SetDirection(float angle)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

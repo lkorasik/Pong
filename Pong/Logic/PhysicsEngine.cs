@@ -8,15 +8,15 @@ namespace Pong.Logic
 {
     class PhysicsEngine
     {
-        private readonly Ball Ball;
-        private readonly Racket LeftRacket;
-        private readonly Racket RightRacket;
+        private readonly IMovable Ball;
+        private readonly IControlMovable LeftRacket;
+        private readonly IControlMovable RightRacket;
         
         /// <summary>
         /// Create physic engine
         /// </summary>
         /// <param name="movables">What you will move</param>
-        public PhysicsEngine(Ball ball, Racket left, Racket right)
+        public PhysicsEngine(IMovable ball, IControlMovable left, IControlMovable right)
         {
             Ball = ball;
             LeftRacket = left;
@@ -44,7 +44,8 @@ namespace Pong.Logic
             CheckCollisionsBallWall(Ball);
             CheckCollisionsBallWithRackets(Ball, LeftRacket, RightRacket);
 
-            Ball.Move(Ball.GetDx(), Ball.GetDy());
+            //Ball.Move(Ball.GetDx(), Ball.GetDy());
+            Ball.Move();
         }
 
         /// <summary>
@@ -57,14 +58,13 @@ namespace Pong.Logic
             var DownRight = ball.GetDownRightPoint();
 
             if (UpLeft.Y <= 0)
-                ball.SetDy(ball.GetDy() * -1);
+                ball.SetDirection((float)(-ball.GetDirection()));
             if (DownRight.Y >= Constants.WindowHeight)
-                ball.SetDy(ball.GetDy() * -1);
-
+                ball.SetDirection((float)(-ball.GetDirection()));
             if (UpLeft.X <= 0)
-                ball.SetDx(ball.GetDx() * -1);
+                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
             if (DownRight.X >= Constants.WindowWidth)
-                ball.SetDx(ball.GetDx() * -1);
+                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Pong.Logic
             var inHorizontalLeftRange = (leftDownRight.X > ballUpLeft.X) && (ballDownRight.X > leftUpLeft.X);
             
             if (inVerticalLeftRange && (leftLeftConnect || leftRightConnect))
-                ball.SetDx(ball.GetDx() * -1);
+                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
             if (inHorizontalLeftRange && (leftUpConnect || leftDownConnect))
-                ball.SetDy(ball.GetDy() * -1);
+                ball.SetDirection((float)(-ball.GetDirection()));
 
             var rightUpConnect = Math.Abs(rightUpLeft.Y - ballDownRight.Y) < 0.5;
             var rightDownConnect = Math.Abs(rightDownRight.Y - ballUpLeft.Y) < 0.5;
@@ -104,9 +104,9 @@ namespace Pong.Logic
             var inHorizontalRightRange = (rightDownRight.X > ballUpLeft.X) && (ballDownRight.X > rightUpLeft.X);
 
             if (inVerticalRightRange && (rightLeftConnect || rightRightConnect))
-                ball.SetDx(ball.GetDx() * -1);
+                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
             if (inHorizontalRightRange && (rightUpConnect || rightDownConnect))
-                ball.SetDy(ball.GetDy() * -1);
+                ball.SetDirection((float)(-ball.GetDirection()));
         }
     }
 
