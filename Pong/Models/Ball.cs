@@ -10,7 +10,7 @@ namespace Pong.Models
     /// <summary>
     /// Create ball
     /// </summary>
-    class Ball : Drawable, IMovable
+    class Ball : Drawable, IBall
     {
         private float X;
         private float Y;

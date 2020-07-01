@@ -60,12 +60,6 @@ namespace Pong.Models
             RacketView.Draw(target, states);
         }
 
-        //REMOVE
-        public float GetDirection()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Right Down corner
         /// </summary>
@@ -112,12 +106,6 @@ namespace Pong.Models
         public void Move()
         {
 
-        }
-
-        //REMOVE
-        public void SetDirection(float angle)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

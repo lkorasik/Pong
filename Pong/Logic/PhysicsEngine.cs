@@ -7,7 +7,7 @@ namespace Pong.Logic
 {
     class PhysicsEngine
     {
-        private readonly IMovable Ball;
+        private readonly IBall Ball;
         private readonly IControlMovable LeftRacket;
         private readonly IControlMovable RightRacket;
         private readonly IReadable Keyboard;
@@ -17,7 +17,7 @@ namespace Pong.Logic
         /// Create physic engine
         /// </summary>
         /// <param name="movables">What you will move</param>
-        public PhysicsEngine(IMovable ball, IControlMovable left, IControlMovable right, IReadable keyboard, Action<PositionTypes> goal)
+        public PhysicsEngine(IBall ball, IControlMovable left, IControlMovable right, IReadable keyboard, Action<PositionTypes> goal)
         {
             Ball = ball;
             LeftRacket = left;
@@ -55,7 +55,7 @@ namespace Pong.Logic
         /// Collisions between wall and ball
         /// </summary>
         /// <param name="ball">Ball</param>
-        private void CheckCollisionsBallWall(IMovable ball)
+        private void CheckCollisionsBallWall(IBall ball)
         {
             var UpLeft = ball.GetUpLeftPoint();
             var DownRight = ball.GetDownRightPoint();
@@ -80,7 +80,7 @@ namespace Pong.Logic
         /// Collisions between rackets and ball
         /// </summary>
         /// <param name="obj">Ball</param>
-        private void CheckCollisionsBallWithRackets(IMovable ball)
+        private void CheckCollisionsBallWithRackets(IBall ball)
         {
             var ballUpLeft = ball.GetUpLeftPoint();
             var ballDownRight = ball.GetDownRightPoint();

@@ -12,7 +12,10 @@ namespace Pong.Models
 
         PointF GetUpLeftPoint();
         PointF GetDownRightPoint();
+    }
 
+    interface IBall: IMovable
+    {
         void SetDirection(float angle);
         float GetDirection();
     }
