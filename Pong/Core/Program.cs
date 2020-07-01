@@ -1,12 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using SFML.Graphics;
-using SFML.Window;
-using SFML.System;
-using System;
-using System.Collections.Generic;
-using System.Reflection.PortableExecutable;
-using System.Runtime.InteropServices;
-using System.Threading;
+﻿using System;
 using Pong.Output;
 using Pong.Models;
 using Pong.Logic;

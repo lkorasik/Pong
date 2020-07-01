@@ -1,10 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Net;
-using System.Text;
 
 namespace Pong.Models
 {
@@ -15,8 +12,6 @@ namespace Pong.Models
         private int Width;
         private int Height;
         private RectangleShape RacketView;
-        private float dx;
-        private float dy;
         private RacketTypes Type;
         private RacketMovements Movement;
 
@@ -71,6 +66,11 @@ namespace Pong.Models
             return new RectangleF(X, Y, Width, Height);
         }
 
+        public float GetDirection()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Left Down corner
         /// </summary>
@@ -87,24 +87,6 @@ namespace Pong.Models
         public PointF GetDownRightPoint()
         {
             return new PointF(X + Width, Y + Height);
-        }
-
-        /// <summary>
-        /// Get horizontal shift
-        /// </summary>
-        /// <returns>Shift</returns>
-        public float GetDx()
-        {
-            return dx;
-        }
-
-        /// <summary>
-        /// Get vertical shift
-        /// </summary>
-        /// <returns>Shift</returns>
-        public float GetDy()
-        {
-            return dy;
         }
 
         /// <summary>
@@ -139,6 +121,7 @@ namespace Pong.Models
         /// </summary>
         /// <param name="dx">steps on axis x</param>
         /// <param name="dy">steps on axis y</param>
+        [Obsolete]
         public void Move(float dx, float dy)
         {
             //X += dx;
@@ -148,21 +131,16 @@ namespace Pong.Models
         }
 
         /// <summary>
-        /// Set horizontal shift
+        /// Move racket
         /// </summary>
-        /// <param name="dx">Shift</param>
-        public void SetDx(float dx)
+        public void Move()
         {
-            this.dx = dx;
+
         }
 
-        /// <summary>
-        /// Set vertical shift
-        /// </summary>
-        /// <param name="dy">Shift</param>
-        public void SetDy(float dy)
+        public void SetDirection(float angle)
         {
-            this.dy = dy;
+            throw new NotImplementedException();
         }
 
         /// <summary>

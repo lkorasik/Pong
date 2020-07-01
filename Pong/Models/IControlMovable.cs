@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pong.Models
+﻿namespace Pong.Models
 {
     /// <summary>
     /// Use this interface if you want to move object by yourself
     /// </summary>
     interface IControlMovable : IMovable
     {
+        void Move(float dx, float dy);
         void SetMovement(RacketMovements movement);
         RacketMovements GetMovement();
     }

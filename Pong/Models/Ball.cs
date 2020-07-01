@@ -1,10 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection.Metadata;
-using System.Text;
 using SFMLColor = SFML.Graphics.Color;
 
 namespace Pong.Models
@@ -19,8 +16,9 @@ namespace Pong.Models
         private int Width;
         private int Height;
         private RectangleShape BallView;
-        private float dx;
-        private float dy;
+        private float Direction;
+        private float Speed;
+        private Vector2f MoveVector;
 
         /// <summary>
         /// Create ball
@@ -37,8 +35,11 @@ namespace Pong.Models
             BallView.Position = new Vector2f(X, Y);
             BallView.FillColor = SFMLColor.White;
 
-            dx = 1;
-            dy = 1;
+            Speed = 1;
+            Direction = (float) Math.PI/4;
+            MoveVector = new Vector2f((float)(Speed * Math.Cos(Direction)), (float)(Speed * Math.Sin(Direction)));
+
+            Console.WriteLine("Ball inited");
         }
 
         /// <summary>
@@ -52,12 +53,10 @@ namespace Pong.Models
         /// <summary>
         /// Move ball
         /// </summary>
-        /// <param name="dx">steps on axis x</param>
-        /// <param name="dy">steps on axis y</param>
-        public void Move(float dx, float dy)
+        public void Move()
         {
-            X += dx;
-            Y += dy;
+            X += (float)(Speed * Math.Cos(Direction));
+            Y += (float)(Speed * Math.Sin(Direction));
             BallView.Position = new Vector2f(X, Y);
         }
 
@@ -95,7 +94,7 @@ namespace Pong.Models
         {
             return new PointF(X + Width, Y);
         }
-
+        
         /// <summary>
         /// Left Down corner
         /// </summary>
@@ -115,39 +114,21 @@ namespace Pong.Models
         }
 
         /// <summary>
-        /// Set horizontal shift
+        /// Set Direction
         /// </summary>
-        /// <param name="dx">Shift</param>
-        public void SetDx(float dx)
+        /// <param name="angle">Angle</param>
+        public void SetDirection(float angle)
         {
-            this.dx = dx;
+            Direction = angle;
         }
 
         /// <summary>
-        /// Set vertical shift
+        /// Get Direction
         /// </summary>
-        /// <param name="dy">Shift</param>
-        public void SetDy(float dy)
+        /// <returns>Angle</returns>
+        public float GetDirection()
         {
-            this.dy = dy;
-        }
-
-        /// <summary>
-        /// Get horizontal shift
-        /// </summary>
-        /// <returns>Shift</returns>
-        public float GetDx()
-        {
-            return dx;
-        }
-
-        /// <summary>
-        /// Get vertical shift
-        /// </summary>
-        /// <returns>Shift</returns>
-        public float GetDy()
-        {
-            return dy;
+            return Direction;
         }
     }
 }
