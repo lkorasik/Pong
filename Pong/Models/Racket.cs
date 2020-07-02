@@ -5,6 +5,9 @@ using System.Drawing;
 
 namespace Pong.Models
 {
+    /// <summary>
+    /// The Rectangle that beats the ball
+    /// </summary>
     class Racket: Drawable, IMovable, IControlMovable
     {
         private float X;
@@ -14,6 +17,9 @@ namespace Pong.Models
         private RectangleShape RacketView;
         private PositionTypes Type;
         private RacketMovements Movement;
+        private float StartX;
+        private float StartY;
+        private Texture RacketTexture;
 
         /// <summary>
         /// Create racket
@@ -29,9 +35,13 @@ namespace Pong.Models
                 X = Constants.RightRacketPositionX;
             Y = Constants.WindowHeight / 2 - Height / 2;
 
+            StartX = X;
+            StartY = Y;
+
             RacketView = new RectangleShape(new Vector2f(Width, Height));
-            RacketView.FillColor = SFML.Graphics.Color.White;
             RacketView.Position = new Vector2f(X, Y);
+            RacketTexture = new Texture(Constants.FullPathToBallBack);
+            RacketView.Texture = RacketTexture;
 
             Type = type;
 
@@ -55,29 +65,6 @@ namespace Pong.Models
         public void Draw(RenderTarget target, RenderStates states)
         {
             RacketView.Draw(target, states);
-        }
-
-        /// <summary>
-        /// Get ball's border
-        /// </summary>
-        /// <returns>Rectangle</returns>
-        public RectangleF GetBorder()
-        {
-            return new RectangleF(X, Y, Width, Height);
-        }
-
-        public float GetDirection()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Left Down corner
-        /// </summary>
-        /// <returns>PointF</returns>
-        public PointF GetDownLeftPoint()
-        {
-            return new PointF(X, Y + Height);
         }
 
         /// <summary>
@@ -108,20 +95,10 @@ namespace Pong.Models
         }
 
         /// <summary>
-        /// Up Right corner
-        /// </summary>
-        /// <returns>PointF</returns>
-        public PointF GetUpRightPoint()
-        {
-            return new PointF(X + Width, Y);
-        }
-
-        /// <summary>
         /// Move racket
         /// </summary>
         /// <param name="dx">steps on axis x</param>
         /// <param name="dy">steps on axis y</param>
-        [Obsolete]
         public void Move(float dx, float dy)
         {
             //X += dx;
@@ -138,11 +115,6 @@ namespace Pong.Models
 
         }
 
-        public void SetDirection(float angle)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Set move state
         /// </summary>
@@ -150,6 +122,16 @@ namespace Pong.Models
         public void SetMovement(RacketMovements movement)
         {
             Movement = movement;
+        }
+
+        /// <summary>
+        /// Return racket to center
+        /// </summary>
+        public void ResetPosition()
+        {
+            X = StartX;
+            Y = StartY;
+            RacketView.Position = new Vector2f(X, Y);
         }
     }
     

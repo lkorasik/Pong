@@ -17,9 +17,10 @@ namespace Pong.Output
     {
         private readonly RenderWindow Window;
         private readonly VideoMode VideoMode;
-        private readonly List<Drawable> Drawables;
+        private List<Drawable> Drawables;
         private readonly PhysicsEngine PhysicEngine;
-        private readonly ISetable KeyboardStat;
+        private readonly IKeyboardSetable KeyboardStat;
+        private readonly MouseState MouseState;
         private readonly Game Game;
 
         /// <summary>
@@ -30,6 +31,7 @@ namespace Pong.Output
             Game = game;
 
             KeyboardStat = game.GetKeyboardState;
+            MouseState = game.GetMouseState;
 
             VideoMode = new VideoMode(Constants.WindowWidth, Constants.WindowHeight);
             Window = new RenderWindow(VideoMode, Constants.WindowTitle);
@@ -37,6 +39,8 @@ namespace Pong.Output
             Window.Closed += OnClose;
             Window.KeyPressed += OnKeyPressed;
             Window.KeyReleased += OnKeyReleased;
+            Window.MouseButtonPressed += OnMousePressed;
+            Window.MouseButtonReleased += OnMouseReleased;
 
             Drawables = game.GetDrawables();
 
@@ -72,7 +76,6 @@ namespace Pong.Output
         private void OnKeyReleased(object obj, KeyEventArgs args)
         {
             if (args.Code == Keyboard.Key.Space)
-                //KeyboardStat.ToggleSpace();
                 Game.TogglePause();
             if (args.Code == Keyboard.Key.S)
                 KeyboardStat.DisableLeftDown();
@@ -85,6 +88,24 @@ namespace Pong.Output
         }
 
         /// <summary>
+        /// Listen mouse
+        /// </summary>
+        private void OnMousePressed(object sender, MouseButtonEventArgs args)
+        {
+            if (args.Button == Mouse.Button.Left)
+                Game.MousePress(args.X, args.Y);
+        }
+
+        /// <summary>
+        /// Listen mouse
+        /// </summary>
+        private void OnMouseReleased(object sender, MouseButtonEventArgs args)
+        {
+            if (args.Button == Mouse.Button.Left)
+                Game.MouseRelease(args.X, args.Y);
+        }
+
+        /// <summary>
         /// Drawing loop
         /// </summary>
         public void StartDrawing()
@@ -93,9 +114,12 @@ namespace Pong.Output
             {
                 Thread.Sleep(15);
 
-                if (Game.GetGameStat == GameStats.PLAY)
+                if (Game.GetGameStat == GameStats.PLAY_PLAYER_PLAYER || Game.GetGameStat == GameStats.MENU || Game.GetGameStat == GameStats.PLAY_PLAYER_PC)
+                {
                     PhysicEngine.MakeStep();
-
+                    Drawables = Game.GetDrawables();
+                }
+                    
                 Window.DispatchEvents();
                 Window.Clear(Color.Black);
                 for(int i = 0; i < Drawables.Count; i++)
@@ -109,7 +133,7 @@ namespace Pong.Output
         /// <summary>
         /// Draw frized screen. Use it when game at pause
         /// </summary>
-        public void DrawFirstFrame()
+        public void DrawSingleFrame()
         {
             Window.Clear(Color.Black);
             for (int i = 0; i < Drawables.Count; i++)

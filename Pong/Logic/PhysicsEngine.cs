@@ -1,4 +1,5 @@
-﻿using Pong.Input;
+﻿using Pong.Core;
+using Pong.Input;
 using Pong.Models;
 using System;
 
@@ -6,21 +7,31 @@ namespace Pong.Logic
 {
     class PhysicsEngine
     {
-        private readonly IMovable Ball;
+        private readonly IBall Ball;
         private readonly IControlMovable LeftRacket;
         private readonly IControlMovable RightRacket;
-        private readonly IReadable Keyboard;
+        private readonly IKeyboardReadable Keyboard;
+        private readonly Action<PositionTypes> Goal;
+        private readonly Func<GameStats> GetGameStat;
+        private readonly Bot LeftBot;
+        private readonly Bot RightBot;
         
         /// <summary>
         /// Create physic engine
         /// </summary>
         /// <param name="movables">What you will move</param>
-        public PhysicsEngine(IMovable ball, IControlMovable left, IControlMovable right, IReadable keyboard)
+        public PhysicsEngine(IBall ball, IControlMovable left, IControlMovable right, IKeyboardReadable keyboard, Action<PositionTypes> goal, Func<GameStats> stat, Bot leftBot, Bot rightBot)
         {
             Ball = ball;
             LeftRacket = left;
             RightRacket = right;
             Keyboard = keyboard;
+
+            LeftBot = leftBot;
+            RightBot = rightBot;
+
+            Goal = goal;
+            GetGameStat = stat;
         }
 
         /// <summary>
@@ -28,18 +39,30 @@ namespace Pong.Logic
         /// </summary>
         public void MakeStep()
         {
-            if (Keyboard.GetLeftUp())
-                LeftRacket.Move(0, -2);
-            if (Keyboard.GetLeftDown())
-                LeftRacket.Move(0, 2);
-            if (Keyboard.GetRightUp())
-                RightRacket.Move(0, -2);
-            if (Keyboard.GetRightDown())
-                RightRacket.Move(0, 2);
-
-            LeftRacket.DebugPrintPosition();
-            RightRacket.DebugPrintPosition();
-            Ball.DebugPrintPosition();
+            if (GetGameStat() == GameStats.PLAY_PLAYER_PLAYER)
+            {
+                if (Keyboard.GetLeftUp())
+                    LeftRacket.Move(0, -2);
+                if (Keyboard.GetLeftDown())
+                    LeftRacket.Move(0, 2);
+                if (Keyboard.GetRightUp())
+                    RightRacket.Move(0, -2);
+                if (Keyboard.GetRightDown())
+                    RightRacket.Move(0, 2);
+            }
+            if(GetGameStat() == GameStats.PLAY_PLAYER_PC)
+            {
+                LeftBot.MakeStep(Ball.GetDirection());
+                if (Keyboard.GetRightUp())
+                    RightRacket.Move(0, -2);
+                if (Keyboard.GetRightDown())
+                    RightRacket.Move(0, 2);
+            }
+            if (GetGameStat() == GameStats.MENU)
+            {
+                LeftBot.MakeStep(Ball.GetDirection());
+                RightBot.MakeStep(Ball.GetDirection());
+            }
 
             CheckCollisionsBallWall(Ball);
             CheckCollisionsBallWithRackets(Ball);
@@ -51,7 +74,7 @@ namespace Pong.Logic
         /// Collisions between wall and ball
         /// </summary>
         /// <param name="ball">Ball</param>
-        private void CheckCollisionsBallWall(IMovable ball)
+        private void CheckCollisionsBallWall(IBall ball)
         {
             var UpLeft = ball.GetUpLeftPoint();
             var DownRight = ball.GetDownRightPoint();
@@ -61,16 +84,22 @@ namespace Pong.Logic
             if (DownRight.Y >= Constants.WindowHeight)
                 ball.SetDirection((float)(-ball.GetDirection()));
             if (UpLeft.X <= 0 - Constants.HorizontalExpand)
-                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+            {
+                //ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+                Goal(PositionTypes.LEFT);
+            }
             if (DownRight.X >= Constants.WindowWidth + Constants.HorizontalExpand)
-                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+            {
+                //ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+                Goal(PositionTypes.RIGHT);
+            }
         }
 
         /// <summary>
         /// Collisions between rackets and ball
         /// </summary>
         /// <param name="obj">Ball</param>
-        private void CheckCollisionsBallWithRackets(IMovable ball)
+        private void CheckCollisionsBallWithRackets(IBall ball)
         {
             var ballUpLeft = ball.GetUpLeftPoint();
             var ballDownRight = ball.GetDownRightPoint();

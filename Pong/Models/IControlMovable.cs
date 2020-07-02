@@ -6,7 +6,5 @@
     interface IControlMovable : IMovable
     {
         void Move(float dx, float dy);
-        void SetMovement(RacketMovements movement);
-        RacketMovements GetMovement();
     }
 }

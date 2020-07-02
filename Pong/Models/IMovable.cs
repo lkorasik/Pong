@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using SFML.System;
+using System.Drawing;
 
 namespace Pong.Models
 {
@@ -8,14 +9,17 @@ namespace Pong.Models
     interface IMovable
     {
         void Move();
-        RectangleF GetBorder();
         void DebugPrintPosition();
 
         PointF GetUpLeftPoint();
-        PointF GetUpRightPoint();
-        PointF GetDownLeftPoint();
         PointF GetDownRightPoint();
+    }
 
+    /// <summary>
+    /// Interface for Ball
+    /// </summary>
+    interface IBall: IMovable
+    {
         void SetDirection(float angle);
         float GetDirection();
     }

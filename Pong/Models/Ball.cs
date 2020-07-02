@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using Pong.Core;
+using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Drawing;
@@ -9,16 +10,19 @@ namespace Pong.Models
     /// <summary>
     /// Create ball
     /// </summary>
-    class Ball : Drawable, IMovable
+    class Ball : Drawable, IBall
     {
         private float X;
         private float Y;
+        private readonly float StartX;
+        private readonly float StartY;
         private int Width;
         private int Height;
-        private RectangleShape BallView;
         private float Direction;
         private float Speed;
         private Vector2f MoveVector;
+        private RectangleShape BallView;
+        private Texture BallTexture;
 
         /// <summary>
         /// Create ball
@@ -31,15 +35,16 @@ namespace Pong.Models
             X = Constants.WindowWidth / 2 - Width / 2;
             Y = Constants.WindowHeight / 2 - Height / 2;
 
+            StartX = X;
+            StartY = Y;
+
             BallView = new RectangleShape(new Vector2f(Width, Height));
-            BallView.Position = new Vector2f(X, Y);
-            BallView.FillColor = SFMLColor.White;
+            BallTexture = new Texture(Constants.FullPathToBallBack);
+            BallView.Texture = BallTexture;
 
             Speed = 1;
             Direction = (float) Math.PI/4;
             MoveVector = new Vector2f((float)(Speed * Math.Cos(Direction)), (float)(Speed * Math.Sin(Direction)));
-
-            Console.WriteLine("Ball inited");
         }
 
         /// <summary>
@@ -61,20 +66,11 @@ namespace Pong.Models
         }
 
         /// <summary>
-        /// Get ball's border
-        /// </summary>
-        /// <returns>Rectangle</returns>
-        public RectangleF GetBorder()
-        {
-            return new RectangleF(X, Y, Width, Height);
-        }
-
-        /// <summary>
         /// Print position
         /// </summary>
         public void DebugPrintPosition()
         {
-            Console.WriteLine("Ball X: {0}, Y: {1}", X, Y);
+            //Console.WriteLine("Ball X: {0}, Y: {1}", X, Y);
         }
 
         /// <summary>
@@ -84,24 +80,6 @@ namespace Pong.Models
         public PointF GetUpLeftPoint()
         {
             return new PointF(X, Y);
-        }
-
-        /// <summary>
-        /// Up Right corner
-        /// </summary>
-        /// <returns>PointF</returns>
-        public PointF GetUpRightPoint()
-        {
-            return new PointF(X + Width, Y);
-        }
-        
-        /// <summary>
-        /// Left Down corner
-        /// </summary>
-        /// <returns>PointF</returns>
-        public PointF GetDownLeftPoint()
-        {
-            return new PointF(X, Y + Height);
         }
 
         /// <summary>
@@ -129,6 +107,16 @@ namespace Pong.Models
         public float GetDirection()
         {
             return Direction;
+        }
+
+        /// <summary>
+        /// Return ball to center
+        /// </summary>
+        public void ResetPosition()
+        {
+            X = StartX;
+            Y = StartY;
+            BallView.Position = new Vector2f(X, Y);
         }
     }
 }

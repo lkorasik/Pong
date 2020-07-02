@@ -4,12 +4,11 @@ using System.Text;
 
 namespace Pong.Input
 {
-    interface IReadable
+    interface IKeyboardReadable
     {
         bool GetLeftUp();
         bool GetLeftDown();
         bool GetRightUp();
         bool GetRightDown();
-        bool GetSpace();
     }
 }

@@ -10,13 +10,17 @@ namespace Pong.Models
         private Font Font;
         private PositionTypes PositionType;
 
+        /// <summary>
+        /// Create counter for count score
+        /// </summary>
+        /// <param name="positionTypes">Left or Right</param>
         public Counter(PositionTypes positionTypes)
         {
             Count = 0;
 
             PositionType = positionTypes;
 
-            Font = new Font(Constants.FullPathToFontFile);
+            Font = new Font(Constants.FullPathToFont);
 
             CountView = new Text(Count.ToString(), Font);
             if (PositionType == PositionTypes.LEFT)
@@ -27,6 +31,18 @@ namespace Pong.Models
             CountView.FillColor = Color.Red;
         }
 
+        /// <summary>
+        /// Increase counter
+        /// </summary>
+        public void Increase()
+        {
+            Count++;
+            CountView.DisplayedString = Count.ToString();
+        }
+
+        /// <summary>
+        /// Draw it!
+        /// </summary>
         public void Draw(RenderTarget target, RenderStates states)
         {
             CountView.Draw(target, states);
