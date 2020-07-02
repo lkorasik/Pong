@@ -24,6 +24,7 @@ namespace Pong.Core
         private readonly Bot RightBot;
         private GameStats GameStat;
         private readonly MainMenu MainMenu;
+        private GameStats GameMode;
         public event Action End;
 
         public Board GetBoard => Board;
@@ -38,6 +39,7 @@ namespace Pong.Core
         public Bot GetLeftBot => LeftBot;
         public Bot GetRightBot => RightBot;
         public GameStats GetGameStat => GameStat;
+        public GameStats GetGameMode => GameMode;
         public MainMenu GetMainMenu => MainMenu;
 
         /// <summary>
@@ -59,6 +61,7 @@ namespace Pong.Core
             RightBot = new Bot(RightRacket);
 
             GameStat = GameStats.MENU;
+            GameMode = GameStats.MENU;
 
             PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState, Goal, () => GetGameStat, LeftBot, RightBot);
         }
@@ -72,6 +75,8 @@ namespace Pong.Core
             if (GameStat == GameStats.MENU)
                 return new List<Drawable>() { Board, Ball, LeftRacket, RightRacket, MainMenu };
             if(GameStat == GameStats.PLAY_PLAYER_PLAYER || GameStat == GameStats.PLAY_PLAYER_PC)
+                return new List<Drawable>() { Board, Ball, LeftRacket, RightRacket, LeftCounter, RightCounter };
+            if (GameStat == GameStats.PAUSE)
                 return new List<Drawable>() { Board, Ball, LeftRacket, RightRacket, LeftCounter, RightCounter };
             return null;
         }
@@ -88,10 +93,13 @@ namespace Pong.Core
         /// </summary>
         public void TogglePause()
         {
-            if (GameStat == GameStats.PLAY_PLAYER_PLAYER)
+            if ((GameStat == GameStats.PLAY_PLAYER_PC) || (GameStat == GameStats.PLAY_PLAYER_PLAYER))
+            {
+                GameMode = GameStat;
                 GameStat = GameStats.PAUSE;
+            }
             else if(GameStat == GameStats.PAUSE)
-                GameStat = GameStats.PLAY_PLAYER_PLAYER;
+                GameStat = GameMode;
         }
 
         /// <summary>
@@ -156,13 +164,14 @@ namespace Pong.Core
         /// <param name="side">Which gates hit</param>
         public void Goal(PositionTypes side)
         {
-            if (GameStat == GameStats.PLAY_PLAYER_PLAYER)
+            if (GameStat == GameStats.PLAY_PLAYER_PLAYER || GameStat == GameStats.PLAY_PLAYER_PC)
             {
                 if (side == PositionTypes.LEFT)
                     RightCounter.Increase();
                 else
                     LeftCounter.Increase();
 
+                GameMode = GameStat;
                 GameStat = GameStats.PAUSE;
             }
             

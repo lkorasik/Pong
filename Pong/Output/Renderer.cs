@@ -117,8 +117,9 @@ namespace Pong.Output
                 if (Game.GetGameStat == GameStats.PLAY_PLAYER_PLAYER || Game.GetGameStat == GameStats.MENU || Game.GetGameStat == GameStats.PLAY_PLAYER_PC)
                 {
                     PhysicEngine.MakeStep();
-                    Drawables = Game.GetDrawables();
                 }
+                
+                Drawables = Game.GetDrawables();
                     
                 Window.DispatchEvents();
                 Window.Clear(Color.Black);

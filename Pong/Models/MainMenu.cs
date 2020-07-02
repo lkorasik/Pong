@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Pong.Models
 {
-    class MainMenu: Drawable
+    class MainMenu : Drawable
     {
         private readonly List<Drawable> MenuList;
         private readonly Button PlayerPc;
@@ -71,7 +71,7 @@ namespace Pong.Models
         /// </summary>
         public void Draw(RenderTarget target, RenderStates states)
         {
-            for(int i = 0; i < MenuList.Count; i++)
+            for (int i = 0; i < MenuList.Count; i++)
             {
                 MenuList[i].Draw(target, states);
             }
