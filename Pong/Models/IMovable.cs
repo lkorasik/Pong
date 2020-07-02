@@ -14,6 +14,9 @@ namespace Pong.Models
         PointF GetDownRightPoint();
     }
 
+    /// <summary>
+    /// Interface for Ball
+    /// </summary>
     interface IBall: IMovable
     {
         void SetDirection(float angle);

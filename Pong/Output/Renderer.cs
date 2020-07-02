@@ -87,16 +87,22 @@ namespace Pong.Output
                 KeyboardStat.DisableRightDown();
         }
 
+        /// <summary>
+        /// Listen mouse
+        /// </summary>
         private void OnMousePressed(object sender, MouseButtonEventArgs args)
         {
             if (args.Button == Mouse.Button.Left)
                 Game.MousePress(args.X, args.Y);
         }
 
+        /// <summary>
+        /// Listen mouse
+        /// </summary>
         private void OnMouseReleased(object sender, MouseButtonEventArgs args)
         {
             if (args.Button == Mouse.Button.Left)
-                Game.MouseRelease(args.X, args.Y);
+                Game.MouseRelease();
         }
 
         /// <summary>

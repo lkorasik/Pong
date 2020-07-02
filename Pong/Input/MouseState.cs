@@ -11,6 +11,9 @@ namespace Pong.Input
 
         private bool IsLeft;
 
+        /// <summary>
+        /// Create instance of this class
+        /// </summary>
         private MouseState()
         {
             IsLeft = false;

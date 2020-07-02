@@ -72,10 +72,15 @@ namespace Pong.Core
         {
             if (GameStat == GameStats.PLAY)
                 GameStat = GameStats.PAUSE;
-            else
+            else if(GameStat == GameStats.PAUSE)
                 GameStat = GameStats.PLAY;
         }
 
+        /// <summary>
+        /// Call it when someone hit the mouse!
+        /// </summary>
+        /// <param name="x">Mouse position on X-axis</param>
+        /// <param name="y">Mouse position on Y-axis</param>
         public void MousePress(float x, float y)
         {
             var button = MainMenu.GetClickedButton(x, y);
@@ -97,7 +102,10 @@ namespace Pong.Core
             }
         }
 
-        public void MouseRelease(float x, float y)
+        /// <summary>
+        /// Call it when someone release mouse button
+        /// </summary>
+        public void MouseRelease()
         {
             MainMenu.PlayerPcRelease();
             MainMenu.PcPcRelease();

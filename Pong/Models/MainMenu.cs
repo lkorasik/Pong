@@ -18,6 +18,9 @@ namespace Pong.Models
         private readonly float ButtonHeight = 50;
         private readonly float ButtonSpace = 10;
 
+        /// <summary>
+        /// Create main menu
+        /// </summary>
         public MainMenu()
         {
             MenuHeight = 4 * ButtonHeight + 3 * ButtonSpace;
@@ -30,7 +33,7 @@ namespace Pong.Models
             PlayerPc.SetColorBottomLayer(Color.Blue);
             PlayerPc.AddText("Player vs PC", new Font(Constants.FullPathToFontFile));
             PlayerPc.SetTextSize(17);
-            PlayerPc.SetPosition(TextAlign.CENTER);
+            PlayerPc.SetTextPosition(TextAlign.CENTER);
             PlayerPc.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
@@ -39,7 +42,7 @@ namespace Pong.Models
             PcPc.SetColorBottomLayer(Color.Blue);
             PcPc.AddText("PC vs PC", new Font(Constants.FullPathToFontFile));
             PcPc.SetTextSize(17);
-            PcPc.SetPosition(TextAlign.CENTER);
+            PcPc.SetTextPosition(TextAlign.CENTER);
             PcPc.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
@@ -48,7 +51,7 @@ namespace Pong.Models
             Settings.SetColorBottomLayer(Color.Blue);
             Settings.AddText("Settings", new Font(Constants.FullPathToFontFile));
             Settings.SetTextSize(17);
-            Settings.SetPosition(TextAlign.CENTER);
+            Settings.SetTextPosition(TextAlign.CENTER);
             Settings.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
@@ -57,12 +60,15 @@ namespace Pong.Models
             Exit.SetColorBottomLayer(Color.Blue);
             Exit.AddText("Exit", new Font(Constants.FullPathToFontFile));
             Exit.SetTextSize(17);
-            Exit.SetPosition(TextAlign.CENTER);
+            Exit.SetTextPosition(TextAlign.CENTER);
             Exit.SetTextColor(Color.Yellow);
 
             MenuList = new List<Drawable>() { PlayerPc, PcPc, Settings, Exit };
         }
 
+        /// <summary>
+        /// Draw it!
+        /// </summary>
         public void Draw(RenderTarget target, RenderStates states)
         {
             for(int i = 0; i < MenuList.Count; i++)
@@ -71,6 +77,12 @@ namespace Pong.Models
             }
         }
 
+        /// <summary>
+        /// Call it when someone hit the mouse
+        /// </summary>
+        /// <param name="x">mouse position on X-axis</param>
+        /// <param name="y">mouse position on Y-axis</param>
+        /// <returns>Null if user missed :)</returns>
         public MainMenuButtons? GetClickedButton(float x, float y)
         {
             if (PlayerPc.IsOverButton(x, y))
@@ -84,17 +96,44 @@ namespace Pong.Models
             return null;
         }
 
+        /// <summary>
+        /// Player press on button PlayerPc
+        /// </summary>
         public void PlayerPcPress() => PlayerPc.Press();
+        /// <summary>
+        /// Player press on button PcPc
+        /// </summary>
         public void PcPcPress() => PcPc.Press();
+        /// <summary>
+        /// Player press on button Settings
+        /// </summary>
         public void SettingsPress() => Settings.Press();
+        /// <summary>
+        /// Player press on button Exit
+        /// </summary>
         public void ExitPress() => Exit.Press();
 
+        /// <summary>
+        /// Player release button PlayerPc
+        /// </summary>
         public void PlayerPcRelease() => PlayerPc.Release();
+        /// <summary>
+        /// Player release button PcPc
+        /// </summary>
         public void PcPcRelease() => PcPc.Release();
+        /// <summary>
+        /// Player release button Settings
+        /// </summary>
         public void SettingsRelease() => Settings.Release();
+        /// <summary>
+        /// Player release button Exit
+        /// </summary>
         public void ExitRelease() => Exit.Release();
     }
 
+    /// <summary>
+    /// Buttons in menu
+    /// </summary>
     enum MainMenuButtons
     {
         PLAYER_PC,
