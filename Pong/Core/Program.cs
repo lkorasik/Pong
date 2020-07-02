@@ -5,6 +5,8 @@ using Pong.Logic;
 using Pong.Input;
 using Pong.Core;
 using System.IO;
+using SFML.Graphics;
+using Pong.TEST;
 
 namespace Pong
 {
