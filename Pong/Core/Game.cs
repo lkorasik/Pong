@@ -19,6 +19,8 @@ namespace Pong.Core
         private readonly MouseState MouseState;
         private readonly Counter LeftCounter;
         private readonly Counter RightCounter;
+        private readonly Bot LeftBot;
+        private readonly Bot RightBot;
         private GameStats GameStat;
         private readonly MainMenu MainMenu;
         public event Action End;
@@ -31,6 +33,8 @@ namespace Pong.Core
         public MouseState GetMouseState => MouseState;
         public Counter GetLeftCounter => LeftCounter;
         public Counter GetRightCounter => RightCounter;
+        public Bot GetLeftBot => LeftBot;
+        public Bot GetRightBot => RightBot;
         public GameStats GetGameStat => GameStat;
         public MainMenu GetMainMenu => MainMenu;
 
@@ -48,10 +52,12 @@ namespace Pong.Core
             LeftCounter = new Counter(PositionTypes.LEFT);
             RightCounter = new Counter(PositionTypes.RIGHT);
             MainMenu = new MainMenu();
+            LeftBot = new Bot(LeftRacket);
+            RightBot = new Bot(RightRacket);
 
             GameStat = GameStats.MENU;
 
-            PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState, Goal);
+            PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState, Goal, () => GetGameStat, LeftBot, RightBot);
         }
 
         /// <summary>
@@ -90,8 +96,8 @@ namespace Pong.Core
                 case MainMenuButtons.PLAYER_PC:
                     MainMenu.PlayerPcPress();
                     break;
-                case MainMenuButtons.PC_PC:
-                    MainMenu.PcPcPress();
+                case MainMenuButtons.PLAYER_PLAYER:
+                    MainMenu.PlayerPlayerPress();
                     break;
                 case MainMenuButtons.SETTINGS:
                     MainMenu.SettingsPress();
@@ -105,12 +111,28 @@ namespace Pong.Core
         /// <summary>
         /// Call it when someone release mouse button
         /// </summary>
-        public void MouseRelease()
+        public void MouseRelease(float x, float y)
         {
             MainMenu.PlayerPcRelease();
-            MainMenu.PcPcRelease();
+            MainMenu.PlayerPlayerRelease();
             MainMenu.SettingsRelease();
             MainMenu.ExitRelease();
+
+            var button = MainMenu.GetClickedButton(x, y);
+
+            switch (button)
+            {
+                case MainMenuButtons.PLAYER_PC:
+                    break;
+                case MainMenuButtons.PLAYER_PLAYER:
+                    GameStat = GameStats.PLAY;
+                    break;
+                case MainMenuButtons.SETTINGS:
+                    break;
+                case MainMenuButtons.EXIT:
+                    Environment.Exit(0);
+                    break;
+            }
         }
 
         /// <summary>
@@ -119,13 +141,19 @@ namespace Pong.Core
         /// <param name="side">Which gates hit</param>
         public void Goal(PositionTypes side)
         {
-            if (side == PositionTypes.LEFT)
-                RightCounter.Increase();
-            else
-                LeftCounter.Increase();
+            if (GameStat == GameStats.PLAY)
+            {
+                if (side == PositionTypes.LEFT)
+                    RightCounter.Increase();
+                else
+                    LeftCounter.Increase();
+
+                GameStat = GameStats.PAUSE;
+            }
             
             Ball.ResetPosition();
-            GameStat = GameStats.PAUSE;
+            LeftRacket.ResetPosition();
+            RightRacket.ResetPosition();
         }
     }
 }

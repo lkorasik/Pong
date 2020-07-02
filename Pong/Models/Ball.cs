@@ -44,8 +44,6 @@ namespace Pong.Models
             Speed = 1;
             Direction = (float) Math.PI/4;
             MoveVector = new Vector2f((float)(Speed * Math.Cos(Direction)), (float)(Speed * Math.Sin(Direction)));
-
-            Console.WriteLine("Ball inited");
         }
 
         /// <summary>
@@ -119,5 +117,6 @@ namespace Pong.Models
             Y = StartY;
             BallView.Position = new Vector2f(X, Y);
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using SFML.System;
+using System.Drawing;
 
 namespace Pong.Models
 {

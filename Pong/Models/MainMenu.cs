@@ -10,7 +10,7 @@ namespace Pong.Models
     {
         private readonly List<Drawable> MenuList;
         private readonly Button PlayerPc;
-        private readonly Button PcPc;
+        private readonly Button PlayerPlayer;
         private readonly Button Settings;
         private readonly Button Exit;
         private readonly float MenuHeight;
@@ -37,13 +37,13 @@ namespace Pong.Models
             PlayerPc.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
-            PcPc = new Button(x, y, ButtonWidth, ButtonHeight);
-            PcPc.SetColorTopLayer(Color.Red);
-            PcPc.SetColorBottomLayer(Color.Blue);
-            PcPc.AddText("PC vs PC", new Font(Constants.FullPathToFontFile));
-            PcPc.SetTextSize(17);
-            PcPc.SetTextPosition(TextAlign.CENTER);
-            PcPc.SetTextColor(Color.Yellow);
+            PlayerPlayer = new Button(x, y, ButtonWidth, ButtonHeight);
+            PlayerPlayer.SetColorTopLayer(Color.Red);
+            PlayerPlayer.SetColorBottomLayer(Color.Blue);
+            PlayerPlayer.AddText("Player vs Player", new Font(Constants.FullPathToFontFile));
+            PlayerPlayer.SetTextSize(17);
+            PlayerPlayer.SetTextPosition(TextAlign.CENTER);
+            PlayerPlayer.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
             Settings = new Button(x, y, ButtonWidth, ButtonHeight);
@@ -63,7 +63,7 @@ namespace Pong.Models
             Exit.SetTextPosition(TextAlign.CENTER);
             Exit.SetTextColor(Color.Yellow);
 
-            MenuList = new List<Drawable>() { PlayerPc, PcPc, Settings, Exit };
+            MenuList = new List<Drawable>() { PlayerPc, PlayerPlayer, Settings, Exit };
         }
 
         /// <summary>
@@ -87,8 +87,8 @@ namespace Pong.Models
         {
             if (PlayerPc.IsOverButton(x, y))
                 return MainMenuButtons.PLAYER_PC;
-            if (PcPc.IsOverButton(x, y))
-                return MainMenuButtons.PC_PC;
+            if (PlayerPlayer.IsOverButton(x, y))
+                return MainMenuButtons.PLAYER_PLAYER;
             if (Settings.IsOverButton(x, y))
                 return MainMenuButtons.SETTINGS;
             if (Exit.IsOverButton(x, y))
@@ -103,7 +103,7 @@ namespace Pong.Models
         /// <summary>
         /// Player press on button PcPc
         /// </summary>
-        public void PcPcPress() => PcPc.Press();
+        public void PlayerPlayerPress() => PlayerPlayer.Press();
         /// <summary>
         /// Player press on button Settings
         /// </summary>
@@ -120,7 +120,7 @@ namespace Pong.Models
         /// <summary>
         /// Player release button PcPc
         /// </summary>
-        public void PcPcRelease() => PcPc.Release();
+        public void PlayerPlayerRelease() => PlayerPlayer.Release();
         /// <summary>
         /// Player release button Settings
         /// </summary>
@@ -137,7 +137,7 @@ namespace Pong.Models
     enum MainMenuButtons
     {
         PLAYER_PC,
-        PC_PC,
+        PLAYER_PLAYER,
         SETTINGS,
         EXIT
     }

@@ -12,19 +12,26 @@ namespace Pong.Logic
         private readonly IControlMovable RightRacket;
         private readonly IKeyboardReadable Keyboard;
         private readonly Action<PositionTypes> Goal;
+        private readonly Func<GameStats> GetGameStat;
+        private readonly Bot LeftBot;
+        private readonly Bot RightBot;
         
         /// <summary>
         /// Create physic engine
         /// </summary>
         /// <param name="movables">What you will move</param>
-        public PhysicsEngine(IBall ball, IControlMovable left, IControlMovable right, IKeyboardReadable keyboard, Action<PositionTypes> goal)
+        public PhysicsEngine(IBall ball, IControlMovable left, IControlMovable right, IKeyboardReadable keyboard, Action<PositionTypes> goal, Func<GameStats> stat, Bot leftBot, Bot rightBot)
         {
             Ball = ball;
             LeftRacket = left;
             RightRacket = right;
             Keyboard = keyboard;
 
+            LeftBot = leftBot;
+            RightBot = rightBot;
+
             Goal = goal;
+            GetGameStat = stat;
         }
 
         /// <summary>
@@ -32,18 +39,22 @@ namespace Pong.Logic
         /// </summary>
         public void MakeStep()
         {
-            if (Keyboard.GetLeftUp())
-                LeftRacket.Move(0, -2);
-            if (Keyboard.GetLeftDown())
-                LeftRacket.Move(0, 2);
-            if (Keyboard.GetRightUp())
-                RightRacket.Move(0, -2);
-            if (Keyboard.GetRightDown())
-                RightRacket.Move(0, 2);
-
-            //LeftRacket.DebugPrintPosition();
-            //RightRacket.DebugPrintPosition();
-            //Ball.DebugPrintPosition();
+            if (GetGameStat() == GameStats.PLAY)
+            {
+                if (Keyboard.GetLeftUp())
+                    LeftRacket.Move(0, -2);
+                if (Keyboard.GetLeftDown())
+                    LeftRacket.Move(0, 2);
+                if (Keyboard.GetRightUp())
+                    RightRacket.Move(0, -2);
+                if (Keyboard.GetRightDown())
+                    RightRacket.Move(0, 2);
+            }
+            if (GetGameStat() == GameStats.MENU)
+            {
+                LeftBot.MakeStep(Ball.GetDirection());
+                RightBot.MakeStep(Ball.GetDirection());
+            }
 
             CheckCollisionsBallWall(Ball);
             CheckCollisionsBallWithRackets(Ball);

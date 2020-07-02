@@ -17,7 +17,7 @@ namespace Pong.Output
     {
         private readonly RenderWindow Window;
         private readonly VideoMode VideoMode;
-        private readonly List<Drawable> Drawables;
+        private List<Drawable> Drawables;
         private readonly PhysicsEngine PhysicEngine;
         private readonly IKeyboardSetable KeyboardStat;
         private readonly MouseState MouseState;
@@ -102,7 +102,7 @@ namespace Pong.Output
         private void OnMouseReleased(object sender, MouseButtonEventArgs args)
         {
             if (args.Button == Mouse.Button.Left)
-                Game.MouseRelease();
+                Game.MouseRelease(args.X, args.Y);
         }
 
         /// <summary>
@@ -115,8 +115,11 @@ namespace Pong.Output
                 Thread.Sleep(15);
 
                 if (Game.GetGameStat == GameStats.PLAY || Game.GetGameStat == GameStats.MENU)
+                {
                     PhysicEngine.MakeStep();
-
+                    Drawables = Game.GetDrawables();
+                }
+                    
                 Window.DispatchEvents();
                 Window.Clear(Color.Black);
                 for(int i = 0; i < Drawables.Count; i++)

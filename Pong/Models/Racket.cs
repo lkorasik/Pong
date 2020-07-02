@@ -17,6 +17,8 @@ namespace Pong.Models
         private RectangleShape RacketView;
         private PositionTypes Type;
         private RacketMovements Movement;
+        private float StartX;
+        private float StartY;
 
         /// <summary>
         /// Create racket
@@ -31,6 +33,9 @@ namespace Pong.Models
             else
                 X = Constants.RightRacketPositionX;
             Y = Constants.WindowHeight / 2 - Height / 2;
+
+            StartX = X;
+            StartY = Y;
 
             RacketView = new RectangleShape(new Vector2f(Width, Height));
             RacketView.FillColor = SFML.Graphics.Color.White;
@@ -115,6 +120,16 @@ namespace Pong.Models
         public void SetMovement(RacketMovements movement)
         {
             Movement = movement;
+        }
+
+        /// <summary>
+        /// Return racket to center
+        /// </summary>
+        public void ResetPosition()
+        {
+            X = StartX;
+            Y = StartY;
+            RacketView.Position = new Vector2f(X, Y);
         }
     }
     
