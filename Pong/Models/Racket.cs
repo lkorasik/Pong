@@ -19,6 +19,7 @@ namespace Pong.Models
         private RacketMovements Movement;
         private float StartX;
         private float StartY;
+        private Texture RacketTexture;
 
         /// <summary>
         /// Create racket
@@ -38,8 +39,9 @@ namespace Pong.Models
             StartY = Y;
 
             RacketView = new RectangleShape(new Vector2f(Width, Height));
-            RacketView.FillColor = SFML.Graphics.Color.White;
             RacketView.Position = new Vector2f(X, Y);
+            RacketTexture = new Texture(Constants.FullPathToBallBack);
+            RacketView.Texture = RacketTexture;
 
             Type = type;
 

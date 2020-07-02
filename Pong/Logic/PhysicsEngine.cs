@@ -39,12 +39,20 @@ namespace Pong.Logic
         /// </summary>
         public void MakeStep()
         {
-            if (GetGameStat() == GameStats.PLAY)
+            if (GetGameStat() == GameStats.PLAY_PLAYER_PLAYER)
             {
                 if (Keyboard.GetLeftUp())
                     LeftRacket.Move(0, -2);
                 if (Keyboard.GetLeftDown())
                     LeftRacket.Move(0, 2);
+                if (Keyboard.GetRightUp())
+                    RightRacket.Move(0, -2);
+                if (Keyboard.GetRightDown())
+                    RightRacket.Move(0, 2);
+            }
+            if(GetGameStat() == GameStats.PLAY_PLAYER_PC)
+            {
+                LeftBot.MakeStep(Ball.GetDirection());
                 if (Keyboard.GetRightUp())
                     RightRacket.Move(0, -2);
                 if (Keyboard.GetRightDown())

@@ -30,8 +30,8 @@ namespace Pong.Models
 
             PlayerPc = new Button(x, y, ButtonWidth, ButtonHeight);
             PlayerPc.SetColorTopLayer(Color.Red);
-            PlayerPc.SetColorBottomLayer(Color.Blue);
-            PlayerPc.AddText("Player vs PC", new Font(Constants.FullPathToFontFile));
+            PlayerPc.SetTextureBottomLayer(Constants.FullPathToDark);
+            PlayerPc.AddText("Player vs PC", new Font(Constants.FullPathToFont));
             PlayerPc.SetTextSize(17);
             PlayerPc.SetTextPosition(TextAlign.CENTER);
             PlayerPc.SetTextColor(Color.Yellow);
@@ -39,8 +39,8 @@ namespace Pong.Models
             y += ButtonHeight + ButtonSpace;
             PlayerPlayer = new Button(x, y, ButtonWidth, ButtonHeight);
             PlayerPlayer.SetColorTopLayer(Color.Red);
-            PlayerPlayer.SetColorBottomLayer(Color.Blue);
-            PlayerPlayer.AddText("Player vs Player", new Font(Constants.FullPathToFontFile));
+            PlayerPlayer.SetTextureBottomLayer(Constants.FullPathToDark);
+            PlayerPlayer.AddText("Player vs Player", new Font(Constants.FullPathToFont));
             PlayerPlayer.SetTextSize(17);
             PlayerPlayer.SetTextPosition(TextAlign.CENTER);
             PlayerPlayer.SetTextColor(Color.Yellow);
@@ -48,8 +48,8 @@ namespace Pong.Models
             y += ButtonHeight + ButtonSpace;
             Settings = new Button(x, y, ButtonWidth, ButtonHeight);
             Settings.SetColorTopLayer(Color.Red);
-            Settings.SetColorBottomLayer(Color.Blue);
-            Settings.AddText("Settings", new Font(Constants.FullPathToFontFile));
+            Settings.SetTextureBottomLayer(Constants.FullPathToDark);
+            Settings.AddText("Settings", new Font(Constants.FullPathToFont));
             Settings.SetTextSize(17);
             Settings.SetTextPosition(TextAlign.CENTER);
             Settings.SetTextColor(Color.Yellow);
@@ -57,8 +57,8 @@ namespace Pong.Models
             y += ButtonHeight + ButtonSpace;
             Exit = new Button(x, y, ButtonWidth, ButtonHeight);
             Exit.SetColorTopLayer(Color.Red);
-            Exit.SetColorBottomLayer(Color.Blue);
-            Exit.AddText("Exit", new Font(Constants.FullPathToFontFile));
+            Exit.SetTextureBottomLayer(Constants.FullPathToDark);
+            Exit.AddText("Exit", new Font(Constants.FullPathToFont));
             Exit.SetTextSize(17);
             Exit.SetTextPosition(TextAlign.CENTER);
             Exit.SetTextColor(Color.Yellow);

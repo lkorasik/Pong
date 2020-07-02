@@ -11,6 +11,7 @@ namespace Pong.Core
 {
     class Game
     {
+        private readonly Board Board;
         private readonly Ball Ball;
         private readonly Racket LeftRacket;
         private readonly Racket RightRacket;
@@ -25,6 +26,7 @@ namespace Pong.Core
         private readonly MainMenu MainMenu;
         public event Action End;
 
+        public Board GetBoard => Board;
         public Ball GetBall => Ball;
         public Racket GetLeftRacket => LeftRacket;
         public Racket GetRightRacket => RightRacket;
@@ -44,6 +46,7 @@ namespace Pong.Core
         /// <param name="keyboardState">Keyboard</param>
         public Game(KeyboardState keyboardState, MouseState mouseState)
         {
+            Board = new Board();
             Ball = new Ball();
             LeftRacket = new Racket(PositionTypes.LEFT);
             RightRacket = new Racket(PositionTypes.RIGHT);
@@ -67,8 +70,17 @@ namespace Pong.Core
         public List<Drawable> GetDrawables()
         {
             if (GameStat == GameStats.MENU)
-                return new List<Drawable>() { Ball, LeftRacket, RightRacket, MainMenu };
-            return new List<Drawable>() { Ball, LeftRacket, RightRacket, LeftCounter, RightCounter };
+                return new List<Drawable>() { Board, Ball, LeftRacket, RightRacket, MainMenu };
+            if(GameStat == GameStats.PLAY_PLAYER_PLAYER || GameStat == GameStats.PLAY_PLAYER_PC)
+                return new List<Drawable>() { Board, Ball, LeftRacket, RightRacket, LeftCounter, RightCounter };
+            return null;
+        }
+
+        public void PrepareForGame()
+        {
+            Ball.ResetPosition();
+            LeftRacket.ResetPosition();
+            RightRacket.ResetPosition();
         }
 
         /// <summary>
@@ -76,10 +88,10 @@ namespace Pong.Core
         /// </summary>
         public void TogglePause()
         {
-            if (GameStat == GameStats.PLAY)
+            if (GameStat == GameStats.PLAY_PLAYER_PLAYER)
                 GameStat = GameStats.PAUSE;
             else if(GameStat == GameStats.PAUSE)
-                GameStat = GameStats.PLAY;
+                GameStat = GameStats.PLAY_PLAYER_PLAYER;
         }
 
         /// <summary>
@@ -123,9 +135,12 @@ namespace Pong.Core
             switch (button)
             {
                 case MainMenuButtons.PLAYER_PC:
+                    GameStat = GameStats.PLAY_PLAYER_PC;
+                    PrepareForGame();
                     break;
                 case MainMenuButtons.PLAYER_PLAYER:
-                    GameStat = GameStats.PLAY;
+                    GameStat = GameStats.PLAY_PLAYER_PLAYER;
+                    PrepareForGame();
                     break;
                 case MainMenuButtons.SETTINGS:
                     break;
@@ -141,7 +156,7 @@ namespace Pong.Core
         /// <param name="side">Which gates hit</param>
         public void Goal(PositionTypes side)
         {
-            if (GameStat == GameStats.PLAY)
+            if (GameStat == GameStats.PLAY_PLAYER_PLAYER)
             {
                 if (side == PositionTypes.LEFT)
                     RightCounter.Increase();

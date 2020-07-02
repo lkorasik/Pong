@@ -20,7 +20,7 @@ namespace Pong.Models
 
             PositionType = positionTypes;
 
-            Font = new Font(Constants.FullPathToFontFile);
+            Font = new Font(Constants.FullPathToFont);
 
             CountView = new Text(Count.ToString(), Font);
             if (PositionType == PositionTypes.LEFT)

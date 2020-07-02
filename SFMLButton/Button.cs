@@ -68,6 +68,18 @@ namespace SFMLButton
             Text = new Text();
         }
 
+        public void SetTextureBottomLayer(string path)
+        {
+            var texture = new Texture(path);
+            BottomLayer.Texture = texture;
+        }
+
+        public void SetTextureTopLayer(string path)
+        {
+            var texture = new Texture(path);
+            TopLayer.Texture = texture;
+        }
+
         /// <summary>
         /// Set buttons position
         /// </summary>

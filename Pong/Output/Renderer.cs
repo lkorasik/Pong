@@ -114,7 +114,7 @@ namespace Pong.Output
             {
                 Thread.Sleep(15);
 
-                if (Game.GetGameStat == GameStats.PLAY || Game.GetGameStat == GameStats.MENU)
+                if (Game.GetGameStat == GameStats.PLAY_PLAYER_PLAYER || Game.GetGameStat == GameStats.MENU || Game.GetGameStat == GameStats.PLAY_PLAYER_PC)
                 {
                     PhysicEngine.MakeStep();
                     Drawables = Game.GetDrawables();

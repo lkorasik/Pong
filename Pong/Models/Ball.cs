@@ -18,10 +18,11 @@ namespace Pong.Models
         private readonly float StartY;
         private int Width;
         private int Height;
-        private RectangleShape BallView;
         private float Direction;
         private float Speed;
         private Vector2f MoveVector;
+        private RectangleShape BallView;
+        private Texture BallTexture;
 
         /// <summary>
         /// Create ball
@@ -38,8 +39,8 @@ namespace Pong.Models
             StartY = Y;
 
             BallView = new RectangleShape(new Vector2f(Width, Height));
-            BallView.Position = new Vector2f(X, Y);
-            BallView.FillColor = SFMLColor.White;
+            BallTexture = new Texture(Constants.FullPathToBallBack);
+            BallView.Texture = BallTexture;
 
             Speed = 1;
             Direction = (float) Math.PI/4;
@@ -69,7 +70,7 @@ namespace Pong.Models
         /// </summary>
         public void DebugPrintPosition()
         {
-            Console.WriteLine("Ball X: {0}, Y: {1}", X, Y);
+            //Console.WriteLine("Ball X: {0}, Y: {1}", X, Y);
         }
 
         /// <summary>
@@ -117,6 +118,5 @@ namespace Pong.Models
             Y = StartY;
             BallView.Position = new Vector2f(X, Y);
         }
-
     }
 }
