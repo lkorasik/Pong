@@ -10,14 +10,14 @@ namespace Pong.Logic
         private readonly IBall Ball;
         private readonly IControlMovable LeftRacket;
         private readonly IControlMovable RightRacket;
-        private readonly IReadable Keyboard;
+        private readonly IKeyboardReadable Keyboard;
         private readonly Action<PositionTypes> Goal;
         
         /// <summary>
         /// Create physic engine
         /// </summary>
         /// <param name="movables">What you will move</param>
-        public PhysicsEngine(IBall ball, IControlMovable left, IControlMovable right, IReadable keyboard, Action<PositionTypes> goal)
+        public PhysicsEngine(IBall ball, IControlMovable left, IControlMovable right, IKeyboardReadable keyboard, Action<PositionTypes> goal)
         {
             Ball = ball;
             LeftRacket = left;
@@ -41,9 +41,9 @@ namespace Pong.Logic
             if (Keyboard.GetRightDown())
                 RightRacket.Move(0, 2);
 
-            LeftRacket.DebugPrintPosition();
-            RightRacket.DebugPrintPosition();
-            Ball.DebugPrintPosition();
+            //LeftRacket.DebugPrintPosition();
+            //RightRacket.DebugPrintPosition();
+            //Ball.DebugPrintPosition();
 
             CheckCollisionsBallWall(Ball);
             CheckCollisionsBallWithRackets(Ball);

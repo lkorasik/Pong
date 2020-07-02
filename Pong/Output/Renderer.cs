@@ -19,7 +19,8 @@ namespace Pong.Output
         private readonly VideoMode VideoMode;
         private readonly List<Drawable> Drawables;
         private readonly PhysicsEngine PhysicEngine;
-        private readonly ISetable KeyboardStat;
+        private readonly IKeyboardSetable KeyboardStat;
+        private readonly MouseState MouseState;
         private readonly Game Game;
 
         /// <summary>
@@ -30,6 +31,7 @@ namespace Pong.Output
             Game = game;
 
             KeyboardStat = game.GetKeyboardState;
+            MouseState = game.GetMouseState;
 
             VideoMode = new VideoMode(Constants.WindowWidth, Constants.WindowHeight);
             Window = new RenderWindow(VideoMode, Constants.WindowTitle);
@@ -37,6 +39,8 @@ namespace Pong.Output
             Window.Closed += OnClose;
             Window.KeyPressed += OnKeyPressed;
             Window.KeyReleased += OnKeyReleased;
+            Window.MouseButtonPressed += OnMousePressed;
+            Window.MouseButtonReleased += OnMouseReleased;
 
             Drawables = game.GetDrawables();
 
@@ -72,7 +76,6 @@ namespace Pong.Output
         private void OnKeyReleased(object obj, KeyEventArgs args)
         {
             if (args.Code == Keyboard.Key.Space)
-                //KeyboardStat.ToggleSpace();
                 Game.TogglePause();
             if (args.Code == Keyboard.Key.S)
                 KeyboardStat.DisableLeftDown();
@@ -84,6 +87,18 @@ namespace Pong.Output
                 KeyboardStat.DisableRightDown();
         }
 
+        private void OnMousePressed(object sender, MouseButtonEventArgs args)
+        {
+            if (args.Button == Mouse.Button.Left)
+                Game.MousePress(args.X, args.Y);
+        }
+
+        private void OnMouseReleased(object sender, MouseButtonEventArgs args)
+        {
+            if (args.Button == Mouse.Button.Left)
+                Game.MouseRelease(args.X, args.Y);
+        }
+
         /// <summary>
         /// Drawing loop
         /// </summary>
@@ -93,7 +108,7 @@ namespace Pong.Output
             {
                 Thread.Sleep(15);
 
-                if (Game.GetGameStat == GameStats.PLAY)
+                if (Game.GetGameStat == GameStats.PLAY || Game.GetGameStat == GameStats.MENU)
                     PhysicEngine.MakeStep();
 
                 Window.DispatchEvents();

@@ -5,7 +5,7 @@ namespace Pong.Input
     /// <summary>
     /// Save key states
     /// </summary>
-    sealed class KeyboardState: IReadable, ISetable
+    sealed class KeyboardState: IKeyboardReadable, IKeyboardSetable
     {
         private static readonly KeyboardState Instance = new KeyboardState();
         public static KeyboardState GetInstance => Instance;

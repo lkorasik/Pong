@@ -6,7 +6,6 @@ using Pong.Input;
 using Pong.Core;
 using System.IO;
 using SFML.Graphics;
-using Pong.TEST;
 
 namespace Pong
 {
@@ -21,8 +20,9 @@ namespace Pong
         static void Main(string[] args)
         {
             var keyboardState = KeyboardState.GetInstance;
+            var mouseState = MouseState.GetInstance;
 
-            var game = new Game(keyboardState);
+            var game = new Game(keyboardState, mouseState);
 
             var renderer = new Renderer(game);
             renderer.StartDrawing();

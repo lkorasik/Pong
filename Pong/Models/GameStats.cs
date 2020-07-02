@@ -7,6 +7,7 @@ namespace Pong.Models
     enum GameStats
     {
         PLAY,
+        MENU,
         PAUSE
     }
 }

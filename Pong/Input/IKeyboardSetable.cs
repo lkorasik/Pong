@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pong.Input
 {
-    interface ISetable
+    interface IKeyboardSetable
     {
         void EnableLeftUp();
         void EnableLeftDown();

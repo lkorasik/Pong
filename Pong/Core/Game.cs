@@ -16,9 +16,11 @@ namespace Pong.Core
         private readonly Racket RightRacket;
         private readonly PhysicsEngine PhysicsEngine;
         private readonly KeyboardState KeyboardState;
+        private readonly MouseState MouseState;
         private readonly Counter LeftCounter;
         private readonly Counter RightCounter;
         private GameStats GameStat;
+        private readonly MainMenu MainMenu;
         public event Action End;
 
         public Ball GetBall => Ball;
@@ -26,24 +28,28 @@ namespace Pong.Core
         public Racket GetRightRacket => RightRacket;
         public PhysicsEngine GetPhysicsEngine => PhysicsEngine;
         public KeyboardState GetKeyboardState => KeyboardState;
+        public MouseState GetMouseState => MouseState;
         public Counter GetLeftCounter => LeftCounter;
         public Counter GetRightCounter => RightCounter;
         public GameStats GetGameStat => GameStat;
+        public MainMenu GetMainMenu => MainMenu;
 
         /// <summary>
         /// Create game
         /// </summary>
         /// <param name="keyboardState">Keyboard</param>
-        public Game(KeyboardState keyboardState)
+        public Game(KeyboardState keyboardState, MouseState mouseState)
         {
             Ball = new Ball();
             LeftRacket = new Racket(PositionTypes.LEFT);
             RightRacket = new Racket(PositionTypes.RIGHT);
             KeyboardState = keyboardState;
+            MouseState = mouseState;
             LeftCounter = new Counter(PositionTypes.LEFT);
             RightCounter = new Counter(PositionTypes.RIGHT);
+            MainMenu = new MainMenu();
 
-            GameStat = GameStats.PAUSE;
+            GameStat = GameStats.MENU;
 
             PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState, Goal);
         }
@@ -54,6 +60,8 @@ namespace Pong.Core
         /// <returns>List</returns>
         public List<Drawable> GetDrawables()
         {
+            if (GameStat == GameStats.MENU)
+                return new List<Drawable>() { Ball, LeftRacket, RightRacket, MainMenu };
             return new List<Drawable>() { Ball, LeftRacket, RightRacket, LeftCounter, RightCounter };
         }
 
@@ -66,6 +74,35 @@ namespace Pong.Core
                 GameStat = GameStats.PAUSE;
             else
                 GameStat = GameStats.PLAY;
+        }
+
+        public void MousePress(float x, float y)
+        {
+            var button = MainMenu.GetClickedButton(x, y);
+
+            switch (button)
+            {
+                case MainMenuButtons.PLAYER_PC:
+                    MainMenu.PlayerPcPress();
+                    break;
+                case MainMenuButtons.PC_PC:
+                    MainMenu.PcPcPress();
+                    break;
+                case MainMenuButtons.SETTINGS:
+                    MainMenu.SettingsPress();
+                    break;
+                case MainMenuButtons.EXIT:
+                    MainMenu.ExitPress();
+                    break;
+            }
+        }
+
+        public void MouseRelease(float x, float y)
+        {
+            MainMenu.PlayerPcRelease();
+            MainMenu.PcPcRelease();
+            MainMenu.SettingsRelease();
+            MainMenu.ExitRelease();
         }
 
         /// <summary>
