@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace Pong
@@ -22,5 +24,9 @@ namespace Pong
         public static string FullPathToBallBack = Path.Combine(FullPathToResources, "BallBackground.png");
         public static string FullPathToBoardBack = Path.Combine(FullPathToResources, "BoardBackground.png");
         public static string FullPathToDark = Path.Combine(FullPathToResources, "DarkBackground.png");
+        public static string FullPathToSettings = Path.Combine(FullPathToResources, "Settings.json");
+
+        public static string CurrentLanguage = "Russian";
+        public static List<string> AvailablesLanguages = new List<string>() { "Russian", "English" };
     }
 }

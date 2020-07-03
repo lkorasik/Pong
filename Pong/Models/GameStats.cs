@@ -9,6 +9,7 @@ namespace Pong.Models
         PLAY_PLAYER_PLAYER,
         PLAY_PLAYER_PC,
         MENU,
+        SETTINGS,
         PAUSE
     }
 }

@@ -24,6 +24,7 @@ namespace Pong.Core
         private readonly Bot RightBot;
         private GameStats GameStat;
         private readonly MainMenu MainMenu;
+        private readonly Settings Settings;
         private GameStats GameMode;
         public event Action End;
 
@@ -41,6 +42,7 @@ namespace Pong.Core
         public GameStats GetGameStat => GameStat;
         public GameStats GetGameMode => GameMode;
         public MainMenu GetMainMenu => MainMenu;
+        public Settings GetSettings => Settings;
 
         /// <summary>
         /// Create game
@@ -59,6 +61,7 @@ namespace Pong.Core
             MainMenu = new MainMenu();
             LeftBot = new Bot(LeftRacket);
             RightBot = new Bot(RightRacket);
+            Settings = new Settings();
 
             GameStat = GameStats.MENU;
             GameMode = GameStats.MENU;
@@ -74,6 +77,8 @@ namespace Pong.Core
         {
             if (GameStat == GameStats.MENU)
                 return new List<Drawable>() { Board, Ball, LeftRacket, RightRacket, MainMenu };
+            if (GameStat == GameStats.SETTINGS)
+                return new List<Drawable>() { Board, Ball, LeftRacket, RightRacket, Settings };
             if(GameStat == GameStats.PLAY_PLAYER_PLAYER || GameStat == GameStats.PLAY_PLAYER_PC)
                 return new List<Drawable>() { Board, Ball, LeftRacket, RightRacket, LeftCounter, RightCounter };
             if (GameStat == GameStats.PAUSE)
@@ -112,22 +117,36 @@ namespace Pong.Core
         /// <param name="y">Mouse position on Y-axis</param>
         public void MousePress(float x, float y)
         {
-            var button = MainMenu.GetClickedButton(x, y);
-
-            switch (button)
+            if (GameStat == GameStats.MENU)
             {
-                case MainMenuButtons.PLAYER_PC:
-                    MainMenu.PlayerPcPress();
-                    break;
-                case MainMenuButtons.PLAYER_PLAYER:
-                    MainMenu.PlayerPlayerPress();
-                    break;
-                case MainMenuButtons.SETTINGS:
-                    MainMenu.SettingsPress();
-                    break;
-                case MainMenuButtons.EXIT:
-                    MainMenu.ExitPress();
-                    break;
+                var button = MainMenu.GetClickedButton(x, y);
+
+                switch (button)
+                {
+                    case MainMenuButtons.PLAYER_PC:
+                        MainMenu.PlayerPcPress();
+                        break;
+                    case MainMenuButtons.PLAYER_PLAYER:
+                        MainMenu.PlayerPlayerPress();
+                        break;
+                    case MainMenuButtons.SETTINGS:
+                        MainMenu.SettingsPress();
+                        break;
+                    case MainMenuButtons.EXIT:
+                        MainMenu.ExitPress();
+                        break;
+                }
+            }
+            else if(GameStat == GameStats.SETTINGS)
+            {
+                var button = Settings.GetClickedButton(x, y);
+
+                switch (button)
+                {
+                    case SettingsButtons.LANGUAGES:
+                        Settings.LanguagePress(x, y);
+                        break;
+                }
             }
         }
 
@@ -136,28 +155,36 @@ namespace Pong.Core
         /// </summary>
         public void MouseRelease(float x, float y)
         {
-            MainMenu.PlayerPcRelease();
-            MainMenu.PlayerPlayerRelease();
-            MainMenu.SettingsRelease();
-            MainMenu.ExitRelease();
-
-            var button = MainMenu.GetClickedButton(x, y);
-
-            switch (button)
+            if (GameStat == GameStats.MENU)
             {
-                case MainMenuButtons.PLAYER_PC:
-                    GameStat = GameStats.PLAY_PLAYER_PC;
-                    ResetAllObjects();
-                    break;
-                case MainMenuButtons.PLAYER_PLAYER:
-                    GameStat = GameStats.PLAY_PLAYER_PLAYER;
-                    ResetAllObjects();
-                    break;
-                case MainMenuButtons.SETTINGS:
-                    break;
-                case MainMenuButtons.EXIT:
-                    Environment.Exit(0);
-                    break;
+                MainMenu.PlayerPcRelease();
+                MainMenu.PlayerPlayerRelease();
+                MainMenu.SettingsRelease();
+                MainMenu.ExitRelease();
+
+                var button = MainMenu.GetClickedButton(x, y);
+
+                switch (button)
+                {
+                    case MainMenuButtons.PLAYER_PC:
+                        GameStat = GameStats.PLAY_PLAYER_PC;
+                        ResetAllObjects();
+                        break;
+                    case MainMenuButtons.PLAYER_PLAYER:
+                        GameStat = GameStats.PLAY_PLAYER_PLAYER;
+                        ResetAllObjects();
+                        break;
+                    case MainMenuButtons.SETTINGS:
+                        GameStat = GameStats.SETTINGS;
+                        break;
+                    case MainMenuButtons.EXIT:
+                        Environment.Exit(0);
+                        break;
+                }
+            }
+            if(GameStat == GameStats.SETTINGS)
+            {
+                Settings.LanguageRelease();
             }
         }
 
