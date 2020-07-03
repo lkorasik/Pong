@@ -81,7 +81,10 @@ namespace Pong.Core
             return null;
         }
 
-        public void PrepareForGame()
+        /// <summary>
+        /// Move ball and rockets to start position
+        /// </summary>
+        public void ResetAllObjects()
         {
             Ball.ResetPosition();
             LeftRacket.ResetPosition();
@@ -144,11 +147,11 @@ namespace Pong.Core
             {
                 case MainMenuButtons.PLAYER_PC:
                     GameStat = GameStats.PLAY_PLAYER_PC;
-                    PrepareForGame();
+                    ResetAllObjects();
                     break;
                 case MainMenuButtons.PLAYER_PLAYER:
                     GameStat = GameStats.PLAY_PLAYER_PLAYER;
-                    PrepareForGame();
+                    ResetAllObjects();
                     break;
                 case MainMenuButtons.SETTINGS:
                     break;
@@ -178,6 +181,15 @@ namespace Pong.Core
             Ball.ResetPosition();
             LeftRacket.ResetPosition();
             RightRacket.ResetPosition();
+        }
+
+        /// <summary>
+        /// Call it when user want return to main menu
+        /// </summary>
+        public void ReturnToMainMenu()
+        {
+            ResetAllObjects();
+            GameStat = GameStats.MENU;
         }
     }
 }

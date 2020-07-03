@@ -31,36 +31,36 @@ namespace Pong.Models
             PlayerPc = new Button(x, y, ButtonWidth, ButtonHeight);
             PlayerPc.SetColorTopLayer(Color.Red);
             PlayerPc.SetTextureBottomLayer(Constants.FullPathToDark);
-            PlayerPc.AddText("Player vs PC", new Font(Constants.FullPathToFont));
+            PlayerPc.SetText("Player vs PC", new Font(Constants.FullPathToFont));
             PlayerPc.SetTextSize(17);
-            PlayerPc.SetTextPosition(TextAlign.CENTER);
+            PlayerPc.SetTextPosition(SFMLViewItems.TextAlign.CENTER);
             PlayerPc.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
             PlayerPlayer = new Button(x, y, ButtonWidth, ButtonHeight);
             PlayerPlayer.SetColorTopLayer(Color.Red);
             PlayerPlayer.SetTextureBottomLayer(Constants.FullPathToDark);
-            PlayerPlayer.AddText("Player vs Player", new Font(Constants.FullPathToFont));
+            PlayerPlayer.SetText("Player vs Player", new Font(Constants.FullPathToFont));
             PlayerPlayer.SetTextSize(17);
-            PlayerPlayer.SetTextPosition(TextAlign.CENTER);
+            PlayerPlayer.SetTextPosition(SFMLViewItems.TextAlign.CENTER);
             PlayerPlayer.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
             Settings = new Button(x, y, ButtonWidth, ButtonHeight);
             Settings.SetColorTopLayer(Color.Red);
             Settings.SetTextureBottomLayer(Constants.FullPathToDark);
-            Settings.AddText("Settings", new Font(Constants.FullPathToFont));
+            Settings.SetText("Settings", new Font(Constants.FullPathToFont));
             Settings.SetTextSize(17);
-            Settings.SetTextPosition(TextAlign.CENTER);
+            Settings.SetTextPosition(SFMLViewItems.TextAlign.CENTER);
             Settings.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
             Exit = new Button(x, y, ButtonWidth, ButtonHeight);
             Exit.SetColorTopLayer(Color.Red);
             Exit.SetTextureBottomLayer(Constants.FullPathToDark);
-            Exit.AddText("Exit", new Font(Constants.FullPathToFont));
+            Exit.SetText("Exit", new Font(Constants.FullPathToFont));
             Exit.SetTextSize(17);
-            Exit.SetTextPosition(TextAlign.CENTER);
+            Exit.SetTextPosition(SFMLViewItems.TextAlign.CENTER);
             Exit.SetTextColor(Color.Yellow);
 
             MenuList = new List<Drawable>() { PlayerPc, PlayerPlayer, Settings, Exit };
@@ -85,13 +85,13 @@ namespace Pong.Models
         /// <returns>Null if user missed :)</returns>
         public MainMenuButtons? GetClickedButton(float x, float y)
         {
-            if (PlayerPc.IsOverButton(x, y))
+            if (PlayerPc.IsOverView(x, y))
                 return MainMenuButtons.PLAYER_PC;
-            if (PlayerPlayer.IsOverButton(x, y))
+            if (PlayerPlayer.IsOverView(x, y))
                 return MainMenuButtons.PLAYER_PLAYER;
-            if (Settings.IsOverButton(x, y))
+            if (Settings.IsOverView(x, y))
                 return MainMenuButtons.SETTINGS;
-            if (Exit.IsOverButton(x, y))
+            if (Exit.IsOverView(x, y))
                 return MainMenuButtons.EXIT;
             return null;
         }

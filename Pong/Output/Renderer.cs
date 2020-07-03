@@ -75,6 +75,8 @@ namespace Pong.Output
         /// </summary>
         private void OnKeyReleased(object obj, KeyEventArgs args)
         {
+            if (args.Code == Keyboard.Key.Escape)
+                Game.ReturnToMainMenu();
             if (args.Code == Keyboard.Key.Space)
                 Game.TogglePause();
             if (args.Code == Keyboard.Key.S)

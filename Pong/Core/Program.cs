@@ -19,6 +19,7 @@ namespace Pong
         /// </summary>
         static void Main(string[] args)
         {
+            /*
             var keyboardState = KeyboardState.GetInstance;
             var mouseState = MouseState.GetInstance;
 
@@ -26,6 +27,9 @@ namespace Pong
 
             var renderer = new Renderer(game);
             renderer.StartDrawing();
+            */
+
+            var tnc = new TestNewCode();
         }
     }
 }
