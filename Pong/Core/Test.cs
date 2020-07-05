@@ -14,19 +14,13 @@ namespace Pong.Core
             var VideoMode = new VideoMode(Constants.WindowWidth, Constants.WindowHeight);
             var Window = new RenderWindow(VideoMode, Constants.WindowTitle);
 
-            var mb = new MessageBox(10, 10, 430, 100);
-            mb.SetColorTopLayer(Color.Red);
-            mb.SetColorBottomLayer(Color.Black);
-            mb.AddRightButton("Yes", new Font(Constants.FullPathToFont));
-            mb.AddLeftButton("No", new Font(Constants.FullPathToFont));
-            mb.SetText("Test", new Font(Constants.FullPathToFont));
-            mb.SetTextPosition(TextAlign.CENTER);
+            var bvo = new BaseViewObject(10, 10, 100, 100, 5);
 
             while (Window.IsOpen)
             {
                 Window.DispatchEvents();
                 Window.Clear(Color.White);
-                Window.Draw(mb);
+                Window.Draw(bvo);
                 Window.Display();
             }
         }

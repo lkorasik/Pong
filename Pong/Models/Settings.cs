@@ -33,7 +33,7 @@ namespace Pong.Models
             var x = Constants.WindowWidth / 2 - ButtonWidth / 2;
             var y = Constants.WindowHeight / 2 - MenuHeight / 2;
 
-            Language = SettingsWorker.LoadLanguageModel();
+            Language = SettingsWorker.LoadSelectorLanguageModel();
 
             Languages = new ButtonList(x, y, ButtonWidth, ButtonHeight, new Font(Constants.FullPathToFont));
             Languages.SetSelected(Language.CurrentLanguage);
@@ -107,7 +107,7 @@ namespace Pong.Models
         {
             Language.CurrentLanguage = Languages.GetSelected();
 
-            SettingsWorker.Save(Language);
+            SettingsWorker.SaveSelectorLanguageModel(Language);
         }
 
         public void CallExitMessageBox()
