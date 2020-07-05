@@ -10,9 +10,6 @@ namespace SFMLViewItems
 {
     public class Button: TextView, Drawable
     {
-        protected float OldX;
-        protected float OldY;
-
         /// <summary>
         /// Create button
         /// </summary>
@@ -30,8 +27,8 @@ namespace SFMLViewItems
         {
             base.AnimatePress();
 
-            OldX = Text.Position.X;
-            OldY = Text.Position.Y;
+            TextPositionX = Text.Position.X;
+            TextPositionY = Text.Position.Y;
 
             if ((ShadowHorizontalType == ShadowHorizontalTypes.LEFT) && (ShdowVerticalType == ShdowVerticalTypes.BOTTOM))
                 Text.Position = new Vector2f(Text.Position.X - ElevationX, Text.Position.Y + ElevationY);
@@ -47,7 +44,7 @@ namespace SFMLViewItems
         {
             base.AnimationRelease();
 
-            Text.Position = new Vector2f(OldX, OldY);
+            Text.Position = new Vector2f(TextPositionX, TextPositionY);
         }
     }
 }

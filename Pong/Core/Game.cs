@@ -197,8 +197,8 @@ namespace Pong.Core
                         GameStat = GameStats.MENU;
                         Settings.BackRelease();
                         Settings.SaveSettings();
-                        //Settings.BackRelease();
-                        //Settings.CallExitMessageBox();
+                        Settings.BackRelease();
+                        Settings.CallExitMessageBox();
                         break;
                 }
             }

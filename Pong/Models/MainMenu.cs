@@ -17,6 +17,7 @@ namespace Pong.Models
         private readonly float ButtonWidth = 200;
         private readonly float ButtonHeight = 50;
         private readonly float ButtonSpace = 10;
+        private readonly float ButtonElevation = 5;
 
         /// <summary>
         /// Create main menu
@@ -28,39 +29,35 @@ namespace Pong.Models
             var x = Constants.WindowWidth / 2 - ButtonWidth / 2;
             var y = Constants.WindowHeight / 2 - MenuHeight / 2;
 
-            PlayerPc = new Button(x, y, ButtonWidth, ButtonHeight);
+            PlayerPc = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             PlayerPc.SetColorTopLayer(Color.Red);
             PlayerPc.SetTextureBottomLayer(Constants.FullPathToDark);
             PlayerPc.SetText("Player vs PC", new Font(Constants.FullPathToFont));
             PlayerPc.SetTextSize(17);
-            PlayerPc.SetTextPosition(SFMLViewItems.TextAlign.CENTER);
             PlayerPc.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
-            PlayerPlayer = new Button(x, y, ButtonWidth, ButtonHeight);
+            PlayerPlayer = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             PlayerPlayer.SetColorTopLayer(Color.Red);
             PlayerPlayer.SetTextureBottomLayer(Constants.FullPathToDark);
             PlayerPlayer.SetText("Player vs Player", new Font(Constants.FullPathToFont));
             PlayerPlayer.SetTextSize(17);
-            PlayerPlayer.SetTextPosition(SFMLViewItems.TextAlign.CENTER);
             PlayerPlayer.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
-            Settings = new Button(x, y, ButtonWidth, ButtonHeight);
+            Settings = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             Settings.SetColorTopLayer(Color.Red);
             Settings.SetTextureBottomLayer(Constants.FullPathToDark);
             Settings.SetText("Settings", new Font(Constants.FullPathToFont));
             Settings.SetTextSize(17);
-            Settings.SetTextPosition(SFMLViewItems.TextAlign.CENTER);
             Settings.SetTextColor(Color.Yellow);
 
             y += ButtonHeight + ButtonSpace;
-            Exit = new Button(x, y, ButtonWidth, ButtonHeight);
+            Exit = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             Exit.SetColorTopLayer(Color.Red);
             Exit.SetTextureBottomLayer(Constants.FullPathToDark);
             Exit.SetText("Exit", new Font(Constants.FullPathToFont));
             Exit.SetTextSize(17);
-            Exit.SetTextPosition(SFMLViewItems.TextAlign.CENTER);
             Exit.SetTextColor(Color.Yellow);
 
             MenuList = new List<Drawable>() { PlayerPc, PlayerPlayer, Settings, Exit };
@@ -99,19 +96,19 @@ namespace Pong.Models
         /// <summary>
         /// Player press on button PlayerPc
         /// </summary>
-        public void PlayerPcPress() => PlayerPc.Press();
+        public void PlayerPcPress() => PlayerPc.AnimatePress();
         /// <summary>
         /// Player press on button PcPc
         /// </summary>
-        public void PlayerPlayerPress() => PlayerPlayer.Press();
+        public void PlayerPlayerPress() => PlayerPlayer.AnimatePress();
         /// <summary>
         /// Player press on button Settings
         /// </summary>
-        public void SettingsPress() => Settings.Press();
+        public void SettingsPress() => Settings.AnimatePress();
         /// <summary>
         /// Player press on button Exit
         /// </summary>
-        public void ExitPress() => Exit.Press();
+        public void ExitPress() => Exit.AnimatePress();
 
         /// <summary>
         /// Player release button PlayerPc

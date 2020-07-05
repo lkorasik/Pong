@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pong", "Pong\Pong.csproj", "{1B2843F1-706F-452A-BAD8-EB616E927A68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFMLViewItems", "SFMLViewItems\SFMLViewItems.csproj", "{9C3458FD-BA79-40E6-B001-0A3D66182AA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFMLView", "SFMLViewItems\SFMLView.csproj", "{9C3458FD-BA79-40E6-B001-0A3D66182AA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,7 +19,7 @@ namespace Pong.Models
                 model.AvailablesLanguages = Constants.AvailablesLanguages;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-                File.WriteAllText(Constants.FullPathToSettings, json);
+                File.WriteAllText(Constants.FullPathToSettings, json, Encoding.UTF8);
             }
             if (!File.Exists(Constants.FullPathToEnglishLang))
             {
@@ -31,7 +31,7 @@ namespace Pong.Models
                 model.Back = Constants.EngBack;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-                File.WriteAllText(Constants.FullPathToSettings, json);
+                File.WriteAllText(Constants.FullPathToSettings, json, Encoding.UTF8);
             }
             if (!File.Exists(Constants.FullPathToRussianLang))
             {
@@ -43,13 +43,13 @@ namespace Pong.Models
                 model.Back = Constants.RusBack;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-                File.WriteAllText(Constants.FullPathToSettings, json);
+                File.WriteAllText(Constants.FullPathToSettings, json, Encoding.UTF8);
             }
         }
 
         public static SelectorLanguageModel LoadSelectorLanguageModel()
         {
-            var reader = new StreamReader(Constants.FullPathToSettings);
+            var reader = new StreamReader(Constants.FullPathToSettings, Encoding.UTF8);
             var json = reader.ReadToEnd();
             reader.Close();
 
@@ -60,14 +60,14 @@ namespace Pong.Models
 
         public static void SaveSelectorLanguageModel(SelectorLanguageModel languageModel)
         {
-            File.WriteAllText(Constants.FullPathToSettings, JsonConvert.SerializeObject(languageModel, Formatting.Indented));
+            File.WriteAllText(Constants.FullPathToSettings, JsonConvert.SerializeObject(languageModel, Formatting.Indented), Encoding.UTF8);
         }
 
         public static GameLanguageModel LoadGameLanguageModel(Languages language)
         {
             if (language == Languages.RUSSIAN)
             {
-                var reader = new StreamReader(Constants.FullPathToRussianLang);
+                var reader = new StreamReader(Constants.FullPathToRussianLang, Encoding.UTF8);
                 var json = reader.ReadToEnd();
                 reader.Close();
 
@@ -77,7 +77,7 @@ namespace Pong.Models
             }
             if (language == Languages.ENGLISH)
             {
-                var reader = new StreamReader(Constants.FullPathToEnglishLang);
+                var reader = new StreamReader(Constants.FullPathToEnglishLang, Encoding.UTF8);
                 var json = reader.ReadToEnd();
                 reader.Close();
 

@@ -28,8 +28,8 @@ namespace Pong
         public static string FullPathToEnglishLang = Path.Combine(FullPathToResources, "English.json");
         public static string FullPathToRussianLang = Path.Combine(FullPathToResources, "Russian.json");
 
-        public static string CurrentLanguage = "Russian";
-        public static List<string> AvailablesLanguages = new List<string>() { "Russian", "English" };
+        public static string CurrentLanguage = "Русский";
+        public static List<string> AvailablesLanguages = new List<string>() { "Русский", "English" };
 
         public static string EngPlayerPc = "Player vs Pc";
         public static string EngPlayerPlayer = "Player vs Player";

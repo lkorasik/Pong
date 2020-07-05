@@ -20,6 +20,7 @@ namespace Pong.Models
         private readonly float ButtonWidth = 200;
         private readonly float ButtonHeight = 50;
         private readonly float ButtonSpace = 10;
+        private readonly float ButtonElevation = 5;
         private readonly SelectorLanguageModel Language;
 
         /// <summary>
@@ -38,11 +39,9 @@ namespace Pong.Models
             Languages.SetSelected(Language.CurrentLanguage);
             foreach (var item in Language.AvailablesLanguages)
                 Languages.AddItem(item);
-            //Languages.AddItem("English");
-            //Languages.AddItem("Russian");
 
             y += ButtonHeight * 3 + ButtonSpace * 3;
-            Back = new Button(x, y, ButtonWidth, ButtonHeight);
+            Back = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             Back.SetColorTopLayer(Color.Red);
             Back.SetTextureBottomLayer(Constants.FullPathToDark);
             Back.SetText("Back", new Font(Constants.FullPathToFont));
@@ -93,7 +92,7 @@ namespace Pong.Models
                 //Проврека над какой кнопкой произошел клик
         }
 
-        public void BackPress() => Back.Press();
+        public void BackPress() => Back.AnimatePress();
         public void BackRelease() => Back.AnimationRelease();
 
         public void LanguageRelease()

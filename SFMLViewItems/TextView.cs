@@ -15,6 +15,8 @@ namespace SFMLViewItems
         protected Font Font;
         protected Color Color;
         protected uint Size;
+        protected float TextPositionX;
+        protected float TextPositionY;
         
         /// <summary>
         /// Create text view
@@ -62,6 +64,8 @@ namespace SFMLViewItems
                 var y = PositionY + Height / 2 - Text.GetLocalBounds().Height / 2 - ElevationY;
                 Text.Position = new Vector2f(x, y);
             }
+            TextPositionX = Text.Position.X;
+            TextPositionY = Text.Position.Y;
 
             Text.CharacterSize = Size;
             Text.FillColor = Color;
