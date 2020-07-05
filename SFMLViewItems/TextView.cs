@@ -1,11 +1,11 @@
 ﻿using SFML.Graphics;
 using SFML.System;
-using SFMLViewItems.Core;
+using SFMLView.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SFMLViewItems
+namespace SFMLView
 {
     public class TextView: BaseViewRectangleObject
     {

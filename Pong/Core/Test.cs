@@ -3,8 +3,8 @@ using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SFMLViewItems;
-using SFMLViewItems.Core;
+using SFMLView;
+using SFMLView.Core;
 
 namespace Pong.Core
 {

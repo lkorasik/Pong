@@ -2,9 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Text;
 
-namespace SFMLViewItems
+namespace SFMLView
 {
     public class ButtonList: Drawable
     {
@@ -14,6 +15,7 @@ namespace SFMLViewItems
         private float ButtonHeight;
         private float ButtonSpace;
         private float HeaderSpace;
+        private float ButtonElevation;
         private List<Button> ListItems;
         private ListStats ListStat;
         private Font Font;
@@ -21,8 +23,8 @@ namespace SFMLViewItems
         private Button Collapser;
         private string CollapsedText = "▼";
         private string DetailedText = "▲";
-        public readonly List<Action> Releases;
-        public readonly List<Action> Pressed;
+        public readonly List<Action> AnimationReleases;
+        public readonly List<Action> AnimationPressed;
         public readonly List<Func<float, float, bool>> IsOvers;
         public readonly List<Func<string>> Texts;
 
@@ -39,24 +41,26 @@ namespace SFMLViewItems
             ButtonSpace = 2;
             HeaderSpace = 6;
 
+            ButtonElevation = 5;
+
             Font = font;
 
-            Header = new TextView(x, y, btnWidth - 52, bthHeight);
+            Header = new TextView(x, y, btnWidth - 52, bthHeight, ButtonElevation, ButtonElevation);
             Header.SetColorBottomLayer(Color.Black);
             Header.SetColorTopLayer(Color.Red);
             Header.SetText("Select", font);
             Header.SetTextPosition(TextAlign.CENTER);
             Header.SetTextColor(Color.Yellow);
 
-            Collapser = new Button(x + 150, y, 50, bthHeight);
+            Collapser = new Button(x + 150, y, 50, bthHeight, ButtonElevation, ButtonElevation);
             Collapser.SetColorBottomLayer(Color.Black);
             Collapser.SetColorTopLayer(Color.Red);
             Collapser.SetText(CollapsedText, font);
             Collapser.SetTextPosition(TextAlign.CENTER);
             Collapser.SetTextColor(Color.Yellow);
 
-            Releases = new List<Action>();
-            Pressed = new List<Action>();
+            AnimationReleases = new List<Action>();
+            AnimationPressed = new List<Action>();
             IsOvers = new List<Func<float, float, bool>>();
             Texts = new List<Func<string>>();
         }
@@ -75,7 +79,7 @@ namespace SFMLViewItems
         {
             var y = PositionY + (ListItems.Count + 1) * ButtonHeight + ListItems.Count * ButtonSpace + HeaderSpace;
             
-            var item = new Button(PositionX, y, ButtonWidth, ButtonHeight);
+            var item = new Button(PositionX, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             item.SetColorBottomLayer(Color.Black);
             item.SetColorTopLayer(Color.Red);
             item.SetText(text, Font);
@@ -84,8 +88,8 @@ namespace SFMLViewItems
 
             ListItems.Add(item);
             
-            Releases.Add(item.AnimationRelease);
-            Pressed.Add(item.Press);
+            AnimationReleases.Add(item.AnimationRelease);
+            AnimationPressed.Add(item.AnimatePress);
             IsOvers.Add(item.IsOverView);
             Texts.Add(item.GetText);
         }
@@ -122,8 +126,8 @@ namespace SFMLViewItems
         {
             if (ListStat == ListStats.COLLAPSED)
             {
-                Collapser.Press();
                 Collapser.SetText(DetailedText, Font);
+                Collapser.AnimatePress();
                 ListStat = ListStats.DETAILED;
             }
             else
@@ -150,7 +154,7 @@ namespace SFMLViewItems
             {
                 if (IsOvers[i](x, y))
                 {
-                    Pressed[i]();
+                    AnimationPressed[i]();
                     SetSelected(Texts[i]());
                     Toggle();
 

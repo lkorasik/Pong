@@ -1,13 +1,13 @@
 ﻿using SFML.Graphics;
 using SFML.System;
-using SFMLViewItems.Core;
+using SFMLView.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using Color = SFML.Graphics.Color;
 
-namespace SFMLViewItems.Core
+namespace SFMLView.Core
 {
     public class BaseViewRectangleObject: Drawable
     {

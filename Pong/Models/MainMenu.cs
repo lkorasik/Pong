@@ -1,5 +1,5 @@
 ﻿using SFML.Graphics;
-using SFMLViewItems;
+using SFMLView;
 using System;
 using System.Collections.Generic;
 using System.Text;

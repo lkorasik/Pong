@@ -1,5 +1,5 @@
 ﻿using SFML.Graphics;
-using SFMLViewItems;
+using SFMLView;
 using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
@@ -97,7 +97,7 @@ namespace Pong.Models
 
         public void LanguageRelease()
         {
-            foreach (var i in Languages.Releases)
+            foreach (var i in Languages.AnimationReleases)
                 i();
         }
 

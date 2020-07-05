@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SFMLViewItems
+namespace SFMLView
 {
     public enum TextAlign
     {

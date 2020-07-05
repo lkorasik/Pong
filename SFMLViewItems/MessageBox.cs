@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SFMLViewItems
+namespace SFMLView
 {
     public class MessageBox: Drawable
     {

@@ -1,12 +1,12 @@
 ﻿using SFML.Graphics;
 using SFML.System;
-using SFMLViewItems;
-using SFMLViewItems.Core;
+using SFMLView;
+using SFMLView.Core;
 using System;
 using System.ComponentModel.Design;
 using System.Security.Cryptography.X509Certificates;
 
-namespace SFMLViewItems
+namespace SFMLView
 {
     public class Button: TextView, Drawable
     {
