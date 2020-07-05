@@ -1,7 +1,12 @@
 ﻿using SFML.Graphics;
+using SFMLButton;
 using SFMLViewItems;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Pong.Models
@@ -10,10 +15,13 @@ namespace Pong.Models
     {
         private readonly List<Drawable> SettingItems;
         private readonly ButtonList Languages;
+        private readonly Button Back;
+        private readonly Button Save;
         private readonly float MenuHeight;
         private readonly float ButtonWidth = 200;
         private readonly float ButtonHeight = 50;
         private readonly float ButtonSpace = 10;
+        private readonly SelectorLanguageModel Language;
 
         /// <summary>
         /// Create main menu
@@ -25,12 +33,25 @@ namespace Pong.Models
             var x = Constants.WindowWidth / 2 - ButtonWidth / 2;
             var y = Constants.WindowHeight / 2 - MenuHeight / 2;
 
-            Languages = new ButtonList(x, y, ButtonWidth, ButtonHeight, new Font(Constants.FullPathToFont));
-            Languages.SetSelected("Lang");
-            Languages.AddItem("English");
-            Languages.AddItem("Russian");
+            Language = SettingsWorker.LoadLanguageModel();
 
-            SettingItems = new List<Drawable>() { Languages };
+            Languages = new ButtonList(x, y, ButtonWidth, ButtonHeight, new Font(Constants.FullPathToFont));
+            Languages.SetSelected(Language.CurrentLanguage);
+            foreach (var item in Language.AvailablesLanguages)
+                Languages.AddItem(item);
+            //Languages.AddItem("English");
+            //Languages.AddItem("Russian");
+
+            y += ButtonHeight * 3 + ButtonSpace * 3;
+            Back = new Button(x, y, ButtonWidth, ButtonHeight);
+            Back.SetColorTopLayer(Color.Red);
+            Back.SetTextureBottomLayer(Constants.FullPathToDark);
+            Back.SetText("Back", new Font(Constants.FullPathToFont));
+            Back.SetTextSize(17);
+            Back.SetTextPosition(TextAlign.CENTER);
+            Back.SetTextColor(Color.Yellow);
+
+            SettingItems = new List<Drawable>() { Languages, Back };
         }
 
         /// <summary>
@@ -44,6 +65,8 @@ namespace Pong.Models
             //if (Languages.IsOverHeader(x, y))
             if (Languages.IsOverView(x, y))
                 return SettingsButtons.LANGUAGES;
+            if (Back.IsOverView(x, y))
+                return SettingsButtons.BACK;
             return null;
         }
 
@@ -54,7 +77,8 @@ namespace Pong.Models
         {
             for (int i = 0; i < SettingItems.Count; i++)
             {
-                SettingItems[i].Draw(target, states);
+                if(SettingItems[i] != null)
+                    SettingItems[i].Draw(target, states);
             }
         }
 
@@ -70,15 +94,42 @@ namespace Pong.Models
                 //Проврека над какой кнопкой произошел клик
         }
 
+        public void BackPress() => Back.Press();
+        public void BackRelease() => Back.Release();
+
         public void LanguageRelease()
         {
             foreach (var i in Languages.Releases)
                 i();
         }
+
+        public void SaveSettings()
+        {
+            Language.CurrentLanguage = Languages.GetSelected();
+
+            SettingsWorker.Save(Language);
+        }
+
+        public void CallExitMessageBox()
+        {
+            var mbWidth = 430;
+            var mbHeight = 110;
+
+            var ExitMessageBox = new MessageBox(Constants.WindowWidth / 2 - mbWidth / 2, Constants.WindowHeight / 2 - mbHeight /2, mbWidth, mbHeight);
+            ExitMessageBox.SetColorTopLayer(Color.Red);
+            ExitMessageBox.SetColorBottomLayer(Color.Black);
+            ExitMessageBox.AddRightButton("Yes", new Font(Constants.FullPathToFont));
+            ExitMessageBox.AddLeftButton("No", new Font(Constants.FullPathToFont));
+            ExitMessageBox.SetText("Do you want to save settings?", new Font(Constants.FullPathToFont));
+            ExitMessageBox.SetTextPosition(TextAlign.CENTER);
+
+            SettingItems.Add(ExitMessageBox);
+        }
     }
 
     enum SettingsButtons
     {
-        LANGUAGES
+        LANGUAGES,
+        BACK
     }
 }

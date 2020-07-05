@@ -67,6 +67,11 @@ namespace SFMLViewItems
             Header.SetText(text, Font);
         }
 
+        public string GetSelected()
+        {
+            return Header.GetText();
+        }
+
         public void AddItem(string text)
         {
             var y = PositionY + (ListItems.Count + 1) * ButtonHeight + ListItems.Count * ButtonSpace + HeaderSpace;
@@ -148,6 +153,7 @@ namespace SFMLViewItems
                 {
                     Pressed[i]();
                     SetSelected(Texts[i]());
+                    Toggle();
 
                     return;
                 }

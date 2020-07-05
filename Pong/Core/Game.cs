@@ -146,6 +146,9 @@ namespace Pong.Core
                     case SettingsButtons.LANGUAGES:
                         Settings.LanguagePress(x, y);
                         break;
+                    case SettingsButtons.BACK:
+                        Settings.BackPress();
+                        break;
                 }
             }
         }
@@ -185,6 +188,19 @@ namespace Pong.Core
             if(GameStat == GameStats.SETTINGS)
             {
                 Settings.LanguageRelease();
+
+                var button = Settings.GetClickedButton(x, y);
+
+                switch (button)
+                {
+                    case SettingsButtons.BACK:
+                        GameStat = GameStats.MENU;
+                        Settings.BackRelease();
+                        Settings.SaveSettings();
+                        //Settings.BackRelease();
+                        //Settings.CallExitMessageBox();
+                        break;
+                }
             }
         }
 

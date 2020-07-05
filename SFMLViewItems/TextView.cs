@@ -46,16 +46,6 @@ namespace SFMLViewItems
         }
 
         /// <summary>
-        /// Set buttons position
-        /// </summary>
-        /// <param name="x">Position on x-axis</param>
-        /// <param name="y">Position on y-axis</param>
-        public void SetPosition(int x, int y)
-        {
-            Text.Position = new Vector2f(x, y);
-        }
-
-        /// <summary>
         /// Set text position on button
         /// </summary>
         /// <param name="align">Center</param>
