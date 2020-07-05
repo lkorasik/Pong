@@ -22,7 +22,7 @@ namespace Pong.Models
         /// <summary>
         /// Create main menu
         /// </summary>
-        public MainMenu()
+        public MainMenu(GameLanguageModel localization)
         {
             MenuHeight = 4 * ButtonHeight + 3 * ButtonSpace;
 
@@ -32,7 +32,7 @@ namespace Pong.Models
             PlayerPc = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             PlayerPc.SetColorTopLayer(Color.Red);
             PlayerPc.SetTextureBottomLayer(Constants.FullPathToDark);
-            PlayerPc.SetText("Player vs PC", new Font(Constants.FullPathToFont));
+            PlayerPc.SetText(localization.PlayerPc, new Font(Constants.FullPathToFont));
             PlayerPc.SetTextSize(17);
             PlayerPc.SetTextColor(Color.Yellow);
 
@@ -40,7 +40,7 @@ namespace Pong.Models
             PlayerPlayer = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             PlayerPlayer.SetColorTopLayer(Color.Red);
             PlayerPlayer.SetTextureBottomLayer(Constants.FullPathToDark);
-            PlayerPlayer.SetText("Player vs Player", new Font(Constants.FullPathToFont));
+            PlayerPlayer.SetText(localization.PlayerPlayer, new Font(Constants.FullPathToFont));
             PlayerPlayer.SetTextSize(17);
             PlayerPlayer.SetTextColor(Color.Yellow);
 
@@ -48,7 +48,7 @@ namespace Pong.Models
             Settings = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             Settings.SetColorTopLayer(Color.Red);
             Settings.SetTextureBottomLayer(Constants.FullPathToDark);
-            Settings.SetText("Settings", new Font(Constants.FullPathToFont));
+            Settings.SetText(localization.Settings, new Font(Constants.FullPathToFont));
             Settings.SetTextSize(17);
             Settings.SetTextColor(Color.Yellow);
 
@@ -56,7 +56,7 @@ namespace Pong.Models
             Exit = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             Exit.SetColorTopLayer(Color.Red);
             Exit.SetTextureBottomLayer(Constants.FullPathToDark);
-            Exit.SetText("Exit", new Font(Constants.FullPathToFont));
+            Exit.SetText(localization.Exit, new Font(Constants.FullPathToFont));
             Exit.SetTextSize(17);
             Exit.SetTextColor(Color.Yellow);
 

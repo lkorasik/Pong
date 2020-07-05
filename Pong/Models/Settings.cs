@@ -29,7 +29,7 @@ namespace Pong.Models
         /// <summary>
         /// Create main menu
         /// </summary>
-        public Settings()
+        public Settings(GameLanguageModel localization)
         {
             MenuHeight = 4 * ButtonHeight + 3 * ButtonSpace;
 
@@ -47,22 +47,22 @@ namespace Pong.Models
             Back = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             Back.SetColorTopLayer(Color.Red);
             Back.SetTextureBottomLayer(Constants.FullPathToDark);
-            Back.SetText("Back", new Font(Constants.FullPathToFont));
+            Back.SetText(localization.Back, new Font(Constants.FullPathToFont));
             Back.SetTextSize(17);
             Back.SetTextPosition(TextAlign.CENTER);
             Back.SetTextColor(Color.Yellow);
 
             SettingStat = SettingsStates.NONE;
 
-            var mbWidth = 430;
+            var mbWidth = 500;
             var mbHeight = 110;
 
             ExitMessageBox = new MessageBox(Constants.WindowWidth / 2 - mbWidth / 2, Constants.WindowHeight / 2 - mbHeight / 2, mbWidth, mbHeight);
             ExitMessageBox.SetColorTopLayer(Color.Red);
             ExitMessageBox.SetColorBottomLayer(Color.Black);
-            ExitMessageBox.AddRightButton("Yes", new Font(Constants.FullPathToFont));
-            ExitMessageBox.AddLeftButton("No", new Font(Constants.FullPathToFont));
-            ExitMessageBox.SetText("Do you want to save settings?", new Font(Constants.FullPathToFont));
+            ExitMessageBox.AddRightButton(localization.Yes, new Font(Constants.FullPathToFont));
+            ExitMessageBox.AddLeftButton(localization.No, new Font(Constants.FullPathToFont));
+            ExitMessageBox.SetText(localization.Question, new Font(Constants.FullPathToFont));
             ExitMessageBox.SetTextPosition(TextAlign.CENTER);
 
             SettingItems = new List<Drawable>() { Languages, Back };

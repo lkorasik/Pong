@@ -34,7 +34,7 @@ namespace Pong.Models
                 model.Back = Constants.EngBack;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-                File.WriteAllText(Constants.FullPathToSettings, json, Encoding.UTF8);
+                File.WriteAllText(Constants.FullPathToRussianLang, json, Encoding.UTF8);
             }
             if (!File.Exists(Constants.FullPathToRussianLang))
             {
@@ -46,7 +46,9 @@ namespace Pong.Models
                 model.Back = Constants.RusBack;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-                File.WriteAllText(Constants.FullPathToSettings, json, Encoding.UTF8);
+
+                Console.WriteLine(json);
+                File.WriteAllText(Constants.FullPathToRussianLang, json, Encoding.UTF8);
             }
         }
 

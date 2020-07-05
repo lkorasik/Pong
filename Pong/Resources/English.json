@@ -3,5 +3,8 @@
   "PlayerPlayer": "Player vs Player",
   "Settings": "Settings",
   "Exit": "Exit",
-  "Back": "Back"
+  "Back": "Back",
+  "Question": "Do you want to save settings?",
+  "Yes": "Yes",
+  "No": "No"
 }

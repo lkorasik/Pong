@@ -51,6 +51,24 @@ namespace Pong.Core
         /// <param name="keyboardState">Keyboard</param>
         public Game(KeyboardState keyboardState, MouseState mouseState)
         {
+            var lang = SettingsWorker.LoadSelectorLanguageModel();
+            Languages language;
+
+            switch (lang.CurrentLanguage)
+            {
+                case "English":
+                    language = Languages.ENGLISH;
+                    break;
+                case "Русский":
+                    language = Languages.RUSSIAN;
+                    break;
+                default:
+                    language = Languages.ENGLISH;
+                    break;
+            }
+
+            var localization = SettingsWorker.LoadGameLanguageModel(language);
+
             Board = new Board();
             Ball = new Ball();
             LeftRacket = new Racket(PositionTypes.LEFT);
@@ -59,10 +77,10 @@ namespace Pong.Core
             MouseState = mouseState;
             LeftCounter = new Counter(PositionTypes.LEFT);
             RightCounter = new Counter(PositionTypes.RIGHT);
-            MainMenu = new MainMenu();
+            MainMenu = new MainMenu(localization);
             LeftBot = new Bot(LeftRacket);
             RightBot = new Bot(RightRacket);
-            Settings = new Settings();
+            Settings = new Settings(localization);
 
             GameStat = GameStats.MENU;
             GameMode = GameStats.MENU;

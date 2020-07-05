@@ -14,5 +14,8 @@ namespace Pong.Models
         public string Settings { get; set; }
         public string Exit { get; set; }
         public string Back { get; set; }
+        public string Yes { get; set; }
+        public string No { get; set; }
+        public string Question { get; set; }
     }
 }
