@@ -21,6 +21,7 @@ namespace SFMLView
         private float ButtonMargin;
         private float ButtonWidth;
         private float ButtonHeight;
+        private float ButtonElevation;
         private TextAlign Align;
 
         public MessageBox(float x, float y, float width, float height)
@@ -31,6 +32,7 @@ namespace SFMLView
             Height = height;
 
             Elevation = 5;
+            ButtonElevation = 5;
 
             TopLayer = new RectangleShape(new Vector2f(Width, Height));
             BottomLayer = new RectangleShape(new Vector2f(Width, Height));
@@ -72,7 +74,7 @@ namespace SFMLView
         /// <param name="font">Font</param>
         public void AddRightButton(string text, Font font)
         {
-            RightButton = new Button(PositionX + ButtonMargin + ButtonMargin + ButtonWidth, PositionY + Height - ButtonMargin - ButtonHeight, ButtonWidth, ButtonHeight);
+            RightButton = new Button(PositionX + ButtonMargin + ButtonMargin + ButtonWidth, PositionY + Height - ButtonMargin - ButtonHeight, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             RightButton.SetColorTopLayer(Color.Yellow);
             RightButton.SetColorBottomLayer(Color.Black);
             RightButton.SetText(text, font);
@@ -88,7 +90,7 @@ namespace SFMLView
         /// <param name="font">Font</param>
         public void AddLeftButton(string text, Font font)
         {
-            LeftButton = new Button(PositionX + ButtonMargin, PositionY + Height - ButtonMargin - ButtonHeight, ButtonWidth, ButtonHeight);
+            LeftButton = new Button(PositionX + ButtonMargin, PositionY + Height - ButtonMargin - ButtonHeight, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
             LeftButton.SetColorTopLayer(Color.Yellow);
             LeftButton.SetColorBottomLayer(Color.Black);
             LeftButton.SetText(text, font);
