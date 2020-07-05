@@ -219,5 +219,8 @@ namespace SFMLView
                 return true;
             return false;
         }
+
+        public bool IsOverLeft(float x, float y) => LeftButton.IsOverView(x, y);
+        public bool IsOverRight(float x, float y) => RightButton.IsOverView(x, y);
     }
 }

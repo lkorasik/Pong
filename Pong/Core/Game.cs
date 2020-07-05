@@ -4,6 +4,7 @@ using Pong.Models;
 using SFML.Graphics;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -191,14 +192,20 @@ namespace Pong.Core
 
                 var button = Settings.GetClickedButton(x, y);
 
+                Console.WriteLine("> " + button);
                 switch (button)
                 {
                     case SettingsButtons.BACK:
+                        Settings.BackRelease();
+                        break;
+                    case SettingsButtons.NO:
                         GameStat = GameStats.MENU;
-                        Settings.BackRelease();
+                        Settings.CloseMessageBox();
+                        break;
+                    case SettingsButtons.YES:
+                        GameStat = GameStats.MENU;
+                        Settings.CloseMessageBox();
                         Settings.SaveSettings();
-                        Settings.BackRelease();
-                        Settings.CallExitMessageBox();
                         break;
                 }
             }

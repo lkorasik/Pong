@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using SFML.Graphics;
 using SFMLView;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace Pong.Models
 {
-    class Settings: Drawable
+    class Settings : Drawable
     {
         private readonly List<Drawable> SettingItems;
         private readonly ButtonList Languages;
@@ -22,6 +23,8 @@ namespace Pong.Models
         private readonly float ButtonSpace = 10;
         private readonly float ButtonElevation = 5;
         private readonly SelectorLanguageModel Language;
+        private SettingsStates SettingStat;
+        private readonly MessageBox ExitMessageBox;
 
         /// <summary>
         /// Create main menu
@@ -49,6 +52,19 @@ namespace Pong.Models
             Back.SetTextPosition(TextAlign.CENTER);
             Back.SetTextColor(Color.Yellow);
 
+            SettingStat = SettingsStates.NONE;
+
+            var mbWidth = 430;
+            var mbHeight = 110;
+
+            ExitMessageBox = new MessageBox(Constants.WindowWidth / 2 - mbWidth / 2, Constants.WindowHeight / 2 - mbHeight / 2, mbWidth, mbHeight);
+            ExitMessageBox.SetColorTopLayer(Color.Red);
+            ExitMessageBox.SetColorBottomLayer(Color.Black);
+            ExitMessageBox.AddRightButton("Yes", new Font(Constants.FullPathToFont));
+            ExitMessageBox.AddLeftButton("No", new Font(Constants.FullPathToFont));
+            ExitMessageBox.SetText("Do you want to save settings?", new Font(Constants.FullPathToFont));
+            ExitMessageBox.SetTextPosition(TextAlign.CENTER);
+
             SettingItems = new List<Drawable>() { Languages, Back };
         }
 
@@ -61,10 +77,21 @@ namespace Pong.Models
         public SettingsButtons? GetClickedButton(float x, float y)
         {
             //if (Languages.IsOverHeader(x, y))
+
+            if ((SettingStat == SettingsStates.MESSAGE_BOX) && (ExitMessageBox.IsOverLeft(x, y)))
+            {
+                return SettingsButtons.NO;
+            }
+            else if ((SettingStat == SettingsStates.MESSAGE_BOX) && (ExitMessageBox.IsOverRight(x, y)))
+            {
+                return SettingsButtons.YES;
+            }
+
             if (Languages.IsOverView(x, y))
                 return SettingsButtons.LANGUAGES;
             if (Back.IsOverView(x, y))
                 return SettingsButtons.BACK;
+
             return null;
         }
 
@@ -75,8 +102,10 @@ namespace Pong.Models
         {
             for (int i = 0; i < SettingItems.Count; i++)
             {
-                if(SettingItems[i] != null)
+                if (SettingItems[i] != null)
                     SettingItems[i].Draw(target, states);
+                if (SettingStat == SettingsStates.MESSAGE_BOX)
+                    ExitMessageBox.Draw(target, states);
             }
         }
 
@@ -89,7 +118,7 @@ namespace Pong.Models
                 Languages.Toggle();
             else if (Languages.IsOverView(x, y))
                 Languages.Press(x, y);
-                //Проврека над какой кнопкой произошел клик
+            //Проврека над какой кнопкой произошел клик
         }
 
         /// <summary>
@@ -99,7 +128,11 @@ namespace Pong.Models
         /// <summary>
         /// animate Back button
         /// </summary>
-        public void BackRelease() => Back.AnimationRelease();
+        public void BackRelease()
+        {
+            Back.AnimationRelease();
+            SettingStat = SettingsStates.MESSAGE_BOX;
+        }
 
         /// <summary>
         /// Release all buttons in list
@@ -125,24 +158,26 @@ namespace Pong.Models
         /// </summary>
         public void CallExitMessageBox()
         {
-            var mbWidth = 430;
-            var mbHeight = 110;
+            SettingStat = SettingsStates.MESSAGE_BOX;
+        }
 
-            var ExitMessageBox = new MessageBox(Constants.WindowWidth / 2 - mbWidth / 2, Constants.WindowHeight / 2 - mbHeight /2, mbWidth, mbHeight);
-            ExitMessageBox.SetColorTopLayer(Color.Red);
-            ExitMessageBox.SetColorBottomLayer(Color.Black);
-            ExitMessageBox.AddRightButton("Yes", new Font(Constants.FullPathToFont));
-            ExitMessageBox.AddLeftButton("No", new Font(Constants.FullPathToFont));
-            ExitMessageBox.SetText("Do you want to save settings?", new Font(Constants.FullPathToFont));
-            ExitMessageBox.SetTextPosition(TextAlign.CENTER);
-
-            SettingItems.Add(ExitMessageBox);
+        public void CloseMessageBox()
+        {
+            SettingStat = SettingsStates.NONE;
         }
     }
 
     enum SettingsButtons
     {
         LANGUAGES,
-        BACK
+        BACK,
+        NO,
+        YES
+    }
+
+    enum SettingsStates
+    {
+        MESSAGE_BOX,
+        NONE
     }
 }
