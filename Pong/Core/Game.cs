@@ -210,7 +210,6 @@ namespace Pong.Core
 
                 var button = Settings.GetClickedButton(x, y);
 
-                Console.WriteLine("> " + button);
                 switch (button)
                 {
                     case SettingsButtons.BACK:
