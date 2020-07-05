@@ -20,6 +20,7 @@ namespace Pong.Models
         private float StartX;
         private float StartY;
         private Texture RacketTexture;
+        private float Step;
 
         /// <summary>
         /// Create racket
@@ -44,6 +45,8 @@ namespace Pong.Models
             RacketView.Texture = RacketTexture;
 
             Type = type;
+
+            Step = (float)(Math.PI / 2 / Height);
 
             Movement = RacketMovements.STOP;
         }
@@ -132,6 +135,16 @@ namespace Pong.Models
             X = StartX;
             Y = StartY;
             RacketView.Position = new Vector2f(X, Y);
+        }
+
+        public float GetHeight()
+        {
+            return Height;
+        }
+
+        public float GetStep()
+        {
+            return Step;
         }
     }
     

@@ -2,6 +2,7 @@
 using Pong.Input;
 using Pong.Models;
 using System;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Pong.Logic
 {
@@ -131,10 +132,27 @@ namespace Pong.Logic
             var inVerticalRightRange = (rightDownRight.Y > ballUpLeft.Y) && (ballDownRight.Y > rightUpLeft.Y);
             var inHorizontalRightRange = (rightDownRight.X > ballUpLeft.X) && (ballDownRight.X > rightUpLeft.X);
 
+
+            if (inVerticalRightRange && (rightLeftConnect || rightRightConnect))
+            {
+                var racketCenter = RightRacket.GetHeight() / 2 + RightRacket.GetUpLeftPoint().Y;
+                var ballCenter = 5 + ball.GetUpLeftPoint().Y;
+                var dy = ballCenter - racketCenter;
+
+                var angle = dy * RightRacket.GetStep();
+
+                ball.SetDirection(-(float)(angle + Math.PI));
+            }
+
+            if (inHorizontalRightRange && (rightUpConnect || rightDownConnect))
+                ball.SetDirection((float)(-ball.GetDirection()));
+
+            /*
             if (inVerticalRightRange && (rightLeftConnect || rightRightConnect))
                 ball.SetDirection((float)(Math.PI - ball.GetDirection()));
             if (inHorizontalRightRange && (rightUpConnect || rightDownConnect))
                 ball.SetDirection((float)(-ball.GetDirection()));
+            */
         }
     }
 }

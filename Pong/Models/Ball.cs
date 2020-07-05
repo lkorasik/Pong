@@ -118,5 +118,6 @@ namespace Pong.Models
             Y = StartY;
             BallView.Position = new Vector2f(X, Y);
         }
+
     }
 }

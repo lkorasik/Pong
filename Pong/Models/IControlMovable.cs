@@ -6,5 +6,7 @@
     interface IControlMovable : IMovable
     {
         void Move(float dx, float dy);
+        float GetHeight();
+        float GetStep();
     }
 }
