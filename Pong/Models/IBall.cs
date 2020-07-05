@@ -5,14 +5,11 @@ using System.Text;
 namespace Pong.Models
 {
     /// <summary>
-    /// Game states
+    /// Interface for Ball
     /// </summary>
-    enum GameStats
+    interface IBall : IMovable
     {
-        PLAY_PLAYER_PLAYER,
-        PLAY_PLAYER_PC,
-        MENU,
-        SETTINGS,
-        PAUSE
+        void SetDirection(float angle);
+        float GetDirection();
     }
 }

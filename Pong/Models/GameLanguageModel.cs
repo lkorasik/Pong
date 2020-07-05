@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Pong.Models
 {
+    /// <summary>
+    /// All translations in game
+    /// </summary>
     class GameLanguageModel
     {
         public string PlayerPc { get; set; }

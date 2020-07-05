@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Pong.Models
 {
+    /// <summary>
+    /// Languages in selector
+    /// </summary>
     class SelectorLanguageModel
     {
         public string CurrentLanguage { get; set; }

@@ -92,15 +92,27 @@ namespace Pong.Models
                 //Проврека над какой кнопкой произошел клик
         }
 
+        /// <summary>
+        /// animate Back button
+        /// </summary>
         public void BackPress() => Back.AnimatePress();
+        /// <summary>
+        /// animate Back button
+        /// </summary>
         public void BackRelease() => Back.AnimationRelease();
 
+        /// <summary>
+        /// Release all buttons in list
+        /// </summary>
         public void LanguageRelease()
         {
             foreach (var i in Languages.AnimationReleases)
                 i();
         }
 
+        /// <summary>
+        /// Save current settings
+        /// </summary>
         public void SaveSettings()
         {
             Language.CurrentLanguage = Languages.GetSelected();
@@ -108,6 +120,9 @@ namespace Pong.Models
             SettingsWorker.SaveSelectorLanguageModel(Language);
         }
 
+        /// <summary>
+        /// Call MessageBox
+        /// </summary>
         public void CallExitMessageBox()
         {
             var mbWidth = 430;

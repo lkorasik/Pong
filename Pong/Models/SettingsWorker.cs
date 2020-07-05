@@ -10,6 +10,9 @@ namespace Pong.Models
 {
     static class SettingsWorker
     {
+        /// <summary>
+        /// Work with JSON-files
+        /// </summary>
         static SettingsWorker()
         {
             if (!File.Exists(Constants.FullPathToSettings))
@@ -47,6 +50,10 @@ namespace Pong.Models
             }
         }
 
+        /// <summary>
+        /// Load data for selector
+        /// </summary>
+        /// <returns>LanguageModel</returns>
         public static SelectorLanguageModel LoadSelectorLanguageModel()
         {
             var reader = new StreamReader(Constants.FullPathToSettings, Encoding.UTF8);
@@ -58,11 +65,20 @@ namespace Pong.Models
             return languageModel;
         }
 
+        /// <summary>
+        /// Save data from selector
+        /// </summary>
+        /// <param name="languageModel">LanguageModel</param>
         public static void SaveSelectorLanguageModel(SelectorLanguageModel languageModel)
         {
             File.WriteAllText(Constants.FullPathToSettings, JsonConvert.SerializeObject(languageModel, Formatting.Indented), Encoding.UTF8);
         }
 
+        /// <summary>
+        /// Load translations
+        /// </summary>
+        /// <param name="language">What lang do you need?</param>
+        /// <returns>GameLanguageModel</returns>
         public static GameLanguageModel LoadGameLanguageModel(Languages language)
         {
             if (language == Languages.RUSSIAN)
