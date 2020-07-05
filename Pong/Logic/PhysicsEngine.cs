@@ -145,14 +145,15 @@ namespace Pong.Logic
             }
 
             if (inHorizontalRightRange && (rightUpConnect || rightDownConnect))
-                ball.SetDirection((float)(-ball.GetDirection()));
+            {
+                var racketCenter = LeftRacket.GetHeight() / 2 + LeftRacket.GetUpLeftPoint().Y;
+                var ballCenter = 5 + ball.GetUpLeftPoint().Y;
+                var dy = ballCenter - racketCenter;
 
-            /*
-            if (inVerticalRightRange && (rightLeftConnect || rightRightConnect))
-                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
-            if (inHorizontalRightRange && (rightUpConnect || rightDownConnect))
-                ball.SetDirection((float)(-ball.GetDirection()));
-            */
+                var angle = dy * LeftRacket.GetStep();
+
+                ball.SetDirection(-(float)(angle - Math.PI));
+            }
         }
     }
 }
