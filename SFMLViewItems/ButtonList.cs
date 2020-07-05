@@ -1,5 +1,4 @@
 ﻿using SFML.Graphics;
-using SFMLButton;
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -84,8 +83,8 @@ namespace SFMLViewItems
             item.SetTextColor(Color.Yellow);
 
             ListItems.Add(item);
-
-            Releases.Add(item.Release);
+            
+            Releases.Add(item.AnimationRelease);
             Pressed.Add(item.Press);
             IsOvers.Add(item.IsOverView);
             Texts.Add(item.GetText);
@@ -129,7 +128,7 @@ namespace SFMLViewItems
             }
             else
             {
-                Collapser.Release();
+                Collapser.AnimationRelease();
                 Collapser.SetText(CollapsedText, Font);
                 ListStat = ListStats.COLLAPSED;
             }

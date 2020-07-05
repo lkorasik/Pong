@@ -1,5 +1,5 @@
 ﻿using SFML.Graphics;
-using SFMLButton;
+using SFMLViewItems;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -116,19 +116,19 @@ namespace Pong.Models
         /// <summary>
         /// Player release button PlayerPc
         /// </summary>
-        public void PlayerPcRelease() => PlayerPc.Release();
+        public void PlayerPcRelease() => PlayerPc.AnimationRelease();
         /// <summary>
         /// Player release button PcPc
         /// </summary>
-        public void PlayerPlayerRelease() => PlayerPlayer.Release();
+        public void PlayerPlayerRelease() => PlayerPlayer.AnimationRelease();
         /// <summary>
         /// Player release button Settings
         /// </summary>
-        public void SettingsRelease() => Settings.Release();
+        public void SettingsRelease() => Settings.AnimationRelease();
         /// <summary>
         /// Player release button Exit
         /// </summary>
-        public void ExitRelease() => Exit.Release();
+        public void ExitRelease() => Exit.AnimationRelease();
     }
 
     /// <summary>

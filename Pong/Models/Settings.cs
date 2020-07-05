@@ -1,5 +1,4 @@
 ﻿using SFML.Graphics;
-using SFMLButton;
 using SFMLViewItems;
 using System;
 using System.Collections.Generic;
@@ -95,7 +94,7 @@ namespace Pong.Models
         }
 
         public void BackPress() => Back.Press();
-        public void BackRelease() => Back.Release();
+        public void BackRelease() => Back.AnimationRelease();
 
         public void LanguageRelease()
         {
