@@ -43,7 +43,7 @@ namespace SFMLView
             Text = new Text();
 
             ButtonMargin = 10;
-            ButtonWidth = 200;
+            ButtonWidth = 230;
             ButtonHeight = 50;
 
             Align = TextAlign.CENTER;
