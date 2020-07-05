@@ -9,11 +9,19 @@ namespace Pong.Models
     {
         private readonly Racket racket;
 
+        /// <summary>
+        /// Create bot
+        /// </summary>
+        /// <param name="racket">Give AI racket!</param>
         public Bot(Racket racket)
         {
             this.racket = racket;
         }
 
+        /// <summary>
+        /// Calc thraectory for racket
+        /// </summary>
+        /// <param name="ballDirection"></param>
         public void MakeStep(float ballDirection)
         {
             if (Math.Sin(ballDirection) > 0)

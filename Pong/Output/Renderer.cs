@@ -75,6 +75,8 @@ namespace Pong.Output
         /// </summary>
         private void OnKeyReleased(object obj, KeyEventArgs args)
         {
+            if (args.Code == Keyboard.Key.Escape)
+                Game.ReturnToMainMenu();
             if (args.Code == Keyboard.Key.Space)
                 Game.TogglePause();
             if (args.Code == Keyboard.Key.S)
@@ -117,8 +119,9 @@ namespace Pong.Output
                 if (Game.GetGameStat == GameStats.PLAY_PLAYER_PLAYER || Game.GetGameStat == GameStats.MENU || Game.GetGameStat == GameStats.PLAY_PLAYER_PC)
                 {
                     PhysicEngine.MakeStep();
-                    Drawables = Game.GetDrawables();
                 }
+                
+                Drawables = Game.GetDrawables();
                     
                 Window.DispatchEvents();
                 Window.Clear(Color.Black);
