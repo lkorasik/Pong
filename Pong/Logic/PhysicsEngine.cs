@@ -86,12 +86,10 @@ namespace Pong.Logic
                 ball.SetDirection((float)(-ball.GetDirection()));
             if (UpLeft.X <= 0 - Constants.HorizontalExpand)
             {
-                //ball.SetDirection((float)(Math.PI - ball.GetDirection()));
                 Goal(PositionTypes.LEFT);
             }
             if (DownRight.X >= Constants.WindowWidth + Constants.HorizontalExpand)
             {
-                //ball.SetDirection((float)(Math.PI - ball.GetDirection()));
                 Goal(PositionTypes.RIGHT);
             }
         }
@@ -131,7 +129,6 @@ namespace Pong.Logic
 
             var inVerticalRightRange = (rightDownRight.Y > ballUpLeft.Y) && (ballDownRight.Y > rightUpLeft.Y);
             var inHorizontalRightRange = (rightDownRight.X > ballUpLeft.X) && (ballDownRight.X > rightUpLeft.X);
-
 
             if (inVerticalRightRange && (rightLeftConnect || rightRightConnect))
             {

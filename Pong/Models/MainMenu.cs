@@ -30,37 +30,30 @@ namespace Pong.Models
             var y = Constants.WindowHeight / 2 - MenuHeight / 2;
 
             PlayerPc = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
-            PlayerPc.SetColorTopLayer(Color.Red);
-            PlayerPc.SetTextureBottomLayer(Constants.FullPathToDark);
-            PlayerPc.SetText(localization.PlayerPc, new Font(Constants.FullPathToFont));
-            PlayerPc.SetTextSize(17);
-            PlayerPc.SetTextColor(Color.Yellow);
+            InitButton(PlayerPc, localization.PlayerPc);
 
             y += ButtonHeight + ButtonSpace;
             PlayerPlayer = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
-            PlayerPlayer.SetColorTopLayer(Color.Red);
-            PlayerPlayer.SetTextureBottomLayer(Constants.FullPathToDark);
-            PlayerPlayer.SetText(localization.PlayerPlayer, new Font(Constants.FullPathToFont));
-            PlayerPlayer.SetTextSize(17);
-            PlayerPlayer.SetTextColor(Color.Yellow);
+            InitButton(PlayerPlayer, localization.PlayerPlayer);
 
             y += ButtonHeight + ButtonSpace;
             Settings = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
-            Settings.SetColorTopLayer(Color.Red);
-            Settings.SetTextureBottomLayer(Constants.FullPathToDark);
-            Settings.SetText(localization.Settings, new Font(Constants.FullPathToFont));
-            Settings.SetTextSize(17);
-            Settings.SetTextColor(Color.Yellow);
+            InitButton(Settings, localization.Settings);
 
             y += ButtonHeight + ButtonSpace;
             Exit = new Button(x, y, ButtonWidth, ButtonHeight, ButtonElevation, ButtonElevation);
-            Exit.SetColorTopLayer(Color.Red);
-            Exit.SetTextureBottomLayer(Constants.FullPathToDark);
-            Exit.SetText(localization.Exit, new Font(Constants.FullPathToFont));
-            Exit.SetTextSize(17);
-            Exit.SetTextColor(Color.Yellow);
+            InitButton(Exit, localization.Exit);
 
             MenuList = new List<Drawable>() { PlayerPc, PlayerPlayer, Settings, Exit };
+        }
+
+        private void InitButton(Button btn, string text)
+        {
+            btn.SetColorTopLayer(Color.Red);
+            btn.SetTextureBottomLayer(Constants.FullPathToDark);
+            btn.SetText(text, new Font(Constants.FullPathToFont));
+            btn.SetTextSize(17);
+            btn.SetTextColor(Color.Yellow);
         }
 
         /// <summary>

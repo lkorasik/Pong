@@ -15,6 +15,13 @@ namespace Pong.Models
         /// </summary>
         static SettingsWorker()
         {
+            CheckSettingsFile();
+            CheckEnglishLangFile();
+            CheckRussianLangFile();
+        }
+
+        private static void CheckSettingsFile()
+        {
             if (!File.Exists(Constants.FullPathToSettings))
             {
                 var model = new SelectorLanguageModel();
@@ -24,6 +31,10 @@ namespace Pong.Models
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
                 File.WriteAllText(Constants.FullPathToSettings, json, Encoding.UTF8);
             }
+        }
+
+        private static void CheckEnglishLangFile()
+        {
             if (!File.Exists(Constants.FullPathToEnglishLang))
             {
                 var model = new GameLanguageModel();
@@ -36,6 +47,10 @@ namespace Pong.Models
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
                 File.WriteAllText(Constants.FullPathToRussianLang, json, Encoding.UTF8);
             }
+        }
+
+        private static void CheckRussianLangFile()
+        {
             if (!File.Exists(Constants.FullPathToRussianLang))
             {
                 var model = new GameLanguageModel();

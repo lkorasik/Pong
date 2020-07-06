@@ -25,9 +25,9 @@ namespace Pong.Models
         public void MakeStep(float ballDirection)
         {
             if (Math.Sin(ballDirection) > 0)
-                racket.Move(0, 1);
+                racket.Move(0, 2);
             if (Math.Sin(ballDirection) < 0)
-                racket.Move(0, -1);
+                racket.Move(0, -2);
         }
     }
 }
