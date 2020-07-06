@@ -59,6 +59,11 @@ namespace Pong.Models
             return Speed;
         }
 
+        public void ResetSpeed()
+        {
+            Speed = 1f;
+        }
+
         /// <summary>
         /// Draw ball
         /// </summary>

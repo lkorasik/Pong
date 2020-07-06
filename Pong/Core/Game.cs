@@ -125,6 +125,7 @@ namespace Pong.Core
         /// </summary>
         public void ResetAllObjects()
         {
+            Ball.ResetSpeed();
             Ball.ResetPosition();
             LeftRacket.ResetPosition();
             RightRacket.ResetPosition();
