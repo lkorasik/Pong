@@ -59,7 +59,7 @@ namespace Pong.Logic
                 if (Keyboard.GetRightDown())
                     RightRacket.Move(0, 2);
             }
-            if (GetGameStat() == GameStats.MENU)
+            if (GetGameStat() == GameStats.MENU || GetGameStat() == GameStats.SETTINGS)
             {
                 LeftBot.MakeStep(Ball.GetDirection());
                 RightBot.MakeStep(Ball.GetDirection());
