@@ -143,6 +143,28 @@ namespace Pong.Logic
 
             if (inHorizontalRightRange && (rightUpConnect || rightDownConnect))
             {
+                var racketCenter = RightRacket.GetHeight() / 2 + RightRacket.GetUpLeftPoint().Y;
+                var ballCenter = 5 + ball.GetUpLeftPoint().Y;
+                var dy = ballCenter - racketCenter;
+
+                var angle = dy * RightRacket.GetStep();
+
+                ball.SetDirection(-(float)(angle - Math.PI));
+            }
+
+            if (inVerticalLeftRange && (leftLeftConnect || leftRightConnect))
+            {
+                var racketCenter = LeftRacket.GetHeight() / 2 + LeftRacket.GetUpLeftPoint().Y;
+                var ballCenter = 5 + ball.GetUpLeftPoint().Y;
+                var dy = ballCenter - racketCenter;
+
+                var angle = dy * LeftRacket.GetStep();
+
+                ball.SetDirection((float)(angle - 2 * Math.PI));
+            }
+
+            if (inHorizontalLeftRange && (leftUpConnect || leftDownConnect))
+            {
                 var racketCenter = LeftRacket.GetHeight() / 2 + LeftRacket.GetUpLeftPoint().Y;
                 var ballCenter = 5 + ball.GetUpLeftPoint().Y;
                 var dy = ballCenter - racketCenter;
