@@ -47,6 +47,18 @@ namespace Pong.Models
             MoveVector = new Vector2f((float)(Speed * Math.Cos(Direction)), (float)(Speed * Math.Sin(Direction)));
         }
 
+        public void IncreaseSpeed()
+        {
+            if (Speed < 4)
+                Speed += 0.5f;
+            Console.WriteLine(Speed);
+        }
+
+        public float GetSpeed()
+        {
+            return Speed;
+        }
+
         /// <summary>
         /// Draw ball
         /// </summary>

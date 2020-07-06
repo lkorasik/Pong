@@ -11,5 +11,6 @@ namespace Pong.Models
     {
         void SetDirection(float angle);
         float GetDirection();
+        float GetSpeed();
     }
 }

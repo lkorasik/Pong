@@ -103,10 +103,10 @@ namespace Pong.Logic
             var rightUpLeft = RightRacket.GetUpLeftPoint();
             var rightDownRight = RightRacket.GetDownRightPoint();
 
-            var rightUpConnect = Math.Abs(rightUpLeft.Y - ballDownRight.Y) < 0.5;
-            var rightDownConnect = Math.Abs(rightDownRight.Y - ballUpLeft.Y) < 0.5;
-            var rightLeftConnect = Math.Abs(ballDownRight.X - rightUpLeft.X) < 0.5;
-            var rightRightConnect = Math.Abs(ballUpLeft.X - rightDownRight.X) < 0.5;
+            var rightUpConnect = Math.Abs(rightUpLeft.Y - ballDownRight.Y) < (ball.GetSpeed() / 2);
+            var rightDownConnect = Math.Abs(rightDownRight.Y - ballUpLeft.Y) < (ball.GetSpeed() / 2);
+            var rightLeftConnect = Math.Abs(ballDownRight.X - rightUpLeft.X) < (ball.GetSpeed() / 2);
+            var rightRightConnect = Math.Abs(ballUpLeft.X - rightDownRight.X) < (ball.GetSpeed() / 2);
 
             var inVerticalRightRange = (rightDownRight.Y > ballUpLeft.Y) && (ballDownRight.Y > rightUpLeft.Y);
             var inHorizontalRightRange = (rightDownRight.X > ballUpLeft.X) && (ballDownRight.X > rightUpLeft.X);
@@ -142,10 +142,10 @@ namespace Pong.Logic
             var leftUpLeft = LeftRacket.GetUpLeftPoint();
             var leftDownRight = LeftRacket.GetDownRightPoint();
 
-            var leftUpConnect = Math.Abs(leftUpLeft.Y - ballDownRight.Y) < 0.5;
-            var leftDownConnect = Math.Abs(leftDownRight.Y - ballUpLeft.Y) < 0.5;
-            var leftLeftConnect = Math.Abs(ballDownRight.X - leftUpLeft.X) < 0.5;
-            var leftRightConnect = Math.Abs(ballUpLeft.X - leftDownRight.X) < 0.5;
+            var leftUpConnect = Math.Abs(leftUpLeft.Y - ballDownRight.Y) < (ball.GetSpeed() / 2);
+            var leftDownConnect = Math.Abs(leftDownRight.Y - ballUpLeft.Y) < (ball.GetSpeed() / 2);
+            var leftLeftConnect = Math.Abs(ballDownRight.X - leftUpLeft.X) < (ball.GetSpeed() / 2);
+            var leftRightConnect = Math.Abs(ballUpLeft.X - leftDownRight.X) < (ball.GetSpeed() / 2);
 
             var inVerticalLeftRange = (leftDownRight.Y > ballUpLeft.Y) && (ballDownRight.Y > leftUpLeft.Y);
             var inHorizontalLeftRange = (leftDownRight.X > ballUpLeft.X) && (ballDownRight.X > leftUpLeft.X);

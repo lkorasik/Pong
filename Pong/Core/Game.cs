@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Timers;
 
 namespace Pong.Core
 {
@@ -68,6 +69,11 @@ namespace Pong.Core
 
             GameStat = GameStats.MENU;
             GameMode = GameStats.MENU;
+
+            var timer = new Timer(5000);
+            timer.Elapsed += (s, e) => Ball.IncreaseSpeed();
+            timer.AutoReset = true;
+            timer.Enabled = true;
 
             PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState, Goal, () => GetGameStat, LeftBot, RightBot);
         }
