@@ -66,7 +66,8 @@ namespace Pong.Logic
             }
 
             CheckCollisionsBallWall(Ball);
-            CheckCollisionsBallWithRackets(Ball);
+            CollisionBallRightRacket(Ball);
+            CollisionBallLeftRacket(Ball);
 
             Ball.Move();
         }
@@ -86,52 +87,29 @@ namespace Pong.Logic
                 ball.SetDirection((float)(-ball.GetDirection()));
             if (UpLeft.X <= 0 - Constants.HorizontalExpand)
             {
-                //ball.SetDirection((float)(Math.PI - ball.GetDirection()));
                 Goal(PositionTypes.LEFT);
             }
             if (DownRight.X >= Constants.WindowWidth + Constants.HorizontalExpand)
             {
-                //ball.SetDirection((float)(Math.PI - ball.GetDirection()));
                 Goal(PositionTypes.RIGHT);
             }
         }
 
-        /// <summary>
-        /// Collisions between rackets and ball
-        /// </summary>
-        /// <param name="obj">Ball</param>
-        private void CheckCollisionsBallWithRackets(IBall ball)
+        private void CollisionBallRightRacket(IBall ball)
         {
             var ballUpLeft = ball.GetUpLeftPoint();
             var ballDownRight = ball.GetDownRightPoint();
 
-            var leftUpLeft = LeftRacket.GetUpLeftPoint();
-            var leftDownRight = LeftRacket.GetDownRightPoint();
-
             var rightUpLeft = RightRacket.GetUpLeftPoint();
             var rightDownRight = RightRacket.GetDownRightPoint();
 
-            var leftUpConnect = Math.Abs(leftUpLeft.Y - ballDownRight.Y) < 0.5;
-            var leftDownConnect = Math.Abs(leftDownRight.Y - ballUpLeft.Y) < 0.5;
-            var leftLeftConnect = Math.Abs(ballDownRight.X - leftUpLeft.X) < 0.5;
-            var leftRightConnect = Math.Abs(ballUpLeft.X - leftDownRight.X) < 0.5;
-
-            var inVerticalLeftRange = (leftDownRight.Y > ballUpLeft.Y) && (ballDownRight.Y > leftUpLeft.Y);
-            var inHorizontalLeftRange = (leftDownRight.X > ballUpLeft.X) && (ballDownRight.X > leftUpLeft.X);
-            
-            if (inVerticalLeftRange && (leftLeftConnect || leftRightConnect))
-                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
-            if (inHorizontalLeftRange && (leftUpConnect || leftDownConnect))
-                ball.SetDirection((float)(-ball.GetDirection()));
-
-            var rightUpConnect = Math.Abs(rightUpLeft.Y - ballDownRight.Y) < 0.5;
-            var rightDownConnect = Math.Abs(rightDownRight.Y - ballUpLeft.Y) < 0.5;
-            var rightLeftConnect = Math.Abs(ballDownRight.X - rightUpLeft.X) < 0.5;
-            var rightRightConnect = Math.Abs(ballUpLeft.X - rightDownRight.X) < 0.5;
+            var rightUpConnect = Math.Abs(rightUpLeft.Y - ballDownRight.Y) < (ball.GetSpeed() / 2);
+            var rightDownConnect = Math.Abs(rightDownRight.Y - ballUpLeft.Y) < (ball.GetSpeed() / 2);
+            var rightLeftConnect = Math.Abs(ballDownRight.X - rightUpLeft.X) < (ball.GetSpeed() / 2);
+            var rightRightConnect = Math.Abs(ballUpLeft.X - rightDownRight.X) < (ball.GetSpeed() / 2);
 
             var inVerticalRightRange = (rightDownRight.Y > ballUpLeft.Y) && (ballDownRight.Y > rightUpLeft.Y);
             var inHorizontalRightRange = (rightDownRight.X > ballUpLeft.X) && (ballDownRight.X > rightUpLeft.X);
-
 
             if (inVerticalRightRange && (rightLeftConnect || rightRightConnect))
             {
@@ -145,6 +123,50 @@ namespace Pong.Logic
             }
 
             if (inHorizontalRightRange && (rightUpConnect || rightDownConnect))
+            {
+                var racketCenter = RightRacket.GetHeight() / 2 + RightRacket.GetUpLeftPoint().Y;
+                var ballCenter = 5 + ball.GetUpLeftPoint().Y;
+                var dy = ballCenter - racketCenter;
+
+                var angle = dy * RightRacket.GetStep();
+
+                ball.SetDirection(-(float)(angle - Math.PI));
+            }
+        }
+
+        private void CollisionBallLeftRacket(IBall ball)
+        {
+            var ballUpLeft = ball.GetUpLeftPoint();
+            var ballDownRight = ball.GetDownRightPoint();
+
+            var leftUpLeft = LeftRacket.GetUpLeftPoint();
+            var leftDownRight = LeftRacket.GetDownRightPoint();
+
+            var leftUpConnect = Math.Abs(leftUpLeft.Y - ballDownRight.Y) < (ball.GetSpeed() / 2);
+            var leftDownConnect = Math.Abs(leftDownRight.Y - ballUpLeft.Y) < (ball.GetSpeed() / 2);
+            var leftLeftConnect = Math.Abs(ballDownRight.X - leftUpLeft.X) < (ball.GetSpeed() / 2);
+            var leftRightConnect = Math.Abs(ballUpLeft.X - leftDownRight.X) < (ball.GetSpeed() / 2);
+
+            var inVerticalLeftRange = (leftDownRight.Y > ballUpLeft.Y) && (ballDownRight.Y > leftUpLeft.Y);
+            var inHorizontalLeftRange = (leftDownRight.X > ballUpLeft.X) && (ballDownRight.X > leftUpLeft.X);
+
+            if (inVerticalLeftRange && (leftLeftConnect || leftRightConnect))
+                ball.SetDirection((float)(Math.PI - ball.GetDirection()));
+            if (inHorizontalLeftRange && (leftUpConnect || leftDownConnect))
+                ball.SetDirection((float)(-ball.GetDirection()));
+
+            if (inVerticalLeftRange && (leftLeftConnect || leftRightConnect))
+            {
+                var racketCenter = LeftRacket.GetHeight() / 2 + LeftRacket.GetUpLeftPoint().Y;
+                var ballCenter = 5 + ball.GetUpLeftPoint().Y;
+                var dy = ballCenter - racketCenter;
+
+                var angle = dy * LeftRacket.GetStep();
+
+                ball.SetDirection((float)(angle - 2 * Math.PI));
+            }
+
+            if (inHorizontalLeftRange && (leftUpConnect || leftDownConnect))
             {
                 var racketCenter = LeftRacket.GetHeight() / 2 + LeftRacket.GetUpLeftPoint().Y;
                 var ballCenter = 5 + ball.GetUpLeftPoint().Y;

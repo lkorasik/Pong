@@ -28,7 +28,7 @@ namespace Pong.Models
             else
                 CountView.Position = new Vector2f(Constants.WindowWidth * 2 / 3, 20);
             CountView.CharacterSize = 20;
-            CountView.FillColor = Color.Red;
+            CountView.FillColor = Color.White;
         }
 
         /// <summary>

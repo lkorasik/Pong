@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Timers;
 
 namespace Pong.Core
 {
@@ -51,23 +52,7 @@ namespace Pong.Core
         /// <param name="keyboardState">Keyboard</param>
         public Game(KeyboardState keyboardState, MouseState mouseState)
         {
-            var lang = SettingsWorker.LoadSelectorLanguageModel();
-            Languages language;
-
-            switch (lang.CurrentLanguage)
-            {
-                case "English":
-                    language = Languages.ENGLISH;
-                    break;
-                case "Русский":
-                    language = Languages.RUSSIAN;
-                    break;
-                default:
-                    language = Languages.ENGLISH;
-                    break;
-            }
-
-            var localization = SettingsWorker.LoadGameLanguageModel(language);
+            var localization = LoadLocalization();
 
             Board = new Board();
             Ball = new Ball();
@@ -85,7 +70,37 @@ namespace Pong.Core
             GameStat = GameStats.MENU;
             GameMode = GameStats.MENU;
 
+            var timer = new Timer(5000);
+            timer.Elapsed += (s, e) => Ball.IncreaseSpeed();
+            timer.AutoReset = true;
+            timer.Enabled = true;
+
             PhysicsEngine = new PhysicsEngine(Ball, LeftRacket, RightRacket, KeyboardState, Goal, () => GetGameStat, LeftBot, RightBot);
+        }
+
+        /// <summary>
+        /// Load translations
+        /// </summary>
+        /// <returns>GameLanguageModel</returns>
+        private GameLanguageModel LoadLocalization()
+        {
+            var lang = SettingsWorker.LoadSelectorLanguageModel();
+            Languages language;
+
+            switch (lang.CurrentLanguage)
+            {
+                case "English":
+                    language = Languages.ENGLISH;
+                    break;
+                case "Русский":
+                    language = Languages.RUSSIAN;
+                    break;
+                default:
+                    language = Languages.ENGLISH;
+                    break;
+            }
+
+            return SettingsWorker.LoadGameLanguageModel(language);
         }
 
         /// <summary>
@@ -138,37 +153,47 @@ namespace Pong.Core
         {
             if (GameStat == GameStats.MENU)
             {
-                var button = MainMenu.GetClickedButton(x, y);
-
-                switch (button)
-                {
-                    case MainMenuButtons.PLAYER_PC:
-                        MainMenu.PlayerPcPress();
-                        break;
-                    case MainMenuButtons.PLAYER_PLAYER:
-                        MainMenu.PlayerPlayerPress();
-                        break;
-                    case MainMenuButtons.SETTINGS:
-                        MainMenu.SettingsPress();
-                        break;
-                    case MainMenuButtons.EXIT:
-                        MainMenu.ExitPress();
-                        break;
-                }
+                MousePressMenu(x, y);
             }
             else if(GameStat == GameStats.SETTINGS)
             {
-                var button = Settings.GetClickedButton(x, y);
+                MousePressSettings(x, y);
+            }
+        }
 
-                switch (button)
-                {
-                    case SettingsButtons.LANGUAGES:
-                        Settings.LanguagePress(x, y);
-                        break;
-                    case SettingsButtons.BACK:
-                        Settings.BackPress();
-                        break;
-                }
+        private void MousePressMenu(float x, float y)
+        {
+            var button = MainMenu.GetClickedButton(x, y);
+
+            switch (button)
+            {
+                case MainMenuButtons.PLAYER_PC:
+                    MainMenu.PlayerPcPress();
+                    break;
+                case MainMenuButtons.PLAYER_PLAYER:
+                    MainMenu.PlayerPlayerPress();
+                    break;
+                case MainMenuButtons.SETTINGS:
+                    MainMenu.SettingsPress();
+                    break;
+                case MainMenuButtons.EXIT:
+                    MainMenu.ExitPress();
+                    break;
+            }
+        }
+
+        private void MousePressSettings(float x, float y)
+        {
+            var button = Settings.GetClickedButton(x, y);
+
+            switch (button)
+            {
+                case SettingsButtons.LANGUAGES:
+                    Settings.LanguagePress(x, y);
+                    break;
+                case SettingsButtons.BACK:
+                    Settings.BackPress();
+                    break;
             }
         }
 
@@ -179,52 +204,62 @@ namespace Pong.Core
         {
             if (GameStat == GameStats.MENU)
             {
-                MainMenu.PlayerPcRelease();
-                MainMenu.PlayerPlayerRelease();
-                MainMenu.SettingsRelease();
-                MainMenu.ExitRelease();
-
-                var button = MainMenu.GetClickedButton(x, y);
-
-                switch (button)
-                {
-                    case MainMenuButtons.PLAYER_PC:
-                        GameStat = GameStats.PLAY_PLAYER_PC;
-                        ResetAllObjects();
-                        break;
-                    case MainMenuButtons.PLAYER_PLAYER:
-                        GameStat = GameStats.PLAY_PLAYER_PLAYER;
-                        ResetAllObjects();
-                        break;
-                    case MainMenuButtons.SETTINGS:
-                        GameStat = GameStats.SETTINGS;
-                        break;
-                    case MainMenuButtons.EXIT:
-                        Environment.Exit(0);
-                        break;
-                }
+                MouseReleaseMenu(x, y);
             }
             if(GameStat == GameStats.SETTINGS)
             {
-                Settings.LanguageRelease();
+                MouseReleaseSettings(x, y);
+            }
+        }
 
-                var button = Settings.GetClickedButton(x, y);
+        private void MouseReleaseMenu(float x, float y)
+        {
+            MainMenu.PlayerPcRelease();
+            MainMenu.PlayerPlayerRelease();
+            MainMenu.SettingsRelease();
+            MainMenu.ExitRelease();
 
-                switch (button)
-                {
-                    case SettingsButtons.BACK:
-                        Settings.BackRelease();
-                        break;
-                    case SettingsButtons.NO:
-                        GameStat = GameStats.MENU;
-                        Settings.CloseMessageBox();
-                        break;
-                    case SettingsButtons.YES:
-                        GameStat = GameStats.MENU;
-                        Settings.CloseMessageBox();
-                        Settings.SaveSettings();
-                        break;
-                }
+            var button = MainMenu.GetClickedButton(x, y);
+
+            switch (button)
+            {
+                case MainMenuButtons.PLAYER_PC:
+                    GameStat = GameStats.PLAY_PLAYER_PC;
+                    ResetAllObjects();
+                    break;
+                case MainMenuButtons.PLAYER_PLAYER:
+                    GameStat = GameStats.PLAY_PLAYER_PLAYER;
+                    ResetAllObjects();
+                    break;
+                case MainMenuButtons.SETTINGS:
+                    GameStat = GameStats.SETTINGS;
+                    break;
+                case MainMenuButtons.EXIT:
+                    Environment.Exit(0);
+                    break;
+            }
+        }
+
+        private void MouseReleaseSettings(float x, float y)
+        {
+            Settings.LanguageRelease();
+
+            var button = Settings.GetClickedButton(x, y);
+
+            switch (button)
+            {
+                case SettingsButtons.BACK:
+                    Settings.BackRelease();
+                    break;
+                case SettingsButtons.NO:
+                    GameStat = GameStats.MENU;
+                    Settings.CloseMessageBox();
+                    break;
+                case SettingsButtons.YES:
+                    GameStat = GameStats.MENU;
+                    Settings.CloseMessageBox();
+                    Settings.SaveSettings();
+                    break;
             }
         }
 
