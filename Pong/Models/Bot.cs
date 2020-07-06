@@ -24,10 +24,27 @@ namespace Pong.Models
         /// <param name="ballDirection"></param>
         public void MakeStep(float ballDirection)
         {
-            if (Math.Sin(ballDirection) > 0)
+            var step = Predict(ballDirection, 3);
+
+            if (step > 0)
                 racket.Move(0, 2);
-            if (Math.Sin(ballDirection) < 0)
+            if (step < 0)
                 racket.Move(0, -2);
+        }
+
+        private float Predict(float ballDirection, int step)
+        {
+            var dy = 0f;
+
+            for (int i = 0; i < step; i++)
+            {
+                if (Math.Sin(ballDirection) > 0)
+                    dy += 2;
+                if (Math.Sin(ballDirection) < 0)
+                    dy -= 2;
+            }
+
+            return dy;
         }
     }
 }
